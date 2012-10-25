@@ -1,0 +1,13 @@
+// Flash maker code
+#define	FLASHID_SAMSUNG		0xEC
+#define	FLASHID_TOSHIBA		0x98
+#define	FLASHID_SANDISK		0x45
+#define	FLASHID_SANDISK2	0x01
+#define FLASHID_HYNIX		0xAD
+#define FLASHID_RENESAS		0x07
+#define FLASHID_ST			0x20
+#define	FLASHID_MICRON		0x2C
+#define FLASHID_INFINEON	0xC1
+#define FLASHID_PFC			0x79
+#define FLASHID_INTEL		0x89
+#define	FLASHID_POWER		0x92
