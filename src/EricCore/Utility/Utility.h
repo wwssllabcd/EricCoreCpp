@@ -216,7 +216,7 @@ namespace EricCore{
 		struct GetNornalData
 		{
 			static RT getFirstItem(Iter iter){
-				return (*iter).first;
+				return (*iter);
 			}
 		};
 
@@ -228,7 +228,7 @@ namespace EricCore{
 			}
 		};
 
-		template< class Colls, template<class, class> class GetDataPolicy >
+		template< class Colls, template<class, class> class GetDataPolicy >	
 		static void findDuplicateItem(Colls& source, Colls& duplicateColl){
 			typedef Colls::iterator Iter;
 			typedef ULONG ValueT;
@@ -242,15 +242,12 @@ namespace EricCore{
 			ValueT addr=0;
 
 			for(iter = source.begin(); iter!=source.end(); iter++){
-
 				addr = GetDataPolicy<Colls::iterator, ValueT>::getFirstItem(iter);
-
 				if( _isHit( addr, map, MAP_SIZE) == true ){
 					duplicateColl.push_back((*iter));
 				}
 			}
 		}
-
 
 		template<class T>
 		static void arrayToVector( T* source, size_t len, vector<T>& target){
