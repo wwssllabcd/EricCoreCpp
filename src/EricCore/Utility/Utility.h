@@ -158,27 +158,77 @@ namespace EricCore{
 		static bool saveToIni(const tstring& appName, const tstring& keyName, const bool& result, const tstring& filePath);
 		static bool saveToIni(const tstring& appName, const tstring& keyName, const tstring& result, const tstring& filePath);
 #endif
-		template<bool flag, class T, class U>
-		static void findDuplicateItem(vector<T>& source, vector<U>& duplicateColl){
-			typename vector<T>::iterator iDBlock;
-			duplicateColl.clear();
+		//template<bool flag, class T, class U>
+		//static void findDuplicateItem(vector<T>& source, vector<U>& duplicateColl){
+		//	typename vector<T>::iterator iDBlock;
+		//	duplicateColl.clear();
 
-			//let sort time approach to Big(1) by using bitMap
-			const size_t MAP_SIZE = 0x80000;
-			BYTE map[MAP_SIZE]={0};
-			T addr=0;
-			
-			for(iDBlock = source.begin(); iDBlock!=source.end(); iDBlock++){
-				addr = (*iDBlock);
-				if( _isHit( addr, map, MAP_SIZE) == true ){
-					duplicateColl.push_back((*iDBlock));
-				}
+		//	//let sort time approach to Big(1) by using bitMap
+		//	const size_t MAP_SIZE = 0x80000;
+		//	BYTE map[MAP_SIZE]={0};
+		//	T addr=0;
+		//	
+		//	for(iDBlock = source.begin(); iDBlock!=source.end(); iDBlock++){
+		//		addr = (*iDBlock);
+		//		if( _isHit( addr, map, MAP_SIZE) == true ){
+		//			duplicateColl.push_back((*iDBlock));
+		//		}
+		//	}
+		//}
+
+		//template<class T>
+		//static void findDuplicateItem(vector<T>& source, vector<T>& duplicateColl){
+		//	typename vector<T>::iterator iDBlock;
+		//	duplicateColl.clear();
+
+		//	//let sort time approach to Big(1) by using bitMap
+		//	const size_t MAP_SIZE = 0x80000;
+		//	BYTE map[MAP_SIZE]={0};
+		//	ULONG addr=0;
+
+		//	for(iDBlock = source.begin(); iDBlock!=source.end(); iDBlock++){
+		//		addr = (*iDBlock).getAddr();
+		//		if( _isHit( addr, map, MAP_SIZE) == true ){
+		//			duplicateColl.push_back((*iDBlock));
+		//		}
+		//	}
+		//}
+
+		//template< class T, class U >
+		//static void findDuplicateItem(vector< pair<T, U> >& source, vector< pair<T, U> >& duplicateColl){
+		//	typename vector< pair<T, U>  >::iterator iDBlock;
+		//	duplicateColl.clear();
+
+		//	//let sort time approach to Big(1) by using bitMap
+		//	const size_t MAP_SIZE = 0x80000;
+		//	BYTE map[MAP_SIZE]={0};
+		//	ULONG addr=0;
+
+		//	for(iDBlock = source.begin(); iDBlock!=source.end(); iDBlock++){
+		//		addr = (*iDBlock).first;
+		//		if( _isHit( addr, map, MAP_SIZE) == true ){
+		//			duplicateColl.push_back((*iDBlock));
+		//		}
+		//	}
+		//}
+
+
+
+		template< typename Iter, class RT >
+		class GetFirst_Pair
+		{
+		public:
+			static RT getFirstItem(Iter iter){
+				return (*iter).first;
 			}
-		}
+		};
 
-		template<class T>
-		static void findDuplicateItem(vector<T>& source, vector<T>& duplicateColl){
-			typename vector<T>::iterator iDBlock;
+		template< class Colls, 
+			template<class, class> class GetDataPolicy
+		>
+		static void findDuplicateItem(Colls& source, Colls& duplicateColl){
+			typename Colls::iterator iter;
+
 			duplicateColl.clear();
 
 			//let sort time approach to Big(1) by using bitMap
@@ -186,31 +236,16 @@ namespace EricCore{
 			BYTE map[MAP_SIZE]={0};
 			ULONG addr=0;
 
-			for(iDBlock = source.begin(); iDBlock!=source.end(); iDBlock++){
-				addr = (*iDBlock).getAddr();
+			for(iter = source.begin(); iter!=source.end(); iter++){
+
+				addr = GetDataPolicy<Colls::iterator, ULONG>::getFirstItem(iter);
+
 				if( _isHit( addr, map, MAP_SIZE) == true ){
-					duplicateColl.push_back((*iDBlock));
+					duplicateColl.push_back((*iter));
 				}
 			}
 		}
 
-		template< class T, class U >
-		static void findDuplicateItem(vector< pair<T, U> >& source, vector< pair<T, U> >& duplicateColl){
-			typename vector< pair<T, U>  >::iterator iDBlock;
-			duplicateColl.clear();
-
-			//let sort time approach to Big(1) by using bitMap
-			const size_t MAP_SIZE = 0x80000;
-			BYTE map[MAP_SIZE]={0};
-			ULONG addr=0;
-
-			for(iDBlock = source.begin(); iDBlock!=source.end(); iDBlock++){
-				addr = (*iDBlock).first;
-				if( _isHit( addr, map, MAP_SIZE) == true ){
-					duplicateColl.push_back((*iDBlock));
-				}
-			}
-		}
 
 		template<class T>
 		static void arrayToVector( T* source, size_t len, vector<T>& target){
