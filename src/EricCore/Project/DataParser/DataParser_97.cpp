@@ -511,11 +511,9 @@ tstring DataParser_97::check_duplicateBlock(BYTE* ramC000, BYTE* ramA000){
 		}
 	}
 
-
-
-
-	Utility::findDuplicateItem< vector<BlkNo_And_Addr>, Utility::GetPair_first >(blockColls, dupColls);
-
+	typedef Utility::FindDpu<vector<BlkNo_And_Addr>, Utility::GetPair_first> FindVectorPairDup;
+	FindVectorPairDup fvpd;
+	fvpd.run(blockColls, dupColls);
 
 	//check duplicate by bitmap
 	for(size_t i=0; i<dupColls.size(); i++){

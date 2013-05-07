@@ -229,25 +229,30 @@ namespace EricCore{
 		};
 
 		template< class Colls, template<class, class> class GetDataPolicy >	
-		static void findDuplicateItem(Colls& source, Colls& duplicateColl){
-			typedef Colls::iterator Iter;
-			typedef ULONG ValueT;
-			Iter iter;
+		class FindDpu : public GetDataPolicy< typename Colls::iterator, ULONG > 
+		{
+		public:
+			static void run(Colls& source, Colls& duplicateColl){
+				typedef Colls::iterator Iter;
+				typedef ULONG ValueT;
+				Iter iter;
 
-			duplicateColl.clear();
+				duplicateColl.clear();
 
-			//let sort time approach to Big(1) by using bitMap
-			const size_t MAP_SIZE = 0x80000;
-			BYTE map[MAP_SIZE]={0};
-			ValueT addr=0;
+				//let sort time approach to Big(1) by using bitMap
+				const size_t MAP_SIZE = 0x80000;
+				BYTE map[MAP_SIZE]={0};
+				ValueT addr=0;
 
-			for(iter = source.begin(); iter!=source.end(); iter++){
-				addr = GetDataPolicy<Colls::iterator, ValueT>::getFirstItem(iter);
-				if( _isHit( addr, map, MAP_SIZE) == true ){
-					duplicateColl.push_back((*iter));
+				for(iter = source.begin(); iter!=source.end(); iter++){
+					addr = getFirstItem(iter);
+					if( _isHit( addr, map, MAP_SIZE) == true ){
+						duplicateColl.push_back((*iter));
+					}
 				}
 			}
-		}
+		};
+
 
 		template<class T>
 		static void arrayToVector( T* source, size_t len, vector<T>& target){
