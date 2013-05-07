@@ -212,33 +212,30 @@ namespace EricCore{
 		//	}
 		//}
 
-
-
-		template< typename Iter, class RT >
-		class GetFirst_Pair
+		template< class Iter, class RT >
+		struct GetFirst_Pair
 		{
-		public:
 			static RT getFirstItem(Iter iter){
 				return (*iter).first;
 			}
 		};
 
-		template< class Colls, 
-			template<class, class> class GetDataPolicy
-		>
+		template< class Colls, template<class, class> class GetDataPolicy >
 		static void findDuplicateItem(Colls& source, Colls& duplicateColl){
-			typename Colls::iterator iter;
+			typedef Colls::iterator Iter;
+			typedef ULONG ValueT;
+			Iter iter;
 
 			duplicateColl.clear();
 
 			//let sort time approach to Big(1) by using bitMap
 			const size_t MAP_SIZE = 0x80000;
 			BYTE map[MAP_SIZE]={0};
-			ULONG addr=0;
+			ValueT addr=0;
 
 			for(iter = source.begin(); iter!=source.end(); iter++){
 
-				addr = GetDataPolicy<Colls::iterator, ULONG>::getFirstItem(iter);
+				addr = GetDataPolicy<Colls::iterator, ValueT>::getFirstItem(iter);
 
 				if( _isHit( addr, map, MAP_SIZE) == true ){
 					duplicateColl.push_back((*iter));
