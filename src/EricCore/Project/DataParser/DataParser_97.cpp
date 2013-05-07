@@ -514,7 +514,7 @@ tstring DataParser_97::check_duplicateBlock(BYTE* ramC000, BYTE* ramA000){
 
 
 
-	Utility::findDuplicateItem< vector<BlkNo_And_Addr>, Utility::GetFirst_Pair >(blockColls, dupColls);
+	Utility::findDuplicateItem< vector<BlkNo_And_Addr>, Utility::GetPair_first >(blockColls, dupColls);
 
 
 	//check duplicate by bitmap

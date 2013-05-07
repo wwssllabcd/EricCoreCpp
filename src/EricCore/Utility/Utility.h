@@ -213,7 +213,15 @@ namespace EricCore{
 		//}
 
 		template< class Iter, class RT >
-		struct GetFirst_Pair
+		struct GetNornalData
+		{
+			static RT getFirstItem(Iter iter){
+				return (*iter).first;
+			}
+		};
+
+		template< class Iter, class RT >
+		struct GetPair_first
 		{
 			static RT getFirstItem(Iter iter){
 				return (*iter).first;
