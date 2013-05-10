@@ -212,37 +212,41 @@ namespace EricCore{
 		//	}
 		//}
 
-		template< class Iter, class RT >
+		template< typename Iter, class RT >
 		struct GetNornalData
 		{
+			typedef RT ReturnType;
 			static RT getFirstItem(Iter iter){
 				return (*iter);
 			}
 		};
 
-		template< class Iter, class RT >
+		template< typename Iter, class RT >
 		struct GetPair_first
 		{
+			typedef RT ReturnType;
 			static RT getFirstItem(Iter iter){
 				return (*iter).first;
 			}
 		};
 
-		template< class Colls, template<class, class> class GetDataPolicy >	
-		class FindDpu : public GetDataPolicy< typename Colls::iterator, ULONG > 
+		template< class T, class GetDataPolicy >
+		class FindDpu : public GetDataPolicy
 		{
 		public:
-			static void run(Colls& source, Colls& duplicateColl){
-				typedef Colls::iterator Iter;
-				typedef ULONG ValueT;
+			static void run(vector<T>& source, vector<T>& duplicateColl){
+				
+				typedef GetDataPolicy::ReturnType ValueT;
+				typedef vector<T>::iterator Iter;
+
 				Iter iter;
+				ValueT addr=0;
 
 				duplicateColl.clear();
 
 				//let sort time approach to Big(1) by using bitMap
 				const size_t MAP_SIZE = 0x80000;
 				BYTE map[MAP_SIZE]={0};
-				ValueT addr=0;
 
 				for(iter = source.begin(); iter!=source.end(); iter++){
 					addr = getFirstItem(iter);

@@ -29,3 +29,41 @@ namespace EricCore{
 
 	};
 }
+
+
+class MyExcepBase
+{
+public:
+	MyExcepBase(void);
+	~MyExcepBase(void);
+};
+
+
+
+//#define THROW_EXCEPTION(msg, errorNo) \
+//{\
+//	class Excep_##msg : public MyExcepBase \
+//	{\
+//		public:\
+//		  const int  errorCode; \
+//	};\
+//	Excep_##msg::errorCode=errorNo;\
+//}
+//
+//THROW_EXCEPTION(TEST, 1)
+
+
+
+class Excep_TEST : public MyExcepBase 
+{
+public:
+	static const int  errorCode; 
+};
+
+#ifndef AAA
+#define AAA
+//const int Excep_TEST::errorCode=1;
+#endif
+
+
+

@@ -1,7 +1,11 @@
 #include "StdAfx.h"
 #include ".\dataparser_97.h"
 
+#include <List>
+
+
 using namespace EricCore;
+
 
 DataParser_97::DataParser_97(void)
 {
@@ -511,7 +515,10 @@ tstring DataParser_97::check_duplicateBlock(BYTE* ramC000, BYTE* ramA000){
 		}
 	}
 
-	typedef Utility::FindDpu<vector<BlkNo_And_Addr>, Utility::GetPair_first> FindVectorPairDup;
+	//list<BlkNo_And_Addr> listColls;
+	typedef Utility::GetPair_first< vector<BlkNo_And_Addr>::iterator, BlkNo_And_Addr::first_type > GetPairDataPolicy;
+	typedef Utility::FindDpu< BlkNo_And_Addr, GetPairDataPolicy > FindVectorPairDup;
+
 	FindVectorPairDup fvpd;
 	fvpd.run(blockColls, dupColls);
 
