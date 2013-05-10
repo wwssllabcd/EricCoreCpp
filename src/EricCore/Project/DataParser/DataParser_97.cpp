@@ -516,8 +516,8 @@ tstring DataParser_97::check_duplicateBlock(BYTE* ramC000, BYTE* ramA000){
 	}
 
 	//list<BlkNo_And_Addr> listColls;
-	typedef Utility::GetPair_first< vector<BlkNo_And_Addr>::iterator, BlkNo_And_Addr::first_type > GetPairDataPolicy;
-	typedef Utility::FindDpu< BlkNo_And_Addr, GetPairDataPolicy > FindVectorPairDup;
+	typedef Utility::GetPairFirstPolicy< vector<BlkNo_And_Addr>::iterator, BlkNo_And_Addr::first_type > GetPairData;
+	typedef Utility::FindDpu< BlkNo_And_Addr, GetPairData > FindVectorPairDup;
 
 	FindVectorPairDup fvpd;
 	fvpd.run(blockColls, dupColls);

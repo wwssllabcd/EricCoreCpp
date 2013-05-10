@@ -213,7 +213,7 @@ namespace EricCore{
 		//}
 
 		template< typename Iter, class RT >
-		struct GetNornalData
+		struct GetNornalDataPolicy
 		{
 			typedef RT ReturnType;
 			static RT getFirstItem(Iter iter){
@@ -222,7 +222,7 @@ namespace EricCore{
 		};
 
 		template< typename Iter, class RT >
-		struct GetPair_first
+		struct GetPairFirstPolicy
 		{
 			typedef RT ReturnType;
 			static RT getFirstItem(Iter iter){
