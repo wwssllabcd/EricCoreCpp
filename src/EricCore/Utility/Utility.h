@@ -74,14 +74,14 @@ namespace EricCore{
 		static void stringSplit(vector<tstring>& array, tstring sign, tstring& orgStr);
 
 
-		//BYTE ptr與WORD ptr互轉
+		//BYTE ptr <--> WORD ptr
 		static WORD* toWordPtr(const BYTE* ptr);
 		static BYTE* toBytePtr(const WORD* ptr);
 
 		static tstring arrayToString(const BYTE* charArray,int length,bool isEndWhenZero = false);
 		static tstring arrayToHexString(const BYTE* charArray, int length, const tstring& filler= " " );
 
-		//bit類
+		// for bit
 		static int getBit(const BYTE& byte,int bitNo);
 		static int getBit(const WORD& word,int num);
 
@@ -90,7 +90,7 @@ namespace EricCore{
 		static void setBit(BYTE& target,BYTE numberOfbit,int intValue);
 		static void setBit(BYTE& target,BYTE numberOfbit,bool isSet_1);
 
-		//檔案類
+		//for file
 		static void toFile(const tstring& filePath, const tstring& msg, bool isAppend);
 		static void toFile(const tstring& filePath, BYTE* data, int length, bool isAppend = false);
 		
@@ -99,11 +99,7 @@ namespace EricCore{
 		static long getFileSize(tstring filePath);
 		static bool isFileExist(const tstring& filePath);
 
-		//表格類
-		//static tstring makeHexTable(BYTE* array);
-		//static tstring makeHexTable(WORD* array);
-		//static tstring makeHexTable(BYTE* array,int secCnt);
-		//static tstring makeHexTable(WORD* array,int secCnt);
+		// gen table
 		static tstring makeHexTable(int length, BYTE* ary, WORD offset=0, bool needHeader=true);
 
 
@@ -158,60 +154,8 @@ namespace EricCore{
 		static bool saveToIni(const tstring& appName, const tstring& keyName, const bool& result, const tstring& filePath);
 		static bool saveToIni(const tstring& appName, const tstring& keyName, const tstring& result, const tstring& filePath);
 #endif
-		//template<bool flag, class T, class U>
-		//static void findDuplicateItem(vector<T>& source, vector<U>& duplicateColl){
-		//	typename vector<T>::iterator iDBlock;
-		//	duplicateColl.clear();
-
-		//	//let sort time approach to Big(1) by using bitMap
-		//	const size_t MAP_SIZE = 0x80000;
-		//	BYTE map[MAP_SIZE]={0};
-		//	T addr=0;
-		//	
-		//	for(iDBlock = source.begin(); iDBlock!=source.end(); iDBlock++){
-		//		addr = (*iDBlock);
-		//		if( _isHit( addr, map, MAP_SIZE) == true ){
-		//			duplicateColl.push_back((*iDBlock));
-		//		}
-		//	}
-		//}
-
-		//template<class T>
-		//static void findDuplicateItem(vector<T>& source, vector<T>& duplicateColl){
-		//	typename vector<T>::iterator iDBlock;
-		//	duplicateColl.clear();
-
-		//	//let sort time approach to Big(1) by using bitMap
-		//	const size_t MAP_SIZE = 0x80000;
-		//	BYTE map[MAP_SIZE]={0};
-		//	ULONG addr=0;
-
-		//	for(iDBlock = source.begin(); iDBlock!=source.end(); iDBlock++){
-		//		addr = (*iDBlock).getAddr();
-		//		if( _isHit( addr, map, MAP_SIZE) == true ){
-		//			duplicateColl.push_back((*iDBlock));
-		//		}
-		//	}
-		//}
-
-		//template< class T, class U >
-		//static void findDuplicateItem(vector< pair<T, U> >& source, vector< pair<T, U> >& duplicateColl){
-		//	typename vector< pair<T, U>  >::iterator iDBlock;
-		//	duplicateColl.clear();
-
-		//	//let sort time approach to Big(1) by using bitMap
-		//	const size_t MAP_SIZE = 0x80000;
-		//	BYTE map[MAP_SIZE]={0};
-		//	ULONG addr=0;
-
-		//	for(iDBlock = source.begin(); iDBlock!=source.end(); iDBlock++){
-		//		addr = (*iDBlock).first;
-		//		if( _isHit( addr, map, MAP_SIZE) == true ){
-		//			duplicateColl.push_back((*iDBlock));
-		//		}
-		//	}
-		//}
-
+		
+		// Policy-based template meta programming  
 		template< typename Iter, class RT >
 		struct GetNornalDataPolicy
 		{
