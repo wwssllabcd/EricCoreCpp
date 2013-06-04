@@ -280,6 +280,7 @@ void Utility::toFile(const tstring& filePath, BYTE* data, int length, bool isApp
 	ofs.write( (const char*) data, length);
 
 	// even you didn't close, ofs will be close in destructor
+	// fstream destruct call close for you. When an exception is thrown, the file is closed automatically.(RAII)
 	ofs.close();
 }
 
