@@ -1,5 +1,6 @@
-#include "stdafx.h"	
+// Written by EricWang 2006-2013
 
+#include "stdafx.h"	
 #include "Utility.h"
 #include <fstream>
 #include <cmath>
