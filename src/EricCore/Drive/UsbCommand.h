@@ -69,6 +69,7 @@ public:
 	void setFeature(BYTE ceNo, BYTE cmdBus, BYTE addrBus, BYTE value) const;
 	void getFeature(BYTE ceNo, BYTE cmdBus, BYTE addrBus) const;
 	void switchECC(BYTE* buffer) const;
+	void UsbCommand::switchECC_40(BYTE* buffer) const ;
 
 
 	//for OCS

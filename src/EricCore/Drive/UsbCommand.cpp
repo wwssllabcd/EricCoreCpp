@@ -659,6 +659,22 @@ void UsbCommand::switchECC(BYTE* buffer) const {
 	}
 }
 
+void UsbCommand::switchECC_40(BYTE* buffer) const {
+	BOOL status;
+	USBDrive usbDrive;
+	UsbCmdStruct cmd;
+	cmd = cmd.switchECC();
+	
+	cmd.cdb[2] = 0x02;//change to 40 bit ecc
+
+	status = usbDrive.UDISK_SendCommand(m_dvrHandle, cmd.cdb, buffer, cmd.length,  cmd.direction);
+	if (status == FALSE) {
+		tstring msg = cmd.description + " fail";
+		throw MyException(USBC_VENDOR_CMD_FAIL, msg);
+	}
+}
+
+
 void UsbCommand::identify3sKey(BYTE* buffer) const {
 	BOOL status;
 	USBDrive usbDrive;
