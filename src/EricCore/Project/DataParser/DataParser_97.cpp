@@ -515,12 +515,16 @@ tstring DataParser_97::check_duplicateBlock(BYTE* ramC000, BYTE* ramA000){
 		}
 	}
 
-	//list<BlkNo_And_Addr> listColls;
-	typedef Utility::GetPairFirstPolicy< vector<BlkNo_And_Addr>::iterator, BlkNo_And_Addr::first_type > GetPairData;
-	typedef Utility::FindDpu< BlkNo_And_Addr, GetPairData > FindVectorPairDup;
-
-	FindVectorPairDup fvpd;
+	typedef Utility::GetDataPolicy< vector<BlkNo_And_Addr> > TPP;
+	Utility::FindDpu<TPP> fvpd;
 	fvpd.run(blockColls, dupColls);
+
+	//vector<int> intBlockColls, intDupColls;
+	//typedef Utility::GetDataPolicy< vector<int> > TPP_INT;
+	//Utility::FindDpu<TPP_INT> fvpd_Int;
+	//fvpd_Int.run(intBlockColls, intDupColls);
+	//string bbb = fvpd_Int.show();
+
 
 	//check duplicate by bitmap
 	for(size_t i=0; i<dupColls.size(); i++){

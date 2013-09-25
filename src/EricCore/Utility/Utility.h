@@ -155,36 +155,58 @@ namespace EricCore{
 		static bool saveToIni(const tstring& appName, const tstring& keyName, const tstring& result, const tstring& filePath);
 #endif
 		
-		// Policy-based template meta programming  
-		template< typename Iter, class RT >
-		struct GetNornalDataPolicy
+
+
+		//typedef typename Colls_Iter GDP_Iter; 
+		template< typename Return_Type, typename Content_Type, typename Colls_Iter  > 
+		struct GDP_TypeTraits
 		{
-			typedef RT ReturnType;
-			static RT getFirstItem(Iter iter){
+			typedef typename Return_Type  ReturnType;
+			typedef typename Content_Type ContentT; 
+			typedef typename Colls_Iter   CollsIter;
+		};
+
+
+		// Policy-based template meta programming  
+		template<typename RT > 
+		struct GetDataPolicy;
+
+		template< typename RT> 
+		struct GetDataPolicy < std::vector< RT > >	
+		{
+			typedef GDP_TypeTraits<typename RT, RT, typename std::vector<RT>::iterator> GDP_Types;
+
+			typename GDP_Types::ReturnType getFirstItem(typename GDP_Types::CollsIter iter){
 				return (*iter);
 			}
-		};
 
-		template< typename Iter, class RT >
-		struct GetPairFirstPolicy
-		{
-			typedef RT ReturnType;
-			static RT getFirstItem(Iter iter){
-				return (*iter).first;
+			string debugString(){
+				return "normal type";
 			}
 		};
 
-		template< class T, class GetDataPolicy >
+		template< typename RT, typename U > struct GetDataPolicy < std::vector< std::pair<RT, U> > >
+		{
+			typedef GDP_TypeTraits<typename RT, typename std::pair<RT, U>, typename std::vector< std::pair<RT, U> >::iterator > GDP_Types;
+
+			typename GDP_Types::ReturnType getFirstItem(typename GDP_Types::CollsIter iter){
+				return (*iter).first;
+			}
+
+			string debugString(){
+				return "pair type";
+			}
+		};
+
+		template< class GetDataPolicy >
 		class FindDpu : public GetDataPolicy
 		{
 		public:
-			static void run(vector<T>& source, vector<T>& duplicateColl){
-				
-				typedef GetDataPolicy::ReturnType ValueT;
-				typedef vector<T>::iterator Iter;
+			typedef typename GetDataPolicy::GDP_Types::ContentT Coll_ContentType;
 
-				Iter iter;
-				ValueT addr=0;
+			void run(vector< Coll_ContentType >& source, vector< Coll_ContentType >& duplicateColl){
+				GetDataPolicy::GDP_Types::CollsIter  iter;
+				GetDataPolicy::GDP_Types::ReturnType addr=0;
 
 				duplicateColl.clear();
 
@@ -193,11 +215,15 @@ namespace EricCore{
 				BYTE map[MAP_SIZE]={0};
 
 				for(iter = source.begin(); iter!=source.end(); iter++){
-					addr = getFirstItem(iter);
+					addr = this->getFirstItem(iter);
 					if( _isHit( addr, map, MAP_SIZE) == true ){
 						duplicateColl.push_back((*iter));
 					}
 				}
+			}
+
+			string show(){
+				return this->debugString();
 			}
 		};
 
