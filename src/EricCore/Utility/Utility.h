@@ -185,7 +185,8 @@ namespace EricCore{
 			}
 		};
 
-		template< typename RT, typename U > struct GetDataPolicy < std::vector< std::pair<RT, U> > >
+		template< typename RT, typename U > 
+		struct GetDataPolicy < std::vector< std::pair<RT, U> > >
 		{
 			typedef GDP_TypeTraits<typename RT, typename std::pair<RT, U>, typename std::vector< std::pair<RT, U> >::iterator > GDP_Types;
 
@@ -199,7 +200,7 @@ namespace EricCore{
 		};
 
 		template< class GetDataPolicy >
-		class FindDpu : public GetDataPolicy
+		class FindDuplicateItem : public GetDataPolicy
 		{
 		public:
 			typedef typename GetDataPolicy::GDP_Types::ContentT Coll_ContentType;

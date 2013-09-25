@@ -515,8 +515,8 @@ tstring DataParser_97::check_duplicateBlock(BYTE* ramC000, BYTE* ramA000){
 		}
 	}
 
-	typedef Utility::GetDataPolicy< vector<BlkNo_And_Addr> > TPP;
-	Utility::FindDpu<TPP> fvpd;
+	typedef Utility::GetDataPolicy< vector<BlkNo_And_Addr> > FindPairPolicy;
+	Utility::FindDuplicateItem<FindPairPolicy> fvpd;
 	fvpd.run(blockColls, dupColls);
 
 	//vector<int> intBlockColls, intDupColls;
