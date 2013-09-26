@@ -547,6 +547,11 @@ void Utility::sourceDataToTarget(FILE* source, FILE* target, int length){
 	}
 }
 
+void Utility::getFileData(tstring filePath, BYTE* data){
+	long fileSize = Utility::getFileSize(filePath);
+	getFileData(filePath, 0, fileSize, data );
+}
+
 void Utility::getFileData(tstring filePath, int startAddr, int length, BYTE* data){
 	int i;
 	FILE* fpSource =  fopen(filePath.c_str(), _T("rb") );

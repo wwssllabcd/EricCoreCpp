@@ -95,6 +95,7 @@ namespace EricCore{
 		static void toFile(const tstring& filePath, BYTE* data, int length, bool isAppend = false);
 		
 
+		static void getFileData(tstring filePath, BYTE* data);
 		static void getFileData(tstring filePath, int startAddr, int length, BYTE* data);
 		static long getFileSize(tstring filePath);
 		static bool isFileExist(const tstring& filePath);
@@ -175,7 +176,6 @@ namespace EricCore{
 		struct GetDataPolicy < std::vector< RT > >	
 		{
 			typedef GDP_TypeTraits<typename RT, RT, typename std::vector<RT>::iterator> GDP_Types;
-
 			typename GDP_Types::ReturnType getFirstItem(typename GDP_Types::CollsIter iter){
 				return (*iter);
 			}
@@ -189,7 +189,6 @@ namespace EricCore{
 		struct GetDataPolicy < std::vector< std::pair<RT, U> > >
 		{
 			typedef GDP_TypeTraits<typename RT, typename std::pair<RT, U>, typename std::vector< std::pair<RT, U> >::iterator > GDP_Types;
-
 			typename GDP_Types::ReturnType getFirstItem(typename GDP_Types::CollsIter iter){
 				return (*iter).first;
 			}
@@ -204,7 +203,6 @@ namespace EricCore{
 		{
 		public:
 			typedef typename GetDataPolicy::GDP_Types::ContentT Coll_ContentType;
-
 			void run(vector< Coll_ContentType >& source, vector< Coll_ContentType >& duplicateColl){
 				GetDataPolicy::GDP_Types::CollsIter  iter;
 				GetDataPolicy::GDP_Types::ReturnType addr=0;
