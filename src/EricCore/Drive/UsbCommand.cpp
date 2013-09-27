@@ -253,6 +253,7 @@ void UsbCommand::read8K(ULONG cycleList, BYTE* buffer) const{
 	cmd.cdb[4] = (BYTE)(cycleList>>16)&0xFF;
 	cmd.cdb[5] = (BYTE)(cycleList>>8)&0xFF;
 	cmd.cdb[6] = (BYTE)cycleList&0xFF;
+	cmd.cdb[7] = (BYTE)cycleList&0xFF;
 
 	status = usbDrive.UDISK_SendCommand(m_dvrHandle, cmd.cdb, buffer, cmd.length,  cmd.direction);
 	if(status == FALSE){
