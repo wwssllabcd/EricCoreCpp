@@ -71,6 +71,7 @@ void UsbCommand::write8K(ULONG cycleList, BYTE* bufData, BYTE* bufExtraByte) con
 	cdb[4]= (BYTE)(cycleList>>16)&0xFF;
 	cdb[5]= (BYTE)(cycleList>>8)&0xFF;
 	cdb[6]= (BYTE)cycleList&0xFF;
+	cdb[7]= (BYTE)cycleList&0xFF;
 
 	BYTE buf[9216];
 	memcpy(buf     ,bufExtraByte,1024);
@@ -646,26 +647,14 @@ void UsbCommand::scanRdy(BYTE* buffer) const {
 	}
 }
 
-void UsbCommand::switchECC(BYTE* buffer) const {
+void UsbCommand::switchECC(BYTE eccMode) const {
 	BOOL status;
 	USBDrive usbDrive;
 	UsbCmdStruct cmd;
-	cmd = cmd.switchECC();
+	BYTE buffer[1];
 
-	status = usbDrive.UDISK_SendCommand(m_dvrHandle, cmd.cdb, buffer, cmd.length,  cmd.direction);
-	if (status == FALSE) {
-		tstring msg = cmd.description + " fail";
-		throw MyException(USBC_VENDOR_CMD_FAIL, msg);
-	}
-}
-
-void UsbCommand::switchECC_40(BYTE* buffer) const {
-	BOOL status;
-	USBDrive usbDrive;
-	UsbCmdStruct cmd;
 	cmd = cmd.switchECC();
-	
-	cmd.cdb[2] = 0x02;//change to 40 bit ecc
+	cmd.cdb[2] = eccMode;//change to 40 bit ecc
 
 	status = usbDrive.UDISK_SendCommand(m_dvrHandle, cmd.cdb, buffer, cmd.length,  cmd.direction);
 	if (status == FALSE) {
