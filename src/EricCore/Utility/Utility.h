@@ -198,18 +198,13 @@ namespace EricCore{
 			}
 		};
 
-		template< typename T, 
-			      typename Policy = GetDataPolicy<T> 
-		>
+		template< typename T, typename Policy = GetDataPolicy<T> >
 		class FindDuplicateItem : public Policy
 		{
 		public:
-			typedef typename GetDataPolicy<T> GDP;
-			typedef typename GDP::Traits::ContentT CT;
-
-			void run(vector< CT >& source, vector< CT >& duplicateColl){
-				GDP::Traits::CollsIter  iter;
-				GDP::Traits::ReturnType addr=0;
+			void run(T& source, T& duplicateColl){
+				Policy::Traits::CollsIter  iter;
+				Policy::Traits::ReturnType addr=0;
 
 				duplicateColl.clear();
 
