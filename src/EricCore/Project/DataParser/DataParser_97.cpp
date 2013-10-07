@@ -4,6 +4,11 @@
 #include <List>
 
 
+
+
+#include "..\..\Utility\FindDuplicateItem.h"
+
+
 using namespace EricCore;
 
 
@@ -518,7 +523,7 @@ tstring DataParser_97::check_duplicateBlock(BYTE* ramC000, BYTE* ramA000){
 		
 	//typedef Utility::GetDataPolicy< vector<BlkNo_And_Addr> > GDP_pair;
 
-	Utility::FindDuplicateItem< vector<BlkNo_And_Addr> > fvpd;
+	FindDuplicateItem< vector<BlkNo_And_Addr> > fvpd;
 	fvpd.run(blockColls, dupColls);
 
 	//vector<int> intBlockColls, intDupColls;

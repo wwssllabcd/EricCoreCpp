@@ -842,19 +842,6 @@ void Utility::stringSplit(vector<tstring>& array, tstring sign, tstring& orgStr)
 }
 
 
-bool Utility::_isHit(ULONG value, BYTE* pMap, size_t mapSize){
-
-	if( value >=mapSize){
-		throw MyException(UTI_PARAM_ERROR, "value>=mapSize"); 
-	}
-
-	bool result = true;
-	if( pMap[ value ] ==0){
-		pMap[ value ] =1;
-		result = false;
-	}
-	return result;
-}
 
 #ifdef _ERIC_WIN_MFC_
 void Utility::getFileColls(tstring strFilePath, vector<tstring>& fileColls){
