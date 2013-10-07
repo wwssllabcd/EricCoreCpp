@@ -160,7 +160,7 @@ namespace EricCore{
 
 		//typedef typename Colls_Iter GDP_Iter; 
 		template< typename Return_Type, typename Content_Type, typename Colls_Iter  > 
-		struct GDP_TypeTraits
+		struct GetDataPolicyTraits
 		{
 			typedef typename Return_Type  ReturnType;
 			typedef typename Content_Type ContentT; 
@@ -175,8 +175,8 @@ namespace EricCore{
 		template< typename RT> 
 		struct GetDataPolicy < std::vector< RT > >	
 		{
-			typedef GDP_TypeTraits<typename RT, RT, typename std::vector<RT>::iterator> GDP_Types;
-			typename GDP_Types::ReturnType getFirstItem(typename GDP_Types::CollsIter iter){
+			typedef GetDataPolicyTraits<typename RT, RT, typename std::vector<RT>::iterator> Traits;
+			typename Traits::ReturnType getItem(typename Traits::CollsIter iter){
 				return (*iter);
 			}
 
@@ -188,8 +188,8 @@ namespace EricCore{
 		template< typename RT, typename U > 
 		struct GetDataPolicy < std::vector< std::pair<RT, U> > >
 		{
-			typedef GDP_TypeTraits<typename RT, typename std::pair<RT, U>, typename std::vector< std::pair<RT, U> >::iterator > GDP_Types;
-			typename GDP_Types::ReturnType getFirstItem(typename GDP_Types::CollsIter iter){
+			typedef GetDataPolicyTraits<typename RT, typename std::pair<RT, U>, typename std::vector< std::pair<RT, U> >::iterator > Traits;
+			typename Traits::ReturnType getItem(typename Traits::CollsIter iter){
 				return (*iter).first;
 			}
 
@@ -198,14 +198,18 @@ namespace EricCore{
 			}
 		};
 
-		template< class GetDataPolicy >
-		class FindDuplicateItem : public GetDataPolicy
+		template< typename T, 
+			      typename Policy = GetDataPolicy<T> 
+		>
+		class FindDuplicateItem : public Policy
 		{
 		public:
-			typedef typename GetDataPolicy::GDP_Types::ContentT Coll_ContentType;
-			void run(vector< Coll_ContentType >& source, vector< Coll_ContentType >& duplicateColl){
-				GetDataPolicy::GDP_Types::CollsIter  iter;
-				GetDataPolicy::GDP_Types::ReturnType addr=0;
+			typedef typename GetDataPolicy<T> GDP;
+			typedef typename GDP::Traits::ContentT CT;
+
+			void run(vector< CT >& source, vector< CT >& duplicateColl){
+				GDP::Traits::CollsIter  iter;
+				GDP::Traits::ReturnType addr=0;
 
 				duplicateColl.clear();
 
@@ -214,7 +218,7 @@ namespace EricCore{
 				BYTE map[MAP_SIZE]={0};
 
 				for(iter = source.begin(); iter!=source.end(); iter++){
-					addr = this->getFirstItem(iter);
+					addr = this->getItem(iter);
 					if( _isHit( addr, map, MAP_SIZE) == true ){
 						duplicateColl.push_back((*iter));
 					}

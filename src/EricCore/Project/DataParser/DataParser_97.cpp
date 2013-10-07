@@ -515,13 +515,14 @@ tstring DataParser_97::check_duplicateBlock(BYTE* ramC000, BYTE* ramA000){
 		}
 	}
 
-	typedef Utility::GetDataPolicy< vector<BlkNo_And_Addr> > FindPairPolicy;
-	Utility::FindDuplicateItem<FindPairPolicy> fvpd;
+		
+	//typedef Utility::GetDataPolicy< vector<BlkNo_And_Addr> > GDP_pair;
+
+	Utility::FindDuplicateItem< vector<BlkNo_And_Addr> > fvpd;
 	fvpd.run(blockColls, dupColls);
 
 	//vector<int> intBlockColls, intDupColls;
-	//typedef Utility::GetDataPolicy< vector<int> > TPP_INT;
-	//Utility::FindDpu<TPP_INT> fvpd_Int;
+	//Utility::FindDuplicateItem< vector<int>, GDP_pair > fvpd_Int;
 	//fvpd_Int.run(intBlockColls, intDupColls);
 	//string bbb = fvpd_Int.show();
 
