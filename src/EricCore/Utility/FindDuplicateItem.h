@@ -1,10 +1,9 @@
 #pragma once
 
-template< typename Return_Type, typename Content_Type, typename Colls_Iter  > 
+template< typename Return_Type, typename Colls_Iter  > 
 struct GetDataPolicyTraits
 {
 	typedef typename Return_Type  ReturnType;
-	typedef typename Content_Type ContentT; 
 	typedef typename Colls_Iter   CollsIter;
 };
 
@@ -15,7 +14,7 @@ struct GetDataPolicy;
 template< typename RT> 
 struct GetDataPolicy < std::vector< RT > >	
 {
-	typedef GetDataPolicyTraits<typename RT, RT, typename std::vector<RT>::iterator> Traits;
+	typedef GetDataPolicyTraits<RT, typename std::vector<RT>::iterator> Traits;
 	typename Traits::ReturnType getItem(typename Traits::CollsIter iter){
 		return (*iter);
 	}
@@ -28,7 +27,7 @@ struct GetDataPolicy < std::vector< RT > >
 template< typename RT, typename U > 
 struct GetDataPolicy < std::vector< std::pair<RT, U> > >
 {
-	typedef GetDataPolicyTraits<typename RT, typename std::pair<RT, U>, typename std::vector< std::pair<RT, U> >::iterator > Traits;
+	typedef GetDataPolicyTraits< RT, typename std::vector< std::pair<RT, U> >::iterator > Traits;
 	typename Traits::ReturnType getItem(typename Traits::CollsIter iter){
 		return (*iter).first;
 	}
