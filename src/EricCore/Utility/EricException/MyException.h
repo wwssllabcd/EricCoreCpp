@@ -6,7 +6,7 @@
 using namespace std;
 
 namespace EricCore{
-	class MyException
+	class MyException : public std::exception
 	{
 	public:
 		MyException(int errorCode, tstring msg);
