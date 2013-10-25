@@ -52,7 +52,7 @@ namespace EricCore{
 		void tabCtrl_init(void);
 		void tabCtrl_addItem(CDialog& dlgPtr, int id, CTabCtrl& mainTabPtr, tstring description);
 
-		static int onDeviceEvent(UINT wParam, DWORD lParam);
+		static int onDeviceEvent(UINT wParam, DWORD_PTR lParam);
 		static int const onDeviceEvent_Arrival;
 		static int const onDeviceEvent_Remove;
 

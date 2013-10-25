@@ -186,7 +186,7 @@ tstring DialogUtility::getFilePathByDialog(const tstring& defaultFileName, const
 }
 
 
-int DialogUtility::onDeviceEvent(UINT wParam, DWORD lParam){
+int DialogUtility::onDeviceEvent(UINT wParam, DWORD_PTR lParam){
 	PDEV_BROADCAST_HDR lpdb = (PDEV_BROADCAST_HDR)lParam;
 	switch (wParam)	{
 		case DBT_DEVICEARRIVAL:

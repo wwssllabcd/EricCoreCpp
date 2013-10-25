@@ -259,7 +259,7 @@ int Utility::getBit(const BYTE& byte,int bitNo){
 
 // output to Text file
 void Utility::toFile(const tstring& filePath, const tstring& msg, bool isAppend){
-	toFile(filePath, (BYTE*)msg.c_str(), msg.length(), isAppend);
+	toFile(filePath, (BYTE*)msg.c_str(), (int)msg.length(), isAppend);
 }
 
 // output Array to Binary file
@@ -730,8 +730,9 @@ void Utility::makeRandomBuffer(BYTE* pBuf, int length)
 	srand(seed);
 
 	ULONG val;
+	
 	for( int i=0; i<length; i++){
-		val     = (ULONG)GetRandom(0, 0xFF) ;
+		val     = static_cast<ULONG>(GetRandom(0, 0xFF)) ;
 		pBuf[i] = (BYTE)val;
 	}
 }

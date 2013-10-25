@@ -453,7 +453,7 @@ DWORD USBDrive::SendAspiCommand(HANDLE drive_handle,BYTE *cdb,BYTE *iobuf,DWORD 
 
 	memset(srb, 0, ASPI_SRB_LEN);
 
-	ULONG ul_handle = (ULONG)drive_handle;
+	ULONG ul_handle = ULONG(drive_handle);
 	srb->SRB_Cmd		= SC_EXEC_SCSI_CMD;
 	srb->SRB_Flags		= flags;
 
