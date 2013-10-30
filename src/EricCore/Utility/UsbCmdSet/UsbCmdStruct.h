@@ -89,4 +89,6 @@ public:
 	//
 	UsbCmdStruct identify3sKey(void);
 
+	UsbCmdStruct read_16k(ULONG cycleList);
+
 };

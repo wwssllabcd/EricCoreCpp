@@ -241,9 +241,6 @@ void UsbCommand::testRam1k(BYTE addr, BYTE* buffer,int inOut, int len) const{
 	}
 }
 
-
-
-
 void UsbCommand::read8K(ULONG cycleList, BYTE* buffer) const{
 	BOOL status;
 	USBDrive usbDrive;
@@ -701,5 +698,23 @@ void UsbCommand::key_read10(ULONG cycleList, WORD secCnt, BYTE* buffer) const{
 	if(status == FALSE){
 		tstring msg = cmd.description + " fail";
 		throw MyException(USBC_SCSI_CMD_FAIL, msg);
+	}
+}
+
+void UsbCommand::read_16K(ULONG cycleList, BYTE* buffer) const{
+	BOOL status;
+	USBDrive usbDrive;
+	UsbCmdStruct cmd;
+	cmd = cmd.read8k();
+	cmd.cdb[3] = (BYTE)(cycleList>>24)&0xFF;
+	cmd.cdb[4] = (BYTE)(cycleList>>16)&0xFF;
+	cmd.cdb[5] = (BYTE)(cycleList>>8)&0xFF;
+	cmd.cdb[6] = (BYTE)cycleList&0xFF;
+	cmd.cdb[7] = (BYTE)cycleList&0xFF;
+
+	status = usbDrive.UDISK_SendCommand(m_dvrHandle, cmd.cdb, buffer, cmd.length,  cmd.direction);
+	if(status == FALSE){
+		tstring msg = cmd.description + " fail";
+		throw MyException(USBC_VENDOR_CMD_FAIL, msg);
 	}
 }

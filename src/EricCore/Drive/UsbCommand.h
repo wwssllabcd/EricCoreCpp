@@ -56,6 +56,11 @@ public:
 	void readRom(BYTE addr, BYTE* buffer) const;
 	void scanRdy(BYTE* buffer) const;
 
+
+	void read_16K(ULONG cycleList, BYTE* buffer) const;
+
+
+
 	//UFI
 	void inquiry(BYTE* buffer) const;
 	void readCapacity(BYTE* buffer) const;

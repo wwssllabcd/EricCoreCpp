@@ -43,6 +43,9 @@ UsbCmdStruct::UsbCmdSet UsbCmdStruct::getAllCommandSet(void){
 	cmdSet.push_back( this->write8k() );
 	cmdSet.push_back( this->read8k() );
 	cmdSet.push_back( this->read8K_withoutECC() );
+	
+	cmdSet.push_back( this->read_16k(0) );
+
 	cmdSet.push_back( this->downLoadISP() );
 	cmdSet.push_back( this->getSN() );
 	cmdSet.push_back( this->setSN() );
@@ -630,3 +633,23 @@ UsbCmdStruct UsbCmdStruct::identify3sKey(void)
 	usbCmdSet.description = "Vendor: identify3sKey";
 	return usbCmdSet;
 }
+
+UsbCmdStruct UsbCmdStruct::read_16k(ULONG cycleList){
+	UsbCmdStruct usbCmdSet;
+
+	usbCmdSet.cdb[0] = OP_3S_VENDOR_CDB;
+	usbCmdSet.cdb[1] = 0x36;
+	usbCmdSet.cdb[2] = 0x01;
+
+	usbCmdSet.cdb[3] = (BYTE)((cycleList >> 0x18) & 0xFF);
+	usbCmdSet.cdb[4] = (BYTE)((cycleList >> 0x10) & 0xFF);
+	usbCmdSet.cdb[5] = (BYTE)((cycleList >> 0x08) & 0xFF);
+	usbCmdSet.cdb[6] = (BYTE)((cycleList >> 0x00) & 0xFF);
+
+	usbCmdSet.length = 17*1024;
+	usbCmdSet.direction = FLAG_DATA_IN;
+	usbCmdSet.description = "Vendor: read_16k";
+
+	return usbCmdSet;
+}
+
