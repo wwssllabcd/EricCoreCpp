@@ -29,9 +29,11 @@ void DialogUtility::setDialogPoint(CDialog* dialogObject){
 	m_pDialog = dialogObject;
 }
 
+CWnd* DialogUtility::getDlgItem(int Id){
+	return m_pDialog->GetDlgItem(Id);
+}
 
 ULONG DialogUtility::getCEditTextToInt(int Id){
-	
 	return Utility::toInt( this->getCEditText(Id) );
 }
 

@@ -15,6 +15,8 @@ namespace EricCore{
 		~DialogUtility(void);
 
 		void setDialogPoint(CDialog* dialogObject);
+		CWnd* getDlgItem(int Id);
+
 
 		tstring getCEditText(int Id);
 		tstring getComboBoxText(int Id);
@@ -46,7 +48,6 @@ namespace EricCore{
 		void setComboBox_addString(int comboBoxId, const tstring& item);
 		int getComboBoxSel(int id);
 
-
 		// TabCtrl 
 		void tabCtrl_moveLocation(CTabCtrl* mainTabPtr, CDialog* targetDialog);
 		void tabCtrl_init(void);
@@ -70,10 +71,5 @@ namespace EricCore{
 
 		CDialog* m_pDialog;
 		static vector< pair<int, CFont*> > m_ItemFontColl;
-
-
-
 	};
-
-
 }
