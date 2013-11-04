@@ -66,8 +66,8 @@ void BootSec::toArray(BYTE* ary64){
 
 	ary64[bootAddr+0x07] = this->regWordModeCtrl;
 
-	Utility::ulongToArray( this->bootBlock,        &ary64[bootAddr+8] );
-	Utility::ulongToArray( this->bootBlock_Backup, &ary64[bootAddr+12] );
+	Utility::toArray( this->bootBlock,        &ary64[bootAddr+8] );
+	Utility::toArray( this->bootBlock_Backup, &ary64[bootAddr+12] );
 
 	ary64[bootAddr+16] = this->ispABSstartPage;
 

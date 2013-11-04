@@ -373,10 +373,10 @@ tstring Utility::CrLf(){
 	return _T("\r\n");
 }
 
-void Utility::toArray(const WORD& value, BYTE* array,bool isHighFirst){
-	BYTE h = static_cast<BYTE>( (value>>8)&0xFF );
-	BYTE l = static_cast<BYTE>(value&0xFF) ;
-	if(isHighFirst == true){
+void Utility::toArray(const WORD& source, BYTE* array,bool isMSB){
+	BYTE h = static_cast<BYTE>( (source>>8)&0xFF );
+	BYTE l = static_cast<BYTE>(source&0xFF) ;
+	if(isMSB == true){
 		array[0] = h;
 		array[1] = l;
 	}else{
@@ -385,17 +385,17 @@ void Utility::toArray(const WORD& value, BYTE* array,bool isHighFirst){
 	}
 }
 
-void Utility::toArray(const ULONG& value, BYTE* array,bool isHighFirst){
-	if(isHighFirst == true){
-		array[0] = static_cast<BYTE>((value>>24)&0xFF);
-		array[1] = static_cast<BYTE>((value>>16)&0xFF);
-		array[2] = static_cast<BYTE>((value>>8)&0xFF);
-		array[3] = static_cast<BYTE>((value    )&0xFF);
+void Utility::toArray(const ULONG& source, BYTE* array,bool isMSB){
+	if(isMSB == true){
+		array[0] = static_cast<BYTE>((source>>24)&0xFF);
+		array[1] = static_cast<BYTE>((source>>16)&0xFF);
+		array[2] = static_cast<BYTE>((source>>8)&0xFF);
+		array[3] = static_cast<BYTE>((source    )&0xFF);
 	}else{
-		array[3] = static_cast<BYTE>((value>>24)&0xFF);
-		array[2] = static_cast<BYTE>((value>>16)&0xFF);
-		array[1] = static_cast<BYTE>((value>>8)&0xFF);
-		array[0] = static_cast<BYTE>((value    )&0xFF);
+		array[3] = static_cast<BYTE>((source>>24)&0xFF);
+		array[2] = static_cast<BYTE>((source>>16)&0xFF);
+		array[1] = static_cast<BYTE>((source>>8)&0xFF);
+		array[0] = static_cast<BYTE>((source    )&0xFF);
 	}
 }
 
@@ -411,77 +411,11 @@ void Utility::toArray(const tstring str, BYTE* ary, int length, BYTE stuffAsciiN
 	}
 }
 
-
 void Utility::toArray(const tstring str, WORD* ary, int length, BYTE stuffAsciiNum){
 	BYTE* ptr= toBytePtr(ary);
 	toArray(str, ptr, length, stuffAsciiNum);
 	highLowByteChange(ptr,length);
 }
-
-
-//tstring Utility::makeHexTable(BYTE* array,int secCnt){
-//	tstring msg;
-//	int i;
-//	for(i=0; i<secCnt; i++){
-//		msg+= makeHexTable(array+i*512);
-//		if( (secCnt-1) !=i ){
-//			msg+= CrLf();
-//		}
-//	}
-//	return msg;
-//}
-//
-//tstring Utility::makeHexTable(WORD* array,int secCnt){
-//	tstring msg;
-//	int i;
-//	for(i=0; i<secCnt; i++){
-//		msg+= makeHexTable(array+i*256);
-//		msg+= CrLf();
-//	}
-//	return msg;
-//}
-
-
-//tstring Utility::makeHexTable(BYTE* ary){
-//	tstring head,msg;
-//	head += _T("00 | 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F ") + Utility::CrLf();
-//	head += _T("== | ============================") + Utility::CrLf();
-//	msg += head;
-//	for(int i=0; i<32; i++){
-//		tstring row;
-//		row = Utility::strFormat(_T("%02X"), i);
-//		msg +=  row;
-//		msg += _T(" | ");
-//		for(int j=0; j<16; j++){
-//			msg+=Utility::toHexString( ary[i*16+j] );
-//			msg+= _T(" ");
-//		}
-//		msg+= Utility::CrLf();
-//	}
-//	return msg;
-//}
-//
-//tstring Utility::makeHexTable(WORD* ary){
-//	tstring head, msg;
-//	head += _T("0000 | 0000 0001 0002 0003 0004 0005 0006 0007 0008 0009 000A 000B 000C 000D 000E 000F") + Utility::CrLf();
-//	head += _T("==== | ===================================================================") + Utility::CrLf();
-//	msg += head;
-//
-//	for(int i=0; i<16; i++){
-//		tstring row = Utility::strFormat(_T("%04X"), i);
-//		msg +=  row;
-//		msg += _T(" | ");
-//		for(int j=0; j<16; j++){
-//			msg+=Utility::toHexString(ary[i*16+j]);
-//			msg+=_T(" ");
-//		}
-//		msg+= Utility::CrLf();
-//	}
-//	return msg;
-//}
-
-
-
 
 tstring Utility::makeAsciiTable(BYTE* ary, int length){
 	tstring msg;
@@ -587,20 +521,6 @@ int Utility::ceil(int dividend, int divisor){
 	return result;
 }
 
-void Utility::ulongToArray(ULONG source, BYTE* array){
-	array[0] = (BYTE)((source>>24)&0xFF);
-	array[1] = (BYTE)((source>>16)&0xFF);
-	array[2] = (BYTE)((source>>8 )&0xFF);
-	array[3] = (BYTE)((source    )&0xFF);
-}
-
-void Utility::wordToArray_MSB(WORD val, BYTE* array){
-
-	array[0] = (BYTE)((val>>8 )&0xFF);
-	array[1] = (BYTE)((val    )&0xFF);
-}
-
-
 void Utility::makeBuf(ULONG number, int length, BYTE* buf){
 	BYTE lbaAddr0,lbaAddr1,lbaAddr2,lbaAddr3;
 	lbaAddr0= (BYTE)((number>>24)&0xFF);
@@ -679,7 +599,6 @@ WORD Utility::arrayToWord(BYTE* ary){
 	value |= ary[1];
 	return value;
 }
-
 
 
 

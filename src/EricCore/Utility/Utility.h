@@ -62,8 +62,8 @@ namespace EricCore{
 		static ULONG hexStringToULONG(tstring& hex);
 		static bool toBool(int intValue);
 
-		static void toArray(const WORD& value, BYTE* array,bool isHighFirst = true);
-		static void toArray(const ULONG& value, BYTE* array,bool isHighFirst = true);
+		static void toArray(const WORD& source, BYTE* array,bool isMSB = true);
+		static void toArray(const ULONG& source, BYTE* array,bool isMSB = true);
 		static void toArray(const tstring str, BYTE* ary, int length, BYTE stuffAsciiNum = 0x20);
 		static void toArray(const tstring str, WORD* ary, int length, BYTE stuffAsciiNum = 0x20);
 
@@ -110,9 +110,6 @@ namespace EricCore{
 		static int ceil(int dividend, int divisor);
 
 		static void sourceDataToTarget(FILE* source, FILE* target, int length);
-
-		static void ulongToArray(ULONG source, BYTE* array);
-		static void wordToArray_MSB(WORD val, BYTE* array);
 		static void swap(BYTE* a, BYTE* b);
 
 		static void makeBuf(ULONG number, int length, BYTE* buf);
