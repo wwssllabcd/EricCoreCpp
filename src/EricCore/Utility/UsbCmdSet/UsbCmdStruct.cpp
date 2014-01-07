@@ -98,6 +98,13 @@ UsbCmdStruct::UsbCmdSet UsbCmdStruct::getAllCommandSet(void){
 
 	cmdSet.push_back( this->getFuture_TSB() );
 	cmdSet.push_back( this->setFuture_TSB() );
+
+	cmdSet.push_back( this->toggleEnable() );
+	cmdSet.push_back( this->toggleDisable() );
+
+	
+
+
 	return cmdSet;
 }
 
@@ -693,5 +700,30 @@ UsbCmdStruct UsbCmdStruct::setFuture_TSB(){
 
 	return usbCmdSet;
 }
+
+UsbCmdStruct UsbCmdStruct::toggleEnable(){
+	UsbCmdStruct usbCmdSet;
+
+	usbCmdSet.cdb[0] = OP_3S_VENDOR_CDB;
+	usbCmdSet.cdb[1] = 0x0B;
+	usbCmdSet.length = 0;
+	usbCmdSet.direction = FLAG_DATA_IN;
+	usbCmdSet.description = "Vendor: Toggle Enable";
+
+	return usbCmdSet;
+}
+
+UsbCmdStruct UsbCmdStruct::toggleDisable(){
+	UsbCmdStruct usbCmdSet;
+
+	usbCmdSet.cdb[0] = OP_3S_VENDOR_CDB;
+	usbCmdSet.cdb[1] = 0x0C;
+	usbCmdSet.length = 0;
+	usbCmdSet.direction = FLAG_DATA_IN;
+	usbCmdSet.description = "Vendor: Toggle Disable";
+
+	return usbCmdSet;
+}
+
 
 

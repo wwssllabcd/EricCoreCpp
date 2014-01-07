@@ -95,6 +95,6 @@ public:
 
 	UsbCmdStruct read_16k(ULONG cycleList);
 
-	
-
+	UsbCmdStruct toggleEnable();
+	UsbCmdStruct toggleDisable();
 };
