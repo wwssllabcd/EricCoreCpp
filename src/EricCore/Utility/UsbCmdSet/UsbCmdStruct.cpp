@@ -95,6 +95,9 @@ UsbCmdStruct::UsbCmdSet UsbCmdStruct::getAllCommandSet(void){
 	cmdSet.push_back( this->switchECC() );
 
 	cmdSet.push_back( this->testFPGA() );
+
+	cmdSet.push_back( this->getFuture_TSB() );
+	cmdSet.push_back( this->setFuture_TSB() );
 	return cmdSet;
 }
 
@@ -652,4 +655,43 @@ UsbCmdStruct UsbCmdStruct::read_16k(ULONG cycleList){
 
 	return usbCmdSet;
 }
+
+
+UsbCmdStruct UsbCmdStruct::getFuture_TSB(){
+	UsbCmdStruct usbCmdSet;
+
+	usbCmdSet.cdb[0] = OP_3S_VENDOR_CDB;
+	usbCmdSet.cdb[1] = 0xEE;
+	usbCmdSet.cdb[2] = 0x00;
+
+	usbCmdSet.cdb[3] = 0;
+	usbCmdSet.cdb[4] = 0xEE;
+	usbCmdSet.cdb[5] = 0x80;
+	usbCmdSet.cdb[6] = 0;
+
+	usbCmdSet.length = 512;
+	usbCmdSet.direction = FLAG_DATA_IN;
+	usbCmdSet.description = "Vendor: GetFuture_TSB";
+
+	return usbCmdSet;
+}
+
+UsbCmdStruct UsbCmdStruct::setFuture_TSB(){
+	UsbCmdStruct usbCmdSet;
+
+	usbCmdSet.cdb[0] = OP_3S_VENDOR_CDB;
+	usbCmdSet.cdb[1] = 0xEF;
+	usbCmdSet.cdb[2] = 0x00;
+
+	usbCmdSet.cdb[3] = 0;
+	usbCmdSet.cdb[4] = 0xEF;
+	usbCmdSet.cdb[5] = 0x80;
+
+	usbCmdSet.length = 0;
+	usbCmdSet.direction = FLAG_DATA_IN;
+	usbCmdSet.description = "Vendor: SetFuture_TSB";
+
+	return usbCmdSet;
+}
+
 

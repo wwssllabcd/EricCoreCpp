@@ -80,6 +80,10 @@ public:
 	UsbCmdStruct SetFeature_IM(void);
 	UsbCmdStruct GetFeature_IM(void);
 
+	UsbCmdStruct getFuture_TSB();
+	UsbCmdStruct setFuture_TSB();
+
+
 	UsbCmdStruct switchECC(void);
 
 	UsbCmdStruct testFPGA(void);
@@ -90,5 +94,7 @@ public:
 	UsbCmdStruct identify3sKey(void);
 
 	UsbCmdStruct read_16k(ULONG cycleList);
+
+	
 
 };
