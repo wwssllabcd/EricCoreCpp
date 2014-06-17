@@ -198,7 +198,7 @@ DWORD USBDrive::UDISK_InitializeSpti()
 	CHAR 	string[25];
 	HANDLE	drive_handle;
 
-	strcpy(string, "\\\\.\\C:");
+	STRCPY(string, "\\\\.\\C:");
 	drive_handle = CreateFile( string,
 							   GENERIC_WRITE | GENERIC_READ,
 							   FILE_SHARE_READ | FILE_SHARE_WRITE,

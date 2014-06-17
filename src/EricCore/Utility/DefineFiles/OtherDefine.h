@@ -33,6 +33,13 @@ typedef const char*    LPCTSTR;
 #endif
 
 
+#ifdef _VC2008
+	#define  FOPEN fopen_s
+	#define  STRCPY strcpy_s
+#else
+	#define  FOPEN fopen
+	#define  STRCPY strcpy
+#endif
 
 
 #define BIT0                    		0x01
