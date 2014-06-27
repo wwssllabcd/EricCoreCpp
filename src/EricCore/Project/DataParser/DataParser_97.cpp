@@ -316,12 +316,12 @@ tstring DataParser_97::makeC000_info(BYTE* ram9000, BYTE* ramA000, BYTE* ramB000
 
 		msg+= Utility::CrLf();
 
-		if( dblockAddr !=0xFFFF ){
-			if( dblockAddr>=0xC000){
-				temp = Utility::strFormat("wc(%d)D-Block=", wcNo) ;
-				dBlockMsg += temp + Utility::arrayToHexString(ramC000 + (dblockAddr&0x0FFF), 0x10) + Utility::CrLf();
-			}
-		}
+		//if( dblockAddr !=0xFFFF ){
+		//	if( dblockAddr>=0xC000){
+		//		temp = Utility::strFormat("wc(%d)D-Block=", wcNo) ;
+		//		dBlockMsg += temp + Utility::arrayToHexString(ramC000 + (dblockAddr&0x0FFF), 0x10) + Utility::CrLf();
+		//	}
+		//}
 	}
 
 	msg += dBlockMsg + Utility::CrLf();
@@ -338,6 +338,14 @@ tstring DataParser_97::makeC000_info(BYTE* ram9000, BYTE* ramA000, BYTE* ramB000
 	msg+="Curr WI-BlockNo  = " + Utility::toHexString( wiBlkNo ) + Utility::CrLf();
 	msg+="WI-BlockPageEnd  = " + Utility::toHexString( ramC000[0xDD2] ) + Utility::CrLf();
 
+	msg+= Utility::CrLf() + "==== WI Table(0xCE00, 3s Struct) ====" + Utility::CrLf();
+	for(int wiNo=0; wiNo<7; wiNo++){
+		temp = Utility::strFormat("(%d)", wiNo) ;
+		msg+= temp ;
+		msg+= "WI = " + Utility::arrayToHexString(ramC000+0xE00+wiNo*0x10, 0x10) + Utility::CrLf();
+	}
+
+
 	msg += Utility::CrLf() + "==== Other(0xCDC0)  ====" + Utility::CrLf();
 	offset = 0xDC0;
 	msg += "x_spare_block_number = " + Utility::toHexString( ramC000[offset] ) + Utility::CrLf();
@@ -348,14 +356,11 @@ tstring DataParser_97::makeC000_info(BYTE* ram9000, BYTE* ramA000, BYTE* ramB000
 	msg += "x_min_age_MLC_spare = " + Utility::toHexString( ramC000[offset+4] ) + Utility::CrLf();
 	msg += "x_max_age_MLC_spare = " + Utility::toHexString( ramC000[offset+5] ) + Utility::CrLf();
 	msg += "x_total_W = " + Utility::toHexString( ramC000[offset+6] ) + Utility::CrLf();
+	msg += "x_total_W = " + Utility::toHexString( ramC000[offset+6] ) + Utility::CrLf();
+	msg += "L1's Ring Cnt  = " + Utility::toHexString( ramC000[offset+0x20] ) + Utility::CrLf();
 
 
-	msg+= Utility::CrLf() + "==== WI Table(0xCE00, 3s Struct) ====" + Utility::CrLf();
-	for(int wiNo=0; wiNo<7; wiNo++){
-		temp = Utility::strFormat("(%d)", wiNo) ;
-		msg+= temp ;
-		msg+= "WI = " + Utility::arrayToHexString(ramC000+0xE00+wiNo*0x10, 0x10) + Utility::CrLf();
-	}
+	
 
 	msg += Utility::CrLf() + "==== WI Used Table (0xCDF0) ====" + Utility::CrLf();
 	msg += Utility::makeHexTable(0x10, ramC000+0xDF0);
