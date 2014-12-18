@@ -19,6 +19,17 @@ SortParser::~SortParser(void)
 {
 }
 
+string SortParser::parsertSortDebugMsg(BYTE* buffer)
+{
+	string res;
+	SortBase sb;
+	if( sb.checkSignature_98_debugMsg(buffer) == false ){
+		return "";
+	}
+
+	return res;
+}
+
 string SortParser::parsertSortTable(BYTE* buffer)
 {
 	string res;

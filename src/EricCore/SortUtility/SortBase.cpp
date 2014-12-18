@@ -259,6 +259,16 @@ bool SortBase::checkSignature_98(BYTE* ary){
 	}
 }
 
+bool SortBase::checkSignature_98_debugMsg(BYTE* ary){
+	BYTE sig[16]={'3', 'S', ' ', '2', '0', '9', '8', ' ', 'D', 'E', 'B', 'U', 'G', 'M', 'S', 'G'};
+	int result = memcmp(ary, sig, 16);
+	if(result!=0){
+		return false;
+	}else{
+		return true;
+	}
+}
+
 
 
 bool SortBase::searchBootBlk(const UsbCommand& usbCmd, ULONG& bootblk, BYTE maxSLCpage)

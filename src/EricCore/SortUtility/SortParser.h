@@ -12,6 +12,7 @@ namespace EricCore{
 		~SortParser(void);
 
 		string parsertSortTable(BYTE* buffer);
+		string parsertSortDebugMsg(BYTE* buffer);
 
 	};
 

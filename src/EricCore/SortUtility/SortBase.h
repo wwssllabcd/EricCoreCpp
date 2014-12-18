@@ -17,6 +17,7 @@ public:
 	bool checkRepeat64(BYTE* ary);
 	bool checkSignature(BYTE* ary);
 	bool checkSignature_98(BYTE* ary);
+	bool checkSignature_98_debugMsg(BYTE* ary);
 	
 
 	ULONG sortTbAddr;
