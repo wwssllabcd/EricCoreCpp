@@ -48,11 +48,11 @@ string SortParser::parsertSortDebugMsg(BYTE* buffer)
 		BYTE err_state_3 = (buffer[offset+7]>>0)&0x03;
 
 		res += "("+ Utility::toHexString(i, "%03X") + ")" 
-			+ "P=" + Utility::toHexString(loop_i) + ",CE=" + Utility::toHexString(tmp&0x0F,"%02X") 
+			+ "Pattern=" + Utility::toHexString(loop_i) + ",CE=" + Utility::toHexString(tmp&0x0F,"%02X") 
 			+ ", Addr = " + Utility::toHexString(addr, "%08X") 
-			+ ", E_Bit = " + Utility::toHexString(buffer[offset+6]) 
-			+ ", E_S = " + Utility::toHexString(err_state_0) + "," + Utility::toHexString(err_state_1) + "," + Utility::toHexString(err_state_2) + "," + Utility::toHexString(err_state_3)
-			+ ", E_BitCnt = " + Utility::toHexString(buffer[offset+8]) + "," + Utility::toHexString(buffer[offset+9]) + "," + Utility::toHexString(buffer[offset+0x0A]) + "," + Utility::toHexString(buffer[offset+0x0B])
+			+ ", Err_Bit = " + Utility::toHexString(buffer[offset+6]) 
+			+ ", ECC_Sts = " + Utility::toHexString(err_state_0) + "," + Utility::toHexString(err_state_1) + "," + Utility::toHexString(err_state_2) + "," + Utility::toHexString(err_state_3)
+			+ ", ECC_BitCnt = " + Utility::toHexString(buffer[offset+8]) + "," + Utility::toHexString(buffer[offset+9]) + "," + Utility::toHexString(buffer[offset+0x0A]) + "," + Utility::toHexString(buffer[offset+0x0B])
 			+ Utility::CrLf();
 	}
 	return res;
