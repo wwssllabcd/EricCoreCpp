@@ -27,6 +27,34 @@ string SortParser::parsertSortDebugMsg(BYTE* buffer)
 		return "";
 	}
 
+	res += "=== Fast Test ===" + Utility::CrLf();
+
+	for( int i=1; i<0x200; i++){
+
+		ULONG offset = i*0x10;
+		BYTE tmp = buffer[offset];
+
+		if(tmp == 0xFF){
+			continue;
+		}
+
+		BYTE loop_i = tmp >>4;
+		ULONG addr = Utility::arrayToUlong(buffer+offset);
+		addr &= 0x0FFFFFFF;
+
+		BYTE err_state_0 = (buffer[offset+7]>>6)&0x03;
+		BYTE err_state_1 = (buffer[offset+7]>>4)&0x03;
+		BYTE err_state_2 = (buffer[offset+7]>>2)&0x03;
+		BYTE err_state_3 = (buffer[offset+7]>>0)&0x03;
+
+		res += "("+ Utility::toHexString(i, "%03X") + ")" 
+			+ "P=" + Utility::toHexString(loop_i) + ",CE=" + Utility::toHexString(tmp&0x0F,"%02X") 
+			+ ", Addr = " + Utility::toHexString(addr, "%08X") 
+			+ ", E_Bit = " + Utility::toHexString(buffer[offset+6]) 
+			+ ", E_S = " + Utility::toHexString(err_state_0) + "," + Utility::toHexString(err_state_1) + "," + Utility::toHexString(err_state_2) + "," + Utility::toHexString(err_state_3)
+			+ ", E_BitCnt = " + Utility::toHexString(buffer[offset+8]) + "," + Utility::toHexString(buffer[offset+9]) + "," + Utility::toHexString(buffer[offset+0x0A]) + "," + Utility::toHexString(buffer[offset+0x0B])
+			+ Utility::CrLf();
+	}
 	return res;
 }
 
