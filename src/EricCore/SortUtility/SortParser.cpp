@@ -48,14 +48,45 @@ string SortParser::parsertSortDebugMsg(BYTE* buffer)
 		BYTE err_state_3 = (buffer[offset+7]>>0)&0x03;
 
 		res += "("+ Utility::toHexString(i, "%03X") + ")" 
-			+ "Pattern=" + Utility::toHexString(loop_i) + ",CE=" + Utility::toHexString(tmp&0x0F,"%02X") 
+			+ "Ptn=" + Utility::toHexString(loop_i) + ",CE=" + Utility::toHexString(tmp&0x0F,"%02X") 
 			+ ", Addr = " + Utility::toHexString(addr, "%08X") 
 			+ ", Err_Bit = " + Utility::toHexString(buffer[offset+6]) 
 			+ ", ECC_Sts = " + Utility::toHexString(err_state_0) + "," + Utility::toHexString(err_state_1) + "," + Utility::toHexString(err_state_2) + "," + Utility::toHexString(err_state_3)
 			+ ", ECC_BitCnt = " + Utility::toHexString(buffer[offset+8]) + "," + Utility::toHexString(buffer[offset+9]) + "," + Utility::toHexString(buffer[offset+0x0A]) + "," + Utility::toHexString(buffer[offset+0x0B])
 			+ Utility::CrLf();
 	}
+
+	res+=Utility::CrLf();
 	return res;
+}
+
+string SortParser::getSortingToolInfo(BYTE* buffer)
+{
+	string res;
+	BYTE sortTool = buffer[0x10 + 14];
+	string strSTool;
+	if( sortTool == 0x04){
+		strSTool = "4 Port";
+	}
+	if( sortTool == 0x16){
+		strSTool = "16 Port";
+	}
+	return strSTool;
+}
+
+void SortParser::getBadBlock(vector<ULONG>& badBlock, BYTE* buffer )
+{
+	ULONG bb_addr;
+	for( int i =0x800; i<0xB30; i++){
+		BYTE tmp = buffer[i];
+		for(int j=0; j<8; j++){
+			if( (tmp&BIT0) == 0){
+				bb_addr =  (i-0x800)*8 + j;
+				badBlock.push_back(bb_addr);
+			}
+			tmp = tmp>>1;
+		}
+	}
 }
 
 string SortParser::parsertSortTable(BYTE* buffer)
@@ -67,33 +98,37 @@ string SortParser::parsertSortTable(BYTE* buffer)
 		return "";
 	}
 
+	res += "=== 3S 2098 SORTING === " + Utility::CrLf() ;
+	WORD totalGoodCnt = Utility::arrayToWord( buffer+0x10);
+	WORD totalbadCnt = Utility::arrayToWord( buffer+0x1C);
 
-	res += "Total Good Block Cnt = 0x" + Utility::arrayToHexString( buffer+0x10, 2, "") + Utility::CrLf();
-	res += "FW version  = 0x" + Utility::arrayToHexString( buffer+0x12, 1, "") + Utility::CrLf();
+	res += "Total Good Block Cnt = 0x" + Utility::toHexString(totalGoodCnt) + "(" + Utility::toString(totalGoodCnt) + ")" + Utility::CrLf() ;
+	res += "Total Bad  Block Cnt = 0x" + Utility::toHexString(totalbadCnt) + "(" + Utility::toString(totalbadCnt) + ")" + Utility::CrLf() ;
+
+	res += "FW version = 0x" + Utility::arrayToHexString( buffer+0x12, 1, "") + Utility::CrLf();
 	res += "Bin Grade = 0x" + Utility::arrayToHexString( buffer+0x13, 1, "") + Utility::CrLf();
-	res += "Sorting Board Sig = 0x" + Utility::arrayToHexString( buffer+0x10 + 14, 1, "") + Utility::CrLf();
-	int bb_cnt = 0;
+	res += "Sorting Tool = " + getSortingToolInfo(buffer) + Utility::CrLf();
 
-	res += "===== Bad Block ====="  + Utility::CrLf();
-	for( int i =0x800; i<0xB30; i++){
-		BYTE tmp = buffer[i];
-
-		for(int j=0; j<8; j++){
-			if( (tmp&BIT0) == 0){
-				int bb_addr =  (i-0x800)*8 + j;
-				res += "bad Block = 0x" +  Utility::toHexString(bb_addr) + Utility::CrLf();
-				bb_cnt++;
-			}
-			tmp = tmp>>1;
-		}
-	}
-	res += "Bad Block Cnt = 0x" + Utility::toHexString(bb_cnt) + Utility::CrLf();
-
+	res +=  Utility::CrLf();
 	res += "===== Sort Param ====="  + Utility::CrLf();
-
 	res += "Test Param = 0x" + Utility::toHexString( buffer[0xB40 + 4]) + Utility::CrLf();
+	res += Utility::CrLf();
 
-	
+	vector<ULONG> badBlock;
+	getBadBlock(badBlock, buffer);
+	res += "===== Bad Block cnt = 0x" + Utility::toHexString( (ULONG)badBlock.size()) + Utility::CrLf();
+
+	for(int i=0; i<badBlock.size(); i++){
+				
+		int offset = 0x800 + badBlock[i]/8;
+		int bit = badBlock[i]%8;
+
+		res += "BadBlk = 0x" + Utility::toHexString( badBlock[i] ) 
+			+ ", offset = 0x" + Utility::toHexString(offset ) 
+			+ ", BIT = " + Utility::toHexString(bit ) 
+
+			+ Utility::CrLf();
+	}
 
 	return res;
 }
