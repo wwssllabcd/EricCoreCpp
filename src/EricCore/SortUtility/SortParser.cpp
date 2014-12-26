@@ -111,7 +111,7 @@ string SortParser::parsertSortTable(BYTE* buffer)
 
 	res +=  Utility::CrLf();
 	res += "===== Sort Param ====="  + Utility::CrLf();
-	res += "Test Param = 0x" + Utility::toHexString( buffer[0xB40 + 4]) + Utility::CrLf();
+	res += "TestFlag = 0x" + Utility::toHexString( buffer[0xB40 + 4]) + Utility::CrLf();
 	res += Utility::CrLf();
 
 	vector<ULONG> badBlock;
