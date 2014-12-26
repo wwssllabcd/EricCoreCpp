@@ -31,13 +31,12 @@ BOOL CEdit_eric::PreTranslateMessage(MSG* pMsg)
 	if(pMsg->message == WM_KEYDOWN)
 	{
 		BOOL b = GetKeyState(VK_CONTROL) & 0x80;
-
-		if(b && (LOWORD(pMsg->wParam) =='a'))
-		{
-			SetSel(0,-1);
-			return TRUE;
+		if( b ){
+			if(LOWORD(pMsg->wParam) =='A'){	
+				SetSel(0,-1);
+				return TRUE;
+			}
 		}
-
 	}
 	return CEdit::PreTranslateMessage(pMsg);
 }
