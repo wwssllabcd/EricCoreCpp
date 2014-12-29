@@ -1,15 +1,12 @@
 #include "StdAfx.h"
 #include ".\sortparser.h"
-
-
 #include ".\sortbase.h"
+
 #include "EricCore\Utility\Utility.h"
 
 
 using namespace EricCore;
 using namespace std;
-
-
 
 SortParser::SortParser(void)
 {
@@ -27,8 +24,10 @@ string SortParser::parsertSortDebugMsg(BYTE* buffer)
 		return "";
 	}
 
-	res += "=== Fast Test ===" + Utility::CrLf();
+	//res += "=== Fast Test ===" + Utility::CrLf();
 
+	vector< pair<BYTE, string> > debugInfos;
+	
 	for( int i=1; i<0x200; i++){
 
 		ULONG offset = i*0x10;
@@ -38,24 +37,58 @@ string SortParser::parsertSortDebugMsg(BYTE* buffer)
 			continue;
 		}
 
+		 pair<BYTE, string> info;
+
 		BYTE loop_i = tmp >>4;
 		ULONG addr = Utility::arrayToUlong(buffer+offset);
 		addr &= 0x0FFFFFFF;
+
+		BYTE ceNo = tmp&0x0F;
+		info.first = ceNo;
 
 		BYTE err_state_0 = (buffer[offset+7]>>6)&0x03;
 		BYTE err_state_1 = (buffer[offset+7]>>4)&0x03;
 		BYTE err_state_2 = (buffer[offset+7]>>2)&0x03;
 		BYTE err_state_3 = (buffer[offset+7]>>0)&0x03;
 
-		res += "("+ Utility::toHexString(i, "%03X") + ")" 
-			+ "Ptn=" + Utility::toHexString(loop_i) + ",CE=" + Utility::toHexString(tmp&0x0F,"%02X") 
+		info.second += "("+ Utility::toHexString(i, "%03X") + ")" 
+			+ "CE=" + Utility::toHexString(ceNo,"%02X") + ", Ptn=" + Utility::toHexString(loop_i) 
 			+ ", Addr = " + Utility::toHexString(addr, "%08X") 
 			+ ", Err_Bit = " + Utility::toHexString(buffer[offset+6]) 
 			+ ", ECC_Sts = " + Utility::toHexString(err_state_0) + "," + Utility::toHexString(err_state_1) + "," + Utility::toHexString(err_state_2) + "," + Utility::toHexString(err_state_3)
+			+ ", Fail 4k No= " + Utility::toHexString(buffer[offset+5]) 
 			+ ", ECC_BitCnt = " + Utility::toHexString(buffer[offset+8]) + "," + Utility::toHexString(buffer[offset+9]) + "," + Utility::toHexString(buffer[offset+0x0A]) + "," + Utility::toHexString(buffer[offset+0x0B])
 			+ Utility::CrLf();
+
+		debugInfos.push_back(info);
 	}
 
+	string res_0, res_1, res_2, res_3;
+	for(int i=0; i<debugInfos.size(); i++){
+		 pair<BYTE, string> info = debugInfos[i];
+		 
+		 switch(info.first)
+		 {
+		 case 0:
+			 res_0+=info.second;
+			 continue;
+		 case 1:
+			 res_1+=info.second;
+			 continue;
+		 case 2:
+			 res_2+=info.second;
+			 continue;
+		 case 3:
+			 res_3+=info.second;
+			 continue;
+		 default:
+			 res+=info.second;
+			 continue;
+			
+		 }
+	}
+
+	res = res + res_0 + res_1 + res_2 + res_3;
 	res+=Utility::CrLf();
 	return res;
 }
