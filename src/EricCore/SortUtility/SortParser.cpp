@@ -64,7 +64,7 @@ string SortParser::parsertSortDebugMsg(BYTE* buffer)
 	}
 
 	string res_0, res_1, res_2, res_3;
-	for(int i=0; i<debugInfos.size(); i++){
+	for(size_t i=0; i<debugInfos.size(); i++){
 		 pair<BYTE, string> info = debugInfos[i];
 		 
 		 switch(info.first)
@@ -151,7 +151,7 @@ string SortParser::parsertSortTable(BYTE* buffer)
 	getBadBlock(badBlock, buffer);
 	res += "===== Bad Block cnt = 0x" + Utility::toHexString( (ULONG)badBlock.size()) + Utility::CrLf();
 
-	for(int i=0; i<badBlock.size(); i++){
+	for(size_t i=0; i<badBlock.size(); i++){
 				
 		int offset = 0x800 + badBlock[i]/8;
 		int bit = badBlock[i]%8;
