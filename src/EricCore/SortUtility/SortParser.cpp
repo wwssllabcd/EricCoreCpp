@@ -28,7 +28,7 @@ string SortParser::parsertSortDebugMsg(BYTE* buffer)
 
 	vector< pair<BYTE, string> > debugInfos;
 	
-	for( int i=1; i<0x200; i++){
+	for( int i=1; i<0x1fa; i++){
 
 		ULONG offset = i*0x10;
 		BYTE tmp = buffer[offset];
