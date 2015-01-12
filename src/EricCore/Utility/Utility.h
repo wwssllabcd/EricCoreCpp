@@ -95,6 +95,7 @@ namespace EricCore{
 		static void toFile(const tstring& filePath, BYTE* data, int length, bool isAppend = false);
 		
 
+		static FILE* getFilePtr(string filePath, string condition);
 		static void getFileData(tstring filePath, BYTE* data);
 		static void getFileData(tstring filePath, int startAddr, int length, BYTE* data);
 		static long getFileSize(tstring filePath);

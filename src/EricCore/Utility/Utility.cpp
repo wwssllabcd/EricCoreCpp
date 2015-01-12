@@ -289,9 +289,22 @@ void Utility::toFile(const tstring& filePath, BYTE* data, int length, bool isApp
 }
 
 // output Array to Binary file
+FILE* Utility::getFilePtr(string filePath, string condition){
+
+	FILE* fpSource;
+	fopen_s(&fpSource, filePath.c_str(), _T("rb"));
+	return fpSource;
+}
+
+// output Array to Binary file
 bool Utility::isFileExist(const tstring& filePath){
 	bool result=false;
-	FILE* fpSource =  FOPEN(filePath.c_str(), _T("rb"));
+	FILE* fpSource = getFilePtr(filePath,  _T("rb"));
+
+
+
+
+
 	if (fpSource != NULL) {
 		result=true;
 		fclose(fpSource);
@@ -491,7 +504,8 @@ void Utility::getFileData(tstring filePath, BYTE* data){
 
 void Utility::getFileData(tstring filePath, int startAddr, int length, BYTE* data){
 	int i;
-	FILE* fpSource =  FOPEN(filePath.c_str(), _T("rb") );
+	FILE* fpSource =  getFilePtr(filePath.c_str(), _T("rb") );
+
 	if (fpSource == NULL) {
 		throw MyException(UTI_GET_FILE_DATA_FAIL, _T("Can`t open file ")  +filePath);
 	}
@@ -504,7 +518,8 @@ void Utility::getFileData(tstring filePath, int startAddr, int length, BYTE* dat
 }
 
 long Utility::getFileSize(tstring filePath){
-	FILE* fpSource =  FOPEN(filePath.c_str(), _T("rb"));
+	FILE* fpSource =  getFilePtr(filePath.c_str(), _T("rb") );
+
 	if (fpSource == NULL) {
 		throw MyException(UTI_GET_FILE_SIZE_FAIL, _T("Can`t open file ")+filePath);
 	}
