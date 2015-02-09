@@ -17,6 +17,7 @@ namespace EricCore{
 
 		int getErrorCode(void);
 		tstring what(void);
+		const char * what(void) const;
 
 
 		static tstring separeString;

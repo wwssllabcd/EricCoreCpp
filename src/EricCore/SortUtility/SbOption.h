@@ -5,7 +5,7 @@ using namespace std;
 
 #define NULL_INI_VALUE  0xFFFFFFFF
 
-#define NULL_CUSTON_BIN_VALUE  0xFFFF
+#define NULL_CUSTON_BIN_VALUE  0
 
 
 class SbOption
@@ -27,14 +27,16 @@ public:
 	
 	string qcInitBinCode;
 	string qcBinCode;
+	string qcBinCode2;
 
 	string sortInitBinCode;
 	string sortBinCode;
-	
+	string sortBinCode2;
 
 	int maxErrorBit;
+	int Ecc_Mode;
 	//bool multiPlane;
-	bool extInterleave;
+	//bool extInterleave;
 
 	int blockCnt;
 
@@ -110,6 +112,12 @@ public:
 	int flash_ID7;
 	int flash_ID8;
 
+
+	BYTE passBin;
+
+	BYTE dieGap;
+	BYTE blockGap;
+	WORD blkPerDie;
 
 
 	bool debug;

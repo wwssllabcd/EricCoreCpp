@@ -56,8 +56,8 @@ void SortingBoardUtility::_loadRecord_IM34_less8192(const UsbCommand& usbCmd, co
 	BYTE ary_ce1_ce3[9216];
 	BYTE* pDataTable=0;
 
-	usbCmd.read8K(defectPageAddr,   ary_ce0_ce2);
-	usbCmd.read8K(defectPageAddr+1, ary_ce1_ce3);
+	usbCmd.read8K(0,defectPageAddr,   ary_ce0_ce2);
+	usbCmd.read8K(0,defectPageAddr+1, ary_ce1_ce3);
 
 	int ce_offset=0;
 
@@ -171,7 +171,7 @@ void SortingBoardUtility::setUse(ULONG blockNo, BYTE* sortTb){
 void SortingBoardUtility::_loadRecord(const UsbCommand& usbCmd, const Flash& f, ULONG defectPageAddr, int recordStartPtr, int recordLen)
 {
 	BYTE dt[9216];
-	usbCmd.read8K(defectPageAddr, dt);
+	usbCmd.read8K(0,defectPageAddr, dt);
 	int ce_offset=0;
 
 	BYTE bitMap[DEFECT_TABLE_SIZE];
@@ -210,8 +210,8 @@ void SortingBoardUtility::_loadRecord_IM34_over8192(const UsbCommand& usbCmd, co
 {
 	BYTE dt_1[9216];
 	BYTE dt_2[9216];
-	usbCmd.read8K(defectPageAddr, dt_1);
-	usbCmd.read8K(defectPageAddr+1, dt_2);
+	usbCmd.read8K(0,defectPageAddr, dt_1);
+	usbCmd.read8K(0,defectPageAddr+1, dt_2);
 
 	BYTE bitMap[DEFECT_TABLE_SIZE];
 	memset(bitMap, 0, DEFECT_TABLE_SIZE);	
@@ -378,7 +378,7 @@ void SortingBoardUtility::loadMultiRecord(const UsbCommand& usbCmd, const Flash&
 void SortingBoardUtility::_loadRecord_OneCe(const UsbCommand& usbCmd, const Flash& f, ULONG defectPageAddr)
 {
 	BYTE dt[9216];
-	usbCmd.read8K(defectPageAddr, dt);
+	usbCmd.read8K(0,defectPageAddr, dt);
 	//int ce_offset=0;
 	int recordLen = 1024;
 	BYTE bitMap[DEFECT_TABLE_SIZE];

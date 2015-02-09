@@ -13,7 +13,7 @@ public:
 	void modify8000(BYTE* ary8k, const SbOption& opt, BYTE sn, BYTE version);
 	bool findBootBlock(ULONG& addr, UsbCommand& usbCmd);
 	bool findSortingPage(const UsbCommand& usbCmd, int ceNo);
-
+	//bool findSortingPage(const UsbCommand& usbCmd, int ceNo, BYTE* aryCfg9216 );
 	bool checkRepeat64(BYTE* ary);
 	bool checkSignature(BYTE* ary);
 	bool checkSignature_98(BYTE* ary);

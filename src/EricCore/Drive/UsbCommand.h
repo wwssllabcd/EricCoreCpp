@@ -17,10 +17,10 @@ public:
 
 
 	void write8K(ULONG cycleList, BYTE* bufData, BYTE* bufExtraByte) const;
-	void read8K(ULONG cycleList, BYTE* buffer) const;
+	void read8K(bool useA2cmd,ULONG cycleList, BYTE* buffer) const;
 
 	void write8k_RetryWrite(ULONG cycleList, BYTE* bufData, BYTE* bufExtraByte) const;
-	void write_and_verify8K(ULONG cycleList, BYTE* bufData, BYTE* bufExtraByte) const;
+	void write_and_verify8K(bool useA2cmd,ULONG cycleList, BYTE* bufData, BYTE* bufExtraByte) const;
 
 	void downLoadISP(BYTE* buffer, BYTE bootCodeCtrl=0);
 	void eraseBlock(ULONG cycleList) const;

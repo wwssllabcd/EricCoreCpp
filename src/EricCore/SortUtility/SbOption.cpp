@@ -14,8 +14,6 @@ SbOption::SbOption(void)
 ,sortInitBinCode("")
 ,qcInitBinCode("")
 ,maxErrorBit(0)
-//,multiPlane(false)
-,extInterleave(false)
 
 ,pettern0(false)
 ,pettern1(false)
@@ -88,6 +86,10 @@ SbOption::SbOption(void)
 ,debug(false)
 ,onCardSort(false)
 ,is_2097(false)
+,passBin(0xFF)
+,dieGap(0xFF)
+,blockGap(0xFF)
+,blkPerDie(0xFFFF)
 {
 }
 
@@ -108,7 +110,7 @@ void SbOption::save(void){
 	if(this->testType!=NULL_INI_VALUE) {Utility::saveToIni(m_modelName,"testType",this->testType ,iniPath);}
 
 	if(this->maxErrorBit!=NULL_INI_VALUE) {Utility::saveToIni(m_modelName,"maxErrorBit",this->maxErrorBit ,iniPath);}
-	if(this->extInterleave!=false) {Utility::saveToIni(m_modelName,"extInterleave",this->extInterleave ,iniPath);}
+	//if(this->extInterleave!=false) {Utility::saveToIni(m_modelName,"extInterleave",this->extInterleave ,iniPath);}
 	if(this->blockCnt!=NULL_INI_VALUE) {Utility::saveToIni(m_modelName,"blockCnt",this->blockCnt ,iniPath);}
 
 	Utility::saveToIni(m_modelName,"pettern0",this->pettern0 ,iniPath);
@@ -193,15 +195,18 @@ void SbOption::load(){
 	this->pcNo = Utility::getIntParamFromIni(m_modelName, "pcNo", NULL_INI_VALUE, m_iniPath);
 	this->flashPartNo = Utility::getStringParamFromIni(m_iniPath, m_modelName, "flashPartNo");
 	this->sortBinCode = Utility::getStringParamFromIni(m_iniPath, m_modelName, "sortBinCode");
+	this->sortBinCode2 = Utility::getStringParamFromIni(m_iniPath, m_modelName, "sortBinCode2");
 	this->qcBinCode = Utility::getStringParamFromIni(m_iniPath, m_modelName, "qcBinCode");
+	this->qcBinCode2 = Utility::getStringParamFromIni(m_iniPath, m_modelName, "qcBinCode2");
 
 	this->sortInitBinCode = Utility::getStringParamFromIni(m_iniPath, m_modelName, "sortInitBinCode");
 	this->qcInitBinCode = Utility::getStringParamFromIni(m_iniPath, m_modelName, "qcInitBinCode");
 
 
 	this->maxErrorBit = Utility::getIntParamFromIni(m_modelName, "maxErrorBit", NULL_INI_VALUE, m_iniPath);
+	this->Ecc_Mode    = Utility::getIntParamFromIni(m_modelName, "Ecc_Mode", NULL_INI_VALUE, m_iniPath);
 	//this->multiPlane = Utility::getIntParamFromIni(m_modelName, "multiPlane", NULL_INI_VALUE, m_iniPath);
-	this->extInterleave = Utility::uintToBool( Utility::getIntParamFromIni(m_modelName, "extInterleave", NULL_INI_VALUE, m_iniPath) );
+	//this->extInterleave = Utility::uintToBool( Utility::getIntParamFromIni(m_modelName, "extInterleave", NULL_INI_VALUE, m_iniPath) );
 	this->blockCnt = Utility::getIntParamFromIni(m_modelName, "blockCnt", NULL_INI_VALUE, m_iniPath);
 
 	this->pettern0 = Utility::uintToBool( Utility::getIntParamFromIni(m_modelName, "pettern0", 0, m_iniPath) );
@@ -279,6 +284,12 @@ void SbOption::load(){
 	this->flash_ID6 = Utility::getIntParamFromIni( m_modelName, "flash_ID6", 0, m_iniPath );
 	this->flash_ID7 = Utility::getIntParamFromIni( m_modelName, "flash_ID7", 0, m_iniPath );
 	this->flash_ID8 = Utility::getIntParamFromIni( m_modelName, "flash_ID8", 0, m_iniPath );
+
+	this->passBin = Utility::getIntParamFromIni( m_modelName, "PassBin", 0xFF, m_iniPath );
+
+	this->dieGap = Utility::getIntParamFromIni( m_modelName, "DieGep", 0xFF, m_iniPath );
+	this->blkPerDie = Utility::getIntParamFromIni( m_modelName, "BlockPerDie", 0xFFFF, m_iniPath );
+	this->blockGap = Utility::getIntParamFromIni( m_modelName, "BlockGap", 0xFF, m_iniPath );
 
 }
 

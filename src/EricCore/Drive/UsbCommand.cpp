@@ -52,7 +52,7 @@ void UsbCommand::getFlashIDs(BYTE* buffer){
 	USBDrive usbDrive;
 	BYTE cdb[12]={0};
 	cdb[0]=0xff;
-	cdb[1]=0x03;
+	cdb[1]=0x07;
 	cdb[2]=0x68;
 	status = usbDrive.UDISK_SendCommand(m_dvrHandle, cdb, buffer, 512, FLAG_DATA_IN);
 	if(status == false){
@@ -83,7 +83,7 @@ void UsbCommand::write8K(ULONG cycleList, BYTE* bufData, BYTE* bufExtraByte) con
 	}
 }
 
-void UsbCommand::write_and_verify8K(ULONG cycleList, BYTE* bufData, BYTE* bufExtraByte) const{
+void UsbCommand::write_and_verify8K(bool useA2cmd,ULONG cycleList, BYTE* bufData, BYTE* bufExtraByte) const{
 	bool status;
 	USBDrive usbDrive;
 	BYTE cdb[12]={0};
@@ -94,7 +94,13 @@ void UsbCommand::write_and_verify8K(ULONG cycleList, BYTE* bufData, BYTE* bufExt
 	cdb[4]= (BYTE)(cycleList>>16)&0xFF;
 	cdb[5]= (BYTE)(cycleList>>8)&0xFF;
 	cdb[6]= (BYTE)cycleList&0xFF;
-
+	cdb[7]= (BYTE)cycleList&0xFF;
+	if(useA2cmd==true){
+		cdb[8]= 0x08;
+	}
+	else{
+		cdb[8]= 0x00;
+	}
 	BYTE buf[9216];
 	memcpy(buf     ,bufExtraByte,1024);
 	memcpy(buf+1024,bufData,8192);
@@ -106,7 +112,7 @@ void UsbCommand::write_and_verify8K(ULONG cycleList, BYTE* bufData, BYTE* bufExt
 		throw MyException(USBC_WRITE_8K_FAIL, msg);
 	}
 
-	this->read8K(cycleList, buf);
+	this->read8K(1,cycleList, buf);
 	int result = memcmp(buf, bufData, 8192);
 	if( result!=0){
 		msg = Utility::strFormat("USBC_WRITE_8K_VERIFY_FAIL at %X", cycleList);
@@ -241,7 +247,10 @@ void UsbCommand::testRam1k(BYTE addr, BYTE* buffer,int inOut, int len) const{
 	}
 }
 
-void UsbCommand::read8K(ULONG cycleList, BYTE* buffer) const{
+
+
+
+void UsbCommand::read8K(bool useA2cmd,ULONG cycleList, BYTE* buffer) const{
 	BOOL status;
 	USBDrive usbDrive;
 	UsbCmdStruct cmd;
@@ -250,8 +259,13 @@ void UsbCommand::read8K(ULONG cycleList, BYTE* buffer) const{
 	cmd.cdb[4] = (BYTE)(cycleList>>16)&0xFF;
 	cmd.cdb[5] = (BYTE)(cycleList>>8)&0xFF;
 	cmd.cdb[6] = (BYTE)cycleList&0xFF;
-	cmd.cdb[7] = (BYTE)cycleList&0xFF;
-
+	cmd.cdb[7]= (BYTE)cycleList&0xFF;
+	if(useA2cmd==true){
+		cmd.cdb[8]= 0x01;
+	}
+	else{
+		cmd.cdb[8]= 0x00;
+	}
 	status = usbDrive.UDISK_SendCommand(m_dvrHandle, cmd.cdb, buffer, cmd.length,  cmd.direction);
 	if(status == FALSE){
 		tstring msg = cmd.description + " fail";

@@ -48,6 +48,10 @@ tstring MyException::what(void){
 	return m_errMsg;
 }
 
+const char * MyException::what(void) const{
+	return m_errMsg.c_str();
+}
+
 int MyException::getErrorCode(void){
 	return m_errorCode;
 }

@@ -33,14 +33,20 @@ void SortBase::modify8000(BYTE* ary8k, const SbOption& opt, BYTE sn, BYTE versio
 
 	ary8k[offset+11] = (BYTE)(opt.pcNo/0x100);
 	ary8k[offset+12] = (BYTE)(opt.pcNo%0x100);
-	ary8k[offset+13] = version;
+	//ary8k[offset+13] = version;
+	ary8k[offset+13] = 0;
+	ary8k[offset+14] = (BYTE)(opt.Ecc_Mode&0xFF);
+	ary8k[offset+15] = (BYTE)(opt.passBin&0xFF);
 
+	ary8k[offset+0x18] = (BYTE)(opt.blockGap&0xFF);
+	ary8k[offset+0x19] = (BYTE)(opt.dieGap&0xFF);
 	ary8k[offset+0x1A] = opt.flash_ID3;
 	ary8k[offset+0x1B] = opt.flash_ID4;
 	ary8k[offset+0x1C] = opt.flash_ID5;
 	ary8k[offset+0x1D] = opt.flash_ID6;
-	ary8k[offset+0x1E] = opt.flash_ID7;
-	ary8k[offset+0x1F] = opt.flash_ID8;
+
+	ary8k[offset+0x1E] = (BYTE)((opt.blkPerDie>>8)&0xFF);
+	ary8k[offset+0x1F] = (BYTE)(opt.blkPerDie&0xFF);
 
 
 	_setBinValue( ary8k+0xFE0+0, opt.bin1, opt.blockCnt);
@@ -83,7 +89,7 @@ void SortBase::modify8000(BYTE* ary8k, const SbOption& opt, BYTE sn, BYTE versio
 
 
 
-	ary8k[offset+4] |= BIT3;
+	//ary8k[offset+4] |= BIT3;
 }
 
 void SortBase::_setCustomBinValue(BYTE* ary8k, WORD binValue){
@@ -169,13 +175,13 @@ bool SortBase::findSortingPage(const UsbCommand& usbCmd, int ceNo){
 		for(pbStart; pbStart<pbEnd; pbStart++){
 			addr = pbStart*blockLen;
 			cycleList = (ceNo<<24)|addr;
-			usbCmd.read8K( cycleList, buf);
+			usbCmd.read8K( 0,cycleList, buf);
 			if( checkSignature(buf)==false){
 				addr+=1;
-				usbCmd.read8K(cycleList, buf);
+				usbCmd.read8K(0,cycleList, buf);
 				if( checkSignature(buf)==false){
 					addr+=2;
-					usbCmd.read8K(cycleList, buf);
+					usbCmd.read8K(0,cycleList, buf);
 					if( checkSignature(buf)==false){
 						continue;
 					}
@@ -213,7 +219,7 @@ bool SortBase::findBootBlock(ULONG& addr, UsbCommand& usbCmd){
 
 		for(pbStart; pbStart<pbEnd; pbStart++){
 			addr = pbStart*blockLen;
-			usbCmd.read8K(addr, buf);
+			usbCmd.read8K(1,addr, buf);
 			if(buf[8192]==0xFC){
 				if( checkRepeat64(buf)==true){
 					return true;
@@ -294,7 +300,7 @@ bool SortBase::searchBootBlk(const UsbCommand& usbCmd, ULONG& bootblk, BYTE maxS
 				if ( maxSLCpage <= searchPgTb[searchPgLen]) break;		// 避免會掃描到下一個 block
 
 
-				usbCmd.read8K( blkToCycleList(0, bootblk+searchCnt, searchPgTb[searchPgLen]), buf);
+				usbCmd.read8K( 1,blkToCycleList(0, bootblk+searchCnt, searchPgTb[searchPgLen]), buf);
 
 				// check boot record signature
 				if (buf[0x00]==0x5A && buf[0x01]==0xA5 && buf[0x02]==0xA5 && buf[0x03]==0x5A) {
