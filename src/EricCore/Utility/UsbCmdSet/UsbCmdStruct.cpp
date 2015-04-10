@@ -627,6 +627,7 @@ UsbCmdStruct UsbCmdStruct::switchECC(void)
 	UsbCmdStruct usbCmdSet;
 	usbCmdSet.cdb[0] = OP_3S_VENDOR_CDB;
 	usbCmdSet.cdb[1] = 0x97;
+	usbCmdSet.cdb[2] = 0x3;
 	usbCmdSet.length = 0;
 	usbCmdSet.direction = FLAG_DATA_IN;
 	usbCmdSet.description = "Vendor: Switch ECC";
