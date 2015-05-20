@@ -767,6 +767,7 @@ BYTE Utility::atob(BYTE hign, BYTE low){
 	}
 
 	BYTE res = (hign<<4) + low;
+	return res;
 
 	
 }
