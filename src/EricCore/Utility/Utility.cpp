@@ -291,7 +291,7 @@ void Utility::toFile(const tstring& filePath, BYTE* data, int length, bool isApp
 // output Array to Binary file
 FILE* Utility::getFilePtr(string filePath, string condition){
 
-	FILE* fpSource;
+	FILE* fpSource=0;
 	fopen_s(&fpSource, filePath.c_str(), _T(condition.c_str()));
 	return fpSource;
 }
