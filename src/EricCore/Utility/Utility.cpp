@@ -292,7 +292,7 @@ void Utility::toFile(const tstring& filePath, BYTE* data, int length, bool isApp
 FILE* Utility::getFilePtr(string filePath, string condition){
 
 	FILE* fpSource;
-	fopen_s(&fpSource, filePath.c_str(), _T("rb"));
+	fopen_s(&fpSource, filePath.c_str(), _T(condition.c_str()));
 	return fpSource;
 }
 
@@ -752,6 +752,24 @@ bool Utility::isAllNumberType(tstring& data){
 	return 1;
 }
 
+BYTE Utility::atob(BYTE hign, BYTE low){
+	if( hign<=0x39){
+		hign = hign-0x30;
+	}else{
+		hign = hign-0x37;
+	}
+
+
+	if( low<=0x39){
+		low = low-0x30;
+	}else{
+		low = low-0x37;
+	}
+
+	BYTE res = (hign<<4) + low;
+
+	
+}
 
 bool Utility::stringSplit(tstring sign, tstring& orgStr, tstring& str1, tstring& str2){
 	tstring::size_type locate = orgStr.find(sign);

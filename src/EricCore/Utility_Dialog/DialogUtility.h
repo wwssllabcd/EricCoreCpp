@@ -37,6 +37,7 @@ namespace EricCore{
 
 		bool getUserYesNo(tstring msg);
 		tstring getFilePathByDialog(const tstring& defaultFileName, const tstring& fileFilter, bool checkExist);
+		tstring getFilePathByDialog();
 
 		// MFC platform
 		static void updateOS();

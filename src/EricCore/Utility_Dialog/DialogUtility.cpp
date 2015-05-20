@@ -187,6 +187,11 @@ tstring DialogUtility::getFilePathByDialog(const tstring& defaultFileName, const
 	return fileName;
 }
 
+tstring DialogUtility::getFilePathByDialog()
+{
+	return getFilePathByDialog("", "", false);
+}
+
 
 int DialogUtility::onDeviceEvent(UINT wParam, DWORD_PTR lParam){
 	PDEV_BROADCAST_HDR lpdb = (PDEV_BROADCAST_HDR)lParam;
