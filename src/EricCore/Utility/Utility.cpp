@@ -752,24 +752,28 @@ bool Utility::isAllNumberType(tstring& data){
 	return 1;
 }
 
-BYTE Utility::atob(BYTE hign, BYTE low){
-	if( hign<=0x39){
-		hign = hign-0x30;
-	}else{
-		hign = hign-0x37;
+BYTE Utility::hexCharToByte(BYTE ascHexNo){
+
+	BYTE res = 0xFF;
+	// hex 0~9
+	if( 0x30 <= ascHexNo <=0x39){
+		res = ascHexNo - '0';
 	}
 
-
-	if( low<=0x39){
-		low = low-0x30;
-	}else{
-		low = low-0x37;
+	//hex A~F
+	if( 'A' <= ascHexNo <='F'){
+		res = ascHexNo - 'A';
 	}
 
-	BYTE res = (hign<<4) + low;
+	//hex a~f
+	if( 'a' <= ascHexNo <= 'f'){
+		res = ascHexNo - 'a';
+	}
 	return res;
+}
 
-	
+BYTE Utility::hexCharToByte(BYTE hign, BYTE low){
+	return hexCharToByte(hign)<<4 + hexCharToByte(low);
 }
 
 bool Utility::stringSplit(tstring sign, tstring& orgStr, tstring& str1, tstring& str2){

@@ -58,7 +58,8 @@ namespace EricCore{
 		static int toInt(const tstring& cs);
 		static int toInt(const bool& boolean);
 		static int toInt(BYTE value);
-		static BYTE atob(BYTE hign, BYTE low);
+		static BYTE hexCharToByte(BYTE hign, BYTE low);
+		static BYTE hexCharToByte(BYTE ascHexNo);
 
 		static ULONG hexStringToULONG(tstring& hex);
 		static bool toBool(int intValue);
