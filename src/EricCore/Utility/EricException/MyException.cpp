@@ -40,10 +40,6 @@ MyException::MyException(LPCTSTR fmt, ...)
 }
 
 
-MyException::~MyException(void)
-{
-}
-
 tstring MyException::what(void){
 	return m_errMsg;
 }

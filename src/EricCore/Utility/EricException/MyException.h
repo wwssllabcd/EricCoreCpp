@@ -6,14 +6,18 @@
 using namespace std;
 
 namespace EricCore{
+
 	class MyException : public std::exception
 	{
 	public:
+		MyException(void){};
+		~MyException(void){};
+
 		MyException(int errorCode, tstring msg);
 		MyException(int errorCode, LPCTSTR fmt, ...);
 		MyException(LPCTSTR fmt, ...);
 
-		~MyException(void);
+		
 
 		int getErrorCode(void);
 		tstring what(void);
