@@ -5,7 +5,7 @@
 
 namespace EricCore{
 	namespace Exception{
-		template< int v>
+		template< int v, char const *str>
 		class ExcepBase : ExceptionDecorator
 		{
 		public:
@@ -28,7 +28,7 @@ namespace EricCore{
 
 
 			tstring what(){
-				return "Out Of Range" + e.what();
+				return str + e.what();
 			};
 
 			int getErrorCode(){

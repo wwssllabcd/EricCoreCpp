@@ -5,7 +5,8 @@
 
 #define GenErrorClass(name, val) namespace EricCore{\
 	namespace Exception{\
-		class name : public ExcepBase<val>{};\
+		char name##_string[] = #name;\
+		class name : public ExcepBase<val, name##_string>{};\
 	}\
 }\
 
