@@ -6,9 +6,7 @@ namespace EricCore{
 		class ExceptionDecorator : public MyException
 		{
 		public:
-			ExceptionDecorator(void){};
-			~ExceptionDecorator(void){};
-
+			virtual  ~ExceptionDecorator(void){};
 			virtual tstring what() = 0;
 			virtual int getErrorCode(void) = 0;
 		};
