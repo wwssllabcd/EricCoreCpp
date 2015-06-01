@@ -55,7 +55,7 @@
 
 
 // Utility
-#define UTI_OBSERVER_REGISTER_FAIL                  0x0301
+#define UTI_OBS_REG_FAIL_NO                         0x0301
 #define UTI_SEMD_MSG_FAIL                           0x0302
 #define UTI_HI_LO_CHG_MUST_EVEN                     0x0303
 #define UTI_GETDATESTRING_PARSER_FAIL               0x0304
