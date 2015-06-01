@@ -1,9 +1,9 @@
 #pragma once
-#include "MyException.h"
+#include "MyExcep.h"
 
 namespace EricCore{
 	namespace Exception{
-		class ExceptionDecorator : public MyException
+		class ExceptionDecorator : public MyExcep
 		{
 		public:
 			virtual  ~ExceptionDecorator(void){};

@@ -8,9 +8,9 @@ namespace EricCore{namespace Exception
 
 #define GenClass(name, val) \
 	class name : public ExceptionDecorator{public:\
-	MyException m_e;\
+	MyExcep m_e;\
 	name##(void){m_errMsg = #name;};\
-	name##(MyException mye):m_e(mye){m_errMsg = #name;};\
+	name##(MyExcep mye):m_e(mye){m_errMsg = #name;};\
 	tstring what(){return m_errMsg + " <- " + m_e.what();};\
 	int getErrorCode(){return  val;};\
 	};\
