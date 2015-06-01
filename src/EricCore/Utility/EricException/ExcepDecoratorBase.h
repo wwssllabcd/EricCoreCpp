@@ -28,7 +28,7 @@ namespace EricCore{
 
 
 			tstring what(){
-				return e.what();
+				return this->m_errMsg + e.what();
 			};
 
 			int getErrorCode(){
