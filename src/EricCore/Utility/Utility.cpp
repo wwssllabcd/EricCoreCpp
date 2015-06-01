@@ -10,6 +10,8 @@
 #include <time.h>
 
 #include "./EricException/MyException.h"
+#include <EricCore\Utility\EricException\ExceptionGenerater.h>
+
 
 // for gcc
 #include <string.h>
@@ -41,6 +43,7 @@ Utility::~Utility(void)
 
 void Utility::observerRegister( Utility::MsgFunPtr pF ){
 	if(pF==0){
+
 		throw MyException(UTI_OBSERVER_REGISTER_FAIL, "observerRegister error: function ptr is empty" );
 	}
 	for(Utility::Observers::size_type i=0; i<m_observers.size(); i++){

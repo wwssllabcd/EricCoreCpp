@@ -1,28 +1,20 @@
 #pragma once
 
-#include "ExcepDecoratorBase.h"
+#include "MyException.h"
+#include "ExceptionDecorator.h"
+
+namespace EricCore{namespace Exception
+{
+
+#define GenClass(name, val) \
+	class name : public ExceptionDecorator{public:\
+	MyException m_e;\
+	name##(MyException mye):m_e(mye){m_errMsg = #name;};\
+	tstring what(){return m_errMsg + "<-" + m_e.what();};\
+	int getErrorCode(){return  val;};\
+	};\
 
 
-#define GenErrorClass(name, val) namespace EricCore{\
-	namespace Exception{\
-		class name : public ExcepBase<val, val>{\
-		public:\
-		name##(void){\
-		m_errMsg = #name;\
-		}\
-		};\
-	}\
-}\
-
-
-#ifndef _myexception
-#define _myexception
-
-
-
-#endif
-
-
-GenErrorClass(OutOfRange,0x01)
-GenErrorClass(DivZero,0x02)
-
+	GenClass(Out_Of_Range, 0x10);
+	GenClass(Div_Zero, 0x20);
+}}
