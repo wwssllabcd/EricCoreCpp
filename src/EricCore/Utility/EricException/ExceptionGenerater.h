@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MyE_OutOfRange.h"
+#include "ExcepDecoratorBase.h"
 
 
 #define GenErrorClass(name, val) namespace EricCore{\
@@ -11,7 +11,14 @@
 }\
 
 
+#ifndef _myexception
+#define _myexception
+
+
+
+#endif
+
+
 GenErrorClass(OutOfRange,0x01)
 GenErrorClass(DivZero,0x02)
-
 
