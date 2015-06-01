@@ -5,7 +5,7 @@
 
 namespace EricCore{
 	namespace Exception{
-		template< int v, char const *str>
+		template< int v,   int u>
 		class ExcepBase : ExceptionDecorator
 		{
 		public:
@@ -28,7 +28,7 @@ namespace EricCore{
 
 
 			tstring what(){
-				return str + e.what();
+				return  e.what();
 			};
 
 			int getErrorCode(){
