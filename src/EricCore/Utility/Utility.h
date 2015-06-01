@@ -3,7 +3,8 @@
 // put include MyException.h in here, if you wanna use Utility, you msut include MyException.h, too
 
 #include "./DefineFiles/DefineFile.h"
-#include "./EricException/MyException.h" // for less include
+#include "./EricException/MyException.h" // for less include.
+#include "EricCore\Utility\EricException\ExceptionGenerater.h"
 
 #include <string>
 #include <vector>

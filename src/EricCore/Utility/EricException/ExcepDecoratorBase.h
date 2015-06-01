@@ -3,38 +3,29 @@
 #include "MyException.h"
 #include "ExceptionDecorator.h"
 
+#include <string>
+using namespace std;
+
 namespace EricCore{
 	namespace Exception{
-		template< int v,   int u>
-		class ExcepBase : ExceptionDecorator
+
+		class OutOfRange : MyException
 		{
 		public:
 			MyException e;
-			const int myErrNo;
 
-			ExcepBase(MyException mye)
-				:e(mye)
-				,myErrNo(v)
+			OutOfRange(void)
+				:MyException(0x10, "OutOfRange")
 			{};
-
-			ExcepBase(void)
-				:myErrNo(v)
-			{
-				MyException mye;
-				e = mye;
-			};
-
-			~ExcepBase(void){};
 
 
 			tstring what(){
-				return  e.what();
+				return  m_errMsg + e.what();
 			};
 
 			int getErrorCode(){
-				return  myErrNo;
+				return  m_errorCode;
 			};
-
 		};
 	}
 }
