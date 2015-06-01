@@ -18,9 +18,6 @@
 using namespace EricCore;
 
 
-
-
-
 #ifdef USE_BOOST
 #include <boost/lexical_cast.hpp>
 #endif

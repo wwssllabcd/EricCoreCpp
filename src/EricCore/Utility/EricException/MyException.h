@@ -27,7 +27,7 @@ namespace EricCore{
 		static tstring separeString;
 
 
-	//friend:
+	//private:
 
 		int m_errorCode;
 		tstring m_errMsg;
