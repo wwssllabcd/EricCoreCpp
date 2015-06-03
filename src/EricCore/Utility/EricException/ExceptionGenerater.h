@@ -5,19 +5,27 @@
 
 namespace EricCore{namespace Exception
 {
+	class DivZero : public MyExpDecorator
+	{
+	public:
+		DivZero( MyExcep* component)
+			:MyExpDecorator(component){};
+		virtual tstring what(){
+			return  "Div Zero," + MyExpDecorator::what();
+		}
 
-#define GenClass(name, val) \
-	class name : public ExceptionDecorator{public:\
-	MyExcep m_e;\
-	name##(void){m_errMsg = #name;};\
-	name##(MyExcep mye):m_e(mye){m_errMsg = #name;};\
-	tstring what(){return m_errMsg + " <- " + m_e.what();};\
-	int getErrorCode(){return  val;};\
-	};\
+	};
 
 
-	GenClass(Out_Of_Range, 0x01);
-	GenClass(Div_Zero, 0x02);
-	GenClass(UTI_OBS_REG_FAIL, UTI_OBS_REG_FAIL_NO);
+	class OutOfRange : public MyExpDecorator
+	{
+	public:
+		OutOfRange( MyExcep* component)
+			:MyExpDecorator(component){};
+		virtual tstring what(){
+			return  "OutOfRange," + MyExpDecorator::what();
+		}
+
+	};
 
 }}

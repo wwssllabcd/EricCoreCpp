@@ -3,12 +3,22 @@
 
 namespace EricCore{
 	namespace Exception{
-		class ExceptionDecorator : public MyExcep
+		class MyExpDecorator : public MyExcep
 		{
 		public:
-			virtual  ~ExceptionDecorator(void){};
-			virtual tstring what() = 0;
-			virtual int getErrorCode(void) = 0;
+			MyExcep* _myExp;
+
+			MyExpDecorator(MyExcep* myExp)
+				:_myExp(myExp)
+			{};
+
+			
+			virtual tstring what(){
+				return _myExp->what();
+			};
+			virtual int getErrorCode(void) {
+				return _myExp->getErrorCode();
+			};
 		};
 	}
 }

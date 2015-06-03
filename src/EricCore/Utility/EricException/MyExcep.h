@@ -7,17 +7,17 @@ using namespace std;
 namespace EricCore{
 	namespace Exception{
 
-		class MyExcep : public std::exception
+		class MyExcep 
 		{
 		public:
 			MyExcep(void){};
 			~MyExcep(void){};
 
 
-			int getErrorCode(void){
+			virtual int getErrorCode(void){
 				return m_errorCode;
 			};
-			tstring what(void){
+			virtual tstring what(void){
 				return m_errMsg;
 			};
 
