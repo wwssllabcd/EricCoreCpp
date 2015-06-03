@@ -11,7 +11,8 @@ namespace EricCore{namespace Exception
 		DivZero( MyExcep* component)
 			:MyExpDecorator(component){};
 		virtual tstring what(){
-			return  "Div Zero," + MyExpDecorator::what();
+			tstring msg = MyExpDecorator::what();
+			return  "Div Zero," + msg;
 		}
 
 	};
@@ -23,7 +24,8 @@ namespace EricCore{namespace Exception
 		OutOfRange( MyExcep* component)
 			:MyExpDecorator(component){};
 		virtual tstring what(){
-			return  "OutOfRange," + MyExpDecorator::what();
+			tstring msg = MyExpDecorator::what();
+			return  "OutOfRange," + msg;
 		}
 
 	};

@@ -14,7 +14,8 @@ namespace EricCore{
 
 			
 			virtual tstring what(){
-				return _myExp->what();
+				tstring msg = _myExp->what();
+				return msg;
 			};
 			virtual int getErrorCode(void) {
 				return _myExp->getErrorCode();
