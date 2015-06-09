@@ -11,6 +11,7 @@ namespace EricCore{namespace Exception
 		DivZero( MyExcep* component)
 			:MyExpDecorator(component){};
 		virtual tstring what(){
+			// It force to call base's function
 			tstring msg = MyExpDecorator::what();
 			return  "Div Zero," + msg;
 		}

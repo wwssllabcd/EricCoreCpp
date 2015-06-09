@@ -12,6 +12,8 @@ namespace EricCore{
 				:_myExp(myExp)
 			{};
 
+			virtual ~MyExpDecorator(){};
+
 			
 			virtual tstring what(){
 				tstring msg = _myExp->what();

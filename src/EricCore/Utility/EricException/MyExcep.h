@@ -11,9 +11,7 @@ namespace EricCore{
 		{
 		public:
 			MyExcep(void){};
-			~MyExcep(void){};
-
-
+			virtual ~MyExcep(void){};
 			virtual int getErrorCode(void){
 				return m_errorCode;
 			};

@@ -166,10 +166,11 @@ tstring DialogUtility::getFilePathByDialog(const tstring& defaultFileName, const
 {
 	// TODO: 在此加入控制項告知處理常式程式碼
 	tstring fileName;
-	CFileDialog fdlg(false, NULL, defaultFileName.c_str(), NULL, fileFilter.c_str() );
 	while(1){
-		fileName = "";
+
+		CFileDialog fdlg(false, NULL, defaultFileName.c_str(), NULL, fileFilter.c_str() );
 		if( fdlg.DoModal() == IDOK){
+
 			fileName = fdlg.GetPathName();
 			if( checkExist ){
 				if( Utility::isFileExist(fileName) == true ){
@@ -180,10 +181,14 @@ tstring DialogUtility::getFilePathByDialog(const tstring& defaultFileName, const
 					}
 				}
 			}
+			break;
+		}else{
+			fileName="";
+			break;
 		}
-		break;
+
 	}
-	
+
 	return fileName;
 }
 
