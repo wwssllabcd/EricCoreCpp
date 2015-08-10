@@ -758,24 +758,27 @@ BYTE Utility::hexCharToByte(BYTE ascHexNo){
 
 	BYTE res = 0xFF;
 	// hex 0~9
-	if( 0x30 <= ascHexNo <=0x39){
+	if( (0x30 <= ascHexNo)&&(ascHexNo<=0x39) ){
 		res = ascHexNo - '0';
 	}
 
 	//hex A~F
-	if( 'A' <= ascHexNo <='F'){
+	if( ('A'<=ascHexNo)&& (ascHexNo<='F')){
 		res = ascHexNo - 'A';
 	}
 
 	//hex a~f
-	if( 'a' <= ascHexNo <= 'f'){
+	if( ('a' <= ascHexNo)&& (ascHexNo <= 'f')){
 		res = ascHexNo - 'a';
 	}
 	return res;
 }
 
 BYTE Utility::hexCharToByte(BYTE hign, BYTE low){
-	return hexCharToByte(hign)<<4 + hexCharToByte(low);
+	BYTE tmp1 = hexCharToByte(hign)<<4;
+	BYTE tmp2 = hexCharToByte(low);
+
+	return tmp1 + tmp2;
 }
 
 bool Utility::stringSplit(tstring sign, tstring& orgStr, tstring& str1, tstring& str2){
