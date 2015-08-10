@@ -1,24 +1,24 @@
-//==================== template çš„LNK2019 éŒ¯èª¤ ============================================
-//lnk 2019çš„å•é¡Œ
-//æ¨¡æ¿é¡åœ¨ç·¨è­¯ä»¥å‰éœ€è¦åšä¸€æ¬¡é¡å‹åƒæ•¸èˆ‡åŸæœ‰ä»£ç¢¼çš„æ•´åˆéç¨‹ï¼Œåœ¨ä¸Šä¾‹ä¸­è¦æŠŠintå‹åƒæ•¸å’Œæ¨¡æ¿é¡çš„å®šç¾©ç”Ÿæˆä¸€ä»½åŸºæ–¼intçš„é¡å®šç¾©ï¼Œç„¶å¾Œç·¨è­¯ã€‚
-//åœ¨éˆæ¥çš„æ™‚å€™éˆæ¥å™¨åœ¨.hæ–‡ä»¶ä¸­æ‰¾ä¸åˆ°TPLå‡½æ•¸é—œæ–¼inté¡å‹çš„å®šç¾©ï¼Œæ‰€ä»¥å ±éŒ¯LNK2019ã€‚
+//==================== template ªºLNK2019 ¿ù»~ ============================================
+//lnk 2019ªº°İÃD
+//¼ÒªOÃş¦b½sÄ¶¥H«e»İ­n°µ¤@¦¸Ãş«¬°Ñ¼Æ»P­ì¦³¥N½Xªº¾ã¦X¹Lµ{¡A¦b¤W¨Ò¤¤­n§âint«¬°Ñ¼Æ©M¼ÒªOÃşªº©w¸q¥Í¦¨¤@¥÷°ò©óintªºÃş©w¸q¡AµM«á½sÄ¶¡C
+//¦bÃì±µªº®É­ÔÃì±µ¾¹¦b.h¤å¥ó¤¤§ä¤£¨ìTPL¨ç¼ÆÃö©óintÃş«¬ªº©w¸q¡A©Ò¥H³ø¿ùLNK2019¡C
 //
-//å…©ç¨®è§£æ±ºæ–¹æ³•ï¼š
-//1) åœ¨è¦è¢«èª¿ç”¨çš„å‡½æ•¸å®šç¾©åå‰åŠ é—œéµå­—exportã€‚æ¯”å¦‚ï¼š
+//¨âºØ¸Ñ¨M¤èªk¡G
+//1) ¦b­n³Q½Õ¥Îªº¨ç¼Æ©w¸q¦W«e¥[ÃöÁä¦rexport¡C¤ñ¦p¡G
 //export typ GetSecondMember() const;
 //
-//å¯æƒœè©²é—œéµå­—ä¸è¢«å¤§å¤šæ•¸CPPç·¨è­¯å™¨æ”¯æŒï¼ˆåŒ…æ‹¬VS.net7.1ï¼‰
+//¥i±¤¸ÓÃöÁä¦r¤£³Q¤j¦h¼ÆCPP½sÄ¶¾¹¤ä«ù¡]¥]¬AVS.net7.1¡^
 //
 //forget it!
 //
-//2ï¼‰æŠŠtyp.cppé‡Œçš„ä»£ç¢¼æ”¾åœ¨typ.hä¸­ï¼Œåˆªé™¤typ.cppæ–‡ä»¶ã€‚ç„¶å¾Œç·¨è­¯å³å¯ã€‚é€™æ¨£å­ï¼Œç·¨è­¯å™¨å¯ä»¥æ‰¾åˆ°åŸºæ–¼inté¡å‹é¡å®šç¾©ï¼Œé€šéï¼:-)
+//2¡^§âtyp.cpp¨½ªº¥N½X©ñ¦btyp.h¤¤¡A§R°£typ.cpp¤å¥ó¡CµM«á½sÄ¶§Y¥i¡C³o¼Ë¤l¡A½sÄ¶¾¹¥i¥H§ä¨ì°ò©óintÃş«¬Ãş©w¸q¡A³q¹L¡I:-)
 //
-// referenceï¼š http://blog.donews.com/forient/category/5824.aspx
+// reference¡G http://blog.donews.com/forient/category/5824.aspx
 
 
-//==================== valarray éŒ¯èª¤ C2334 éŒ¯èª¤ ============================================
-//åªè¦åœ¨#include WinDef.hä¹‹å‰ï¼Œ#define NOMINMAXæˆ–æ˜¯åœ¨å°ˆæ¡ˆè¨­å®šçš„Preprocessorè£¡è¼¸å…¥NOMINMAXå°±å¯ä»¥é—œé–‰max, min macroäº†
-//é—œéµå­—:boost/serialization/vector.hpp c2334 NOMINMAX
+//==================== valarray ¿ù»~ C2334 ¿ù»~ ============================================
+//¥u­n¦b#include WinDef.h¤§«e¡A#define NOMINMAX©Î¬O¦b±M®×³]©wªºPreprocessor¸Ì¿é¤JNOMINMAX´N¥i¥HÃö³¬max, min macro¤F
+//ÃöÁä¦r:boost/serialization/vector.hpp c2334 NOMINMAX
 
 #pragma once
 #include <boost/serialization/vector.hpp>
@@ -26,10 +26,12 @@
 #include <boost/archive/xml_iarchive.hpp>
 #include <fstream>
 #include <iostream>
-#pragma comment(lib, "libboost_serialization-vc71-mt-s-1_50.lib")
+#pragma comment(lib, "libboost_serialization-vc90-mt-1_58.lib")
 
 #include "../Utility/EricException/MyException.h"
 #include "../Utility/DefineFiles/DefineFile.h"
+
+
 
 using namespace std;
 
@@ -40,16 +42,17 @@ public:
 	~SerializeService(void){};
 
 	template<class T>
-	void save(tstring filePath,const vector<T>& coll)
+	void save(tstring filePath,const vector<T>& s)
 	{
 		std::ofstream ofs(filePath.c_str());
+		assert(ofs.good());
 		boost::archive::xml_oarchive oa(ofs);
-		oa << BOOST_SERIALIZATION_NVP(coll);
+		oa << BOOST_SERIALIZATION_NVP(s);
 		ofs.close();	
 	}
 
 	template<class T>
-	load(tstring filePath, vector<T>& collnew)
+	void load(tstring filePath, vector<T>& collnew)
 	{
 		ifstream ifs(filePath.c_str());
 		if(!ifs){
@@ -67,6 +70,7 @@ public:
 			msg += err;
 			throw MyException(0, msg.c_str());
 		}
+
 	}
 
 };
