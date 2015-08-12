@@ -10,8 +10,6 @@
 #include <time.h>
 
 #include "./EricException/MyException.h"
-#include <EricCore\Utility\EricException\ExceptionGenerater.h>
-
 
 // for gcc
 #include <string.h>
