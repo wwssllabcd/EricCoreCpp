@@ -6,6 +6,7 @@
 
 #include "./DefineFiles/DefineFile.h"
 #include "./EricException/MyException.h" // for less include
+#include "./EricException/MyExcep.h" // for less include
 
 #include <string>
 #include <vector>

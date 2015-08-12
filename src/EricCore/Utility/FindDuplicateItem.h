@@ -68,7 +68,7 @@ private:
 	bool _isHit(ULONG value, BYTE* pMap, size_t mapSize){
 
 		if( value >=mapSize){
-			throw MyException(UTI_PARAM_ERROR, "value>=mapSize"); 
+			throw Exception::FDC_PARAM_ERR();
 		}
 
 		bool result = true;
