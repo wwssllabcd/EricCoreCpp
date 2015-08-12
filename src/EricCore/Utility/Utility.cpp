@@ -41,7 +41,6 @@ Utility::~Utility(void)
 
 void Utility::observerRegister( Utility::MsgFunPtr pF ){
 	if(pF==0){
-
 		throw MyException(UTI_OBS_REG_FAIL_NO, "observerRegister error: function ptr is empty" );
 	}
 	for(Utility::Observers::size_type i=0; i<m_observers.size(); i++){
