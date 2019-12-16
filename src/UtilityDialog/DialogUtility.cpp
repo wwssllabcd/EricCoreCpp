@@ -5,7 +5,6 @@
 #include "Dbt.h"
 #include <afxdlgs.h> //CFileDialog
 #include "Utility/StringUtility.h"
-#include "Utility/FileUtility.h"
 #include "Utility/EricException.h"
 
 using namespace EricCore;
@@ -22,7 +21,7 @@ int DialogUtility::get_cur_select(CComboBox_p cbobox) {
 }
 
 bool DialogUtility::getCheck(CButton_p btnCheck) {
-	return m_u.toBool(btnCheck->GetCheck());
+	return m_su.toBool(btnCheck->GetCheck());
 }
 
 void DialogUtility::setCheck(CButton_p btnCheck, bool isCheck) {
@@ -63,7 +62,7 @@ void DialogUtility::bind_combobox(CComboBox_p cbobox, vector<estring>& dataColl)
 
 estring DialogUtility::getFilePathByDialog(const estring& defaultFileName, const estring& fileFilter, bool checkExist) {
 	estring fileName;
-    FileUtility fu;
+    StringUtility fu;
 	while(1) {
 		CFileDialog fdlg(false, NULL, defaultFileName.c_str(), NULL, fileFilter.c_str());
 		if(fdlg.DoModal() == IDOK) {

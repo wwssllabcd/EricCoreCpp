@@ -1,7 +1,7 @@
 #pragma once
 
 #include "DefineFiles/DefineFile.h"
-#include <vector>
+
 
 using namespace std;
 
@@ -13,6 +13,7 @@ namespace EricCore {
         StringUtility(void);
         ~StringUtility(void);
 
+        //---------- for string 
         estring strFormat(const echar *fmt, ...);
         estring strFormat(int forDispatch, const echar* fmt, va_list marker);
 
@@ -23,18 +24,61 @@ namespace EricCore {
         estring toHexString(const eu16& arg);
         estring toHexString(const eu32& arg);
 
-        estring arrayToString(const eu8* charArray, int length, bool isEndWhenZero = false);
-        estring arrayToHexString(const eu8* charArray, int length, const estring& filler = _ET(" "));
+        estring arrayToString(eu8_p charArray, int length, bool isEndWhenZero = false);
+        estring arrayToHexString(eu8_p charArray, int length, const estring& filler = _ET(" "));
 
-        estring makeHexTable(int length, eu8* ary, eu16 offset = 0, bool needHeader = true);
-        estring makeAsciiTable(eu8* ary, int length);
+        estring makeHexTable(int length, eu8_p ary, eu16 offset = 0, bool needHeader = true);
+        estring makeAsciiTable(eu8_p ary, int length);
 
-        bool stringSplit(const estring& sign, const estring& orgStr, estring& str1, estring& str2);
-        void stringSplit(vector<estring>& array, const estring& sign, const estring& orgStr);
 
         ERIC_STATIC estring crLf();
 
+
+        //---------- for file
+ 
+        void toFile(const estring& filePath, const estring& msg, bool isAppend);
+        void toFile(const estring& filePath, eu8_p data, int length, bool isAppend = false);
+
+        eu8_p getFileData(const estring& filePath, eu8_p data);
+        eu8_p getFileData(const estring& filePath, eu32 fileSize, eu8_p data);
+        eu8_p getFileData(const estring& filePath, int startAddr, int length, eu8_p data);
+
+        eu32 getFileSize(const estring& filePath);
+        FILE* getFilePtr(const estring& filePath, const estring& condition);
+        bool isFileExist(const estring& filePath);
+        int deleteFile(const estring& filePath);
+
+        // for folder
+        void createFolder(const estring& folderName);
+
+        //---------- for convert
+        int toInt(const bool& boolean);
+        int toInt(eu8 value);
+
+        bool toBool(eu32 intValue);
+
+        void toArray(const eu16& source, eu8_p array, bool isMSB = true);
+        void toArray(const eu32& source, eu8_p array, bool isMSB = true);
+        void toArray(const estring& str, eu8_p ary, int length, eu8 stuffAsciiNum = 0x20);
+
+        eu32 hexToU32(estring hex);
+
+        eu16 toU16(eu8_p ary, bool isBigEndian = true);
+        eu32 toU32(eu8_p ary, bool isBigEndian = true);
+
+
+        // for bit
+        int getBit(const eu8& byte, int bitNo);
+        int getBit(const eu16& word, int num);
+
+        int ceil(int dividend, int divisor);
+        void makeBuf(eu32 number, int length, eu8_p buf);
+
+        eu32 getCheckSum(eu8_p ary, eu32 length);
+        eu32 getRandom(eu32 min, eu32 max);
+
     private:
         estring _toStringBase(estring param, const int& arg);
+        eu8_p getFileDataNew(const estring& filePath, int length, eu8_p data);
     };
 }

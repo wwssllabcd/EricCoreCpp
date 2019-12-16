@@ -3,6 +3,7 @@
 
 #include "DefineFiles/DefineFile.h"
 #include "Utility/Utility.h"
+#include "Utility/StringUtility.h"
 
 #include <vector>
 #include <afxcmn.h>  //CTabCtrl
@@ -69,15 +70,9 @@ namespace EricCore {
         }
 
         template <typename T>
-        eu32 getValue(T* pItem, estring convert = _ET("16")) {
+        eu32 getHexValue(T* pItem) {
             estring txt = getText(pItem);
-            eu32 res;
-            if (convert == _ET("16")) {
-                res = m_u.hexStringToULONG(txt);
-            } else {
-                res = m_u.toInt(txt);
-            }
-            return res;
+            return m_su.hexToU32(txt);
         }
 
         template <typename T>
@@ -96,5 +91,6 @@ namespace EricCore {
         vector< TabStruct > m_tabColls;
         //CDialog* m_pDialog;
         Utility m_u;
+        StringUtility m_su;
     };
 }
