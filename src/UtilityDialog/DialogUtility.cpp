@@ -4,7 +4,7 @@
 #include "DialogUtility.h"
 #include "Dbt.h"
 #include <afxdlgs.h> //CFileDialog
-#include "Utility/StringUtility.h"
+#include "Utility/Utility.h"
 #include "Utility/EricException.h"
 
 using namespace EricCore;
@@ -21,7 +21,7 @@ int DialogUtility::get_cur_select(CComboBox_p cbobox) {
 }
 
 bool DialogUtility::getCheck(CButton_p btnCheck) {
-	return m_su.toBool(btnCheck->GetCheck());
+	return m_u.toBool(btnCheck->GetCheck());
 }
 
 void DialogUtility::setCheck(CButton_p btnCheck, bool isCheck) {
@@ -62,14 +62,14 @@ void DialogUtility::bind_combobox(CComboBox_p cbobox, vector<estring>& dataColl)
 
 estring DialogUtility::getFilePathByDialog(const estring& defaultFileName, const estring& fileFilter, bool checkExist) {
 	estring fileName;
-    StringUtility fu;
+    Utility u;
 	while(1) {
 		CFileDialog fdlg(false, NULL, defaultFileName.c_str(), NULL, fileFilter.c_str());
 		if(fdlg.DoModal() == IDOK) {
 
 			fileName = fdlg.GetPathName();
 			if(checkExist) {
-				if(fu.isFileExist(fileName) == true) {
+				if(u.isFileExist(fileName) == true) {
 					estring msg = _T("File exist, Do you want to continue?");
 					int userSelect = AfxMessageBox(msg.c_str(), MB_OKCANCEL | MB_ICONINFORMATION | MB_DEFBUTTON2);
 					if(userSelect == IDCANCEL) {
@@ -206,16 +206,16 @@ estring DialogUtility::genTimeString(const SYSTEMTIME& current_date_time) {
 
 estring DialogUtility::genTimeString(const SYSTEMTIME& current_date_time, const estring& separateSign, estring format, const int separateType) {
 	estring yy, mo, dd, hh, mm, ss;
-	StringUtility su;
+	Utility u;
 	if(format == _ET("")) {
         format = _ET("04%");
 	} 
-    yy = su.toString(current_date_time.wYear);
-    mo = su.strFormat(format.c_str(), current_date_time.wMonth);
-    dd = su.strFormat(format.c_str(), current_date_time.wDay);
-    hh = su.strFormat(format.c_str(), current_date_time.wHour);
-    mm = su.strFormat(format.c_str(), current_date_time.wMinute);
-    ss = su.strFormat(format.c_str(), current_date_time.wSecond);
+    yy = u.toString(current_date_time.wYear);
+    mo = u.strFormat(format.c_str(), current_date_time.wMonth);
+    dd = u.strFormat(format.c_str(), current_date_time.wDay);
+    hh = u.strFormat(format.c_str(), current_date_time.wHour);
+    mm = u.strFormat(format.c_str(), current_date_time.wMinute);
+    ss = u.strFormat(format.c_str(), current_date_time.wSecond);
 	estring res;
 	if(separateType == 0) {
 		res = yy + separateSign + mo + separateSign + dd + separateSign + hh + separateSign + mm + separateSign + ss;

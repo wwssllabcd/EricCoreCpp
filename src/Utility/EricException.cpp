@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "EricException.h"
-#include "StringUtility.h"
+#include "Utility.h"
 #include <stdarg.h> // for va_start, va_end
 
 using namespace EricCore;
@@ -15,7 +15,7 @@ EricException::EricException(int errorCode, ELPCTSTR fmt, ...)
     estring str;
     va_list	arg;
     va_start( arg, fmt );
-    StringUtility su;
+    Utility su;
     str = su.strFormat(0, fmt, arg);
     va_end( arg );
 
@@ -27,7 +27,7 @@ EricException::EricException(ELPCTSTR fmt, ...)
     estring str;
     va_list	arg;
     va_start( arg, fmt );
-    StringUtility su;
+    Utility su;
     str = su.strFormat(0, fmt, arg);
     va_end( arg );
     m_errMsg = str;

@@ -3,7 +3,6 @@
 #include "stdafx.h"
 
 #include "Utility\Utility.h"
-#include "Utility\StringUtility.h"
 #include "Utility\Observer.h"
 #include "Utility\EricException.h"
 
@@ -14,7 +13,7 @@ estring m_string;
 #define ERIC_EXTERN_C extern "C"
 
 ERIC_EXTERN_C void* wrap_utility_strFormat(const echar* fmt, va_list marker) {
-	StringUtility su;
+	Utility su;
 	m_string = su.strFormat(0, fmt, marker);
 	return &m_string;
 }

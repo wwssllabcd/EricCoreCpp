@@ -2,7 +2,7 @@
 
 #include "stdafx.h"
 #include "Observer.h"
-#include "StringUtility.h"
+#include "Utility.h"
 #include "EricException.h"
 #include <stdarg.h> // for va_start, va_end
 
@@ -46,7 +46,7 @@ void Observer::sendMsg(int id, estring& msg, bool isCrLf, bool isClean) {
         }
         if (o.first == id) {
             if (isCrLf) {
-                msg = StringUtility::crLf() + msg;
+                msg = Utility::crLf() + msg;
             }
             pF(msg, isClean);
         }
@@ -57,7 +57,7 @@ void Observer::sendMsg(int id, bool isCrLf, bool isClean, ELPCTSTR fmt, ...) {
     estring	str;
     va_list	arg;
     va_start(arg, fmt);
-    StringUtility su;
+    Utility su;
     str = su.strFormat(0, fmt, arg);
     va_end(arg);
     sendMsg(id, str, isCrLf, isClean);
