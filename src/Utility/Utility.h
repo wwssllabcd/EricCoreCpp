@@ -17,6 +17,7 @@ namespace EricCore {
 
         estring toString(const size_t& arg);
         estring toString(const int& arg);
+        estring toString(const eu32& val, estring param);
 
         estring toHexString(const eu8& arg);
         estring toHexString(const eu16& arg);

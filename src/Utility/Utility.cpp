@@ -82,6 +82,10 @@ estring Utility::toString(const int& arg) {
     return _toStringBase(_ET("%ld"), arg);
 }
 
+estring Utility::toString(const eu32& val, estring param) {
+    return _toStringBase(param, val);
+}
+
 estring Utility::toHexString(const eu8& arg) {
     return _toStringBase(_ET("%02X"), arg);
 }
