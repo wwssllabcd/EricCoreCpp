@@ -70,7 +70,7 @@ estring DialogUtility::getFilePathByDialog(const estring& defaultFileName, const
 			fileName = fdlg.GetPathName();
 			if(checkExist) {
 				if(u.isFileExist(fileName) == true) {
-					estring msg = _T("File exist, Do you want to continue?");
+					estring msg = _ET("File exist, Do you want to continue?");
 					int userSelect = AfxMessageBox(msg.c_str(), MB_OKCANCEL | MB_ICONINFORMATION | MB_DEFBUTTON2);
 					if(userSelect == IDCANCEL) {
 						continue;
@@ -79,7 +79,7 @@ estring DialogUtility::getFilePathByDialog(const estring& defaultFileName, const
 			}
 			break;
 		} else {
-			fileName = _T("");
+			fileName = _ET("");
 			break;
 		}
 	}
@@ -87,7 +87,7 @@ estring DialogUtility::getFilePathByDialog(const estring& defaultFileName, const
 }
 
 estring DialogUtility::getFilePathByDialog() {
-	return getFilePathByDialog(_T(""), _T(""), false);
+	return getFilePathByDialog(_ET(""), _ET(""), false);
 }
 
 int DialogUtility::onDeviceEvent(eu32 wParam, DWORD_PTR lParam) {
@@ -201,7 +201,7 @@ SYSTEMTIME DialogUtility::getTimeNow() {
 }
 
 estring DialogUtility::genTimeString(const SYSTEMTIME& current_date_time) {
-	return genTimeString(current_date_time, _T(":"), _T("%02d"), 0);
+	return genTimeString(current_date_time, _ET(":"), _ET("%02d"), 0);
 }
 
 estring DialogUtility::genTimeString(const SYSTEMTIME& current_date_time, const estring& separateSign, estring format, const int separateType) {

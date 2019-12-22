@@ -19,9 +19,9 @@ IniUtility::~IniUtility()
 
 estring IniUtility::getString(estring appName, estring keyName, estring defaultString) {
 	echar cKey[200];
-	GetPrivateProfileString(appName.c_str(), keyName.c_str(), _T(""), cKey, 200, iniFilePath_.c_str());
+	GetPrivateProfileString(appName.c_str(), keyName.c_str(), _ET(""), cKey, 200, iniFilePath_.c_str());
 	Utility u;
-	estring res = u.strFormat(_T("%s"), cKey);
+	estring res = u.strFormat(_ET("%s"), cKey);
 	if(res.length() == 0) {
 		res = defaultString;
 	}
