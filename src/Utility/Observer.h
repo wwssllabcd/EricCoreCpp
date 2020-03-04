@@ -6,10 +6,11 @@
 using namespace std;
 
 
-#define SEND_MSG(fmt, ...)                 Observer::sendMsg(0, true, false, fmt, __VA_ARGS__)
-#define SEND_MSG_NOCRLF(fmt, ...)          Observer::sendMsg(0, false, false, fmt, __VA_ARGS__)
-#define SEND_MSG_STR(estr)                 Observer::sendMsg(0, estr, true, false)
-#define SEND_MSG_CLEAR()                   Observer::sendMsg(0, false, true, _ET(""))
+#define SEND_MSG(fmt, ...)                       Observer::sendMsg(0, true, false, fmt, __VA_ARGS__)
+#define SEND_MSG_NOCRLF(fmt, ...)                Observer::sendMsg(0, false, false, fmt, __VA_ARGS__)
+#define SEND_MSG_STR(estr)                       Observer::sendMsg(0, estr, true, false)
+#define SEND_MSG_STR_CLEAR(estr)                 Observer::sendMsg(0, estr, false, true)
+#define SEND_MSG_CLEAR()                         Observer::sendMsg(0, false, true, _ET(""))
 
 namespace EricCore {
     class Observer

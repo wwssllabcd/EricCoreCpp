@@ -12,7 +12,9 @@
 	typedef const T* const T##_sp;    \
 	typedef T* const T##_p;           \
 	typedef T* T##_usp;               \
-    typedef volatile T  v##T;             
+	typedef const T&  T##_cr;         \
+    typedef volatile T  v##T;         
+	
 
 typedef unsigned char         eu8;
 ERIC_GEN_OTHER_TYPE(eu8);
@@ -46,7 +48,10 @@ typedef char                  echar;
 typedef const char*           ELPCTSTR;
 typedef int lpts_wsl;
 
-#endif // 
+#endif 
+
+ERIC_GEN_OTHER_TYPE(echar);
+
 
 
 

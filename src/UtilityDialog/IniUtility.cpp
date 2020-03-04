@@ -6,7 +6,7 @@
 
 using namespace EricCore;
 
-IniUtility::IniUtility(estring iniFilePath)
+IniUtility::IniUtility(estring_cr iniFilePath)
 	:iniFilePath_(iniFilePath)
 {
 }
@@ -17,7 +17,7 @@ IniUtility::~IniUtility()
 }
 
 
-estring IniUtility::getString(estring appName, estring keyName, estring defaultString) {
+estring IniUtility::getString(estring_cr appName, estring_cr keyName, estring_cr defaultString) {
 	echar cKey[200];
 	GetPrivateProfileString(appName.c_str(), keyName.c_str(), _ET(""), cKey, 200, iniFilePath_.c_str());
 	Utility u;
@@ -28,7 +28,7 @@ estring IniUtility::getString(estring appName, estring keyName, estring defaultS
 	return res;
 }
 
-bool IniUtility::getBool(estring appName, estring keyName, bool defaultVal) {
+bool IniUtility::getBool(estring_cr appName, estring_cr keyName, bool defaultVal) {
 	bool res = false;
 	if(GetPrivateProfileInt(appName.c_str(), keyName.c_str(), defaultVal, iniFilePath_.c_str())) {
 		res = true;
@@ -38,7 +38,7 @@ bool IniUtility::getBool(estring appName, estring keyName, bool defaultVal) {
 	return res;
 }
 
-eu32 IniUtility::getInt(estring appName, estring keyName, eu32 defaultVal){
+eu32 IniUtility::getInt(estring_cr appName, estring_cr keyName, eu32 defaultVal){
 	return GetPrivateProfileInt(appName.c_str(), keyName.c_str(), defaultVal, iniFilePath_.c_str());
 }
 

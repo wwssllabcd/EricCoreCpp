@@ -50,3 +50,6 @@
 
 #endif
 
+typedef const estring&    estring_cr;
+
+

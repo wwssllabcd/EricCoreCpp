@@ -12,19 +12,17 @@ namespace EricCore {
         ~Utility(void);
 
         //---------- for string 
-        estring strFormat(const echar* fmt, ...);
-        estring strFormat(int forDispatch, const echar* fmt, va_list marker);
+        estring strFormat(echar_sp fmt, ...);
+        estring strFormatValist(int forDispatch, echar_sp fmt, va_list marker);
 
-        estring toString(const size_t& arg);
-        estring toString(const int& arg);
-        estring toString(const eu32& val, estring param);
+        estring toString(const eu32& val, estring_cr param = _ET("%D"));
 
-        estring toHexString(const eu8& arg);
-        estring toHexString(const eu16& arg);
-        estring toHexString(const eu32& arg);
+		estring toHexString(const eu8& arg);
+		estring toHexString(const eu16& arg);
+        estring toHexString(const eu32& arg, estring_cr param = _ET("%X"));
 
         estring arrayToString(eu8_sp charArray, int length, bool isEndWhenZero = false);
-        estring arrayToHexString(eu8_sp charArray, int length, const estring& filler = _ET(" "));
+        estring arrayToHexString(eu8_sp charArray, int length, estring_cr filler = _ET(" "));
 
         estring makeHexTable(int length, eu8_sp ary, eu16 offset = 0, bool needHeader = true);
         estring makeAsciiTable(eu8_sp ary, int length);
@@ -33,20 +31,20 @@ namespace EricCore {
         
         //---------- for file
 
-        void toFile(const estring& filePath, const estring& msg, bool isAppend);
-        void toFile(const estring& filePath, eu8_p data, int length, bool isAppend = false);
+        void toFile(estring_cr filePath, estring_cr msg, bool isAppend);
+        void toFile(estring_cr filePath, eu8_p data, int length, bool isAppend = false);
 
-        eu8_p getFileData(const estring& filePath, eu8_p data);
-        eu8_p getFileData(const estring& filePath, eu32 fileSize, eu8_p data);
-        eu8_p getFileData(const estring& filePath, int startAddr, int length, eu8_p data);
+        eu8_p getFileData(estring_cr filePath, eu8_p data);
+        eu8_p getFileData(estring_cr filePath, eu32 fileSize, eu8_p data);
+        eu8_p getFileData(estring_cr filePath, int startAddr, int length, eu8_p data);
 
-        eu32 getFileSize(const estring& filePath);
-        FILE* getFilePtr(const estring& filePath, const estring& condition);
-        bool isFileExist(const estring& filePath);
-        int deleteFile(const estring& filePath);
+        eu32 getFileSize(estring_cr filePath);
+        FILE* getFilePtr(estring_cr filePath, estring_cr condition);
+        bool isFileExist(estring_cr filePath);
+        int deleteFile(estring_cr filePath);
 
         // for folder
-        void createFolder(const estring& folderName);
+        void createFolder(estring_cr folderName);
 
         //---------- for convert
         int toInt(const bool& boolean);
@@ -56,9 +54,9 @@ namespace EricCore {
 
         void toArray(const eu16& source, eu8_p array, bool isMSB = true);
         void toArray(const eu32& source, eu8_p array, bool isMSB = true);
-        void toArray(const estring& str, eu8_p ary, int length, eu8 stuffAsciiNum = 0x20);
+        void toArray(estring_cr str, eu8_p ary, int length, eu8 stuffAsciiNum = 0x20);
 
-        eu32 hexToU32(estring hex);
+        eu32 hexToU32(estring_cr hex);
 
         eu16 toU16(eu8_sp ary, bool isBigEndian = true);
         eu32 toU32(eu8_sp ary, bool isBigEndian = true);
@@ -74,8 +72,8 @@ namespace EricCore {
         eu32 getRandom(eu32 min, eu32 max);
 
     private:
-        estring _toStringBase(estring param, const int& arg);
-        eu8_p _getFileDataNew(const estring& filePath, int length, eu8_p data);
+        estring _toStringBase(estring_cr param, const int& arg);
+        eu8_p _getFileDataNew(estring_cr filePath, int length, eu8_p data);
     };
 }
 

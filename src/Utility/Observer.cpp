@@ -58,7 +58,7 @@ void Observer::sendMsg(int id, bool isCrLf, bool isClean, ELPCTSTR fmt, ...) {
     va_list	arg;
     va_start(arg, fmt);
     Utility su;
-    str = su.strFormat(0, fmt, arg);
+    str = su.strFormatValist(0, fmt, arg);
     va_end(arg);
     sendMsg(id, str, isCrLf, isClean);
 }

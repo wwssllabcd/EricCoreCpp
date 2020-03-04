@@ -4,7 +4,8 @@
 #include "DefineFiles/DefineFile.h"
 
 
-#define THROW_MYEXCEPTION(errCode, fmt, ...) EricCore::EricException(errCode, fmt, __VA_ARGS__)
+#define THROW_MYEXCEPTION(errCode, msg)      throw EricCore::EricException(errCode, msg)
+
 
 namespace EricCore {
 
@@ -18,9 +19,8 @@ namespace EricCore {
 		virtual ~EricException(void) throw() {
 		};
 
-        EricException(int errorCode, const estring& msg);
-        EricException(int errorCode, ELPCTSTR fmt, ...);
-        EricException(ELPCTSTR fmt, ...);
+        EricException(int errorCode, estring_cr msg);
+		EricException(int errorCode, ELPCTSTR fmt, ...);
 
         const echar* what(void);
         int get_error_code(void) const;

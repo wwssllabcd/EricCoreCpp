@@ -28,7 +28,7 @@ void DialogUtility::setCheck(CButton_p btnCheck, bool isCheck) {
 	btnCheck->SetCheck(isCheck);
 }
 
-void DialogUtility::setFont(CEdit_p item, int size, const estring& fontName, bool reDraw, CFont* font) {
+void DialogUtility::setFont(CEdit_p item, int size, estring_cr fontName, bool reDraw, CFont_p font) {
 	if(item == 0) {
 		THROW_MYEXCEPTION(GENERAL_FAIL, _ET("DialogUtility::setFont, item = nullPtr"));
 	}
@@ -41,7 +41,7 @@ void DialogUtility::setFont(CEdit_p item, int size, const estring& fontName, boo
 	item->SetFont(font, reDraw);
 }
 
-bool DialogUtility::getUserYesNo(const estring& msg) {
+bool DialogUtility::getUserYesNo(estring_cr msg) {
 	int userSelect = AfxMessageBox(msg.c_str(), MB_OKCANCEL | MB_ICONINFORMATION | MB_DEFBUTTON2);
 	if(userSelect == IDOK) {
 		return true;
@@ -60,7 +60,7 @@ void DialogUtility::bind_combobox(CComboBox_p cbobox, vector<estring>& dataColl)
 	cbobox->SetCurSel(0);
 }
 
-estring DialogUtility::getFilePathByDialog(const estring& defaultFileName, const estring& fileFilter, bool checkExist) {
+estring DialogUtility::getFilePathByDialog(estring_cr defaultFileName, estring_cr fileFilter, bool checkExist) {
 	estring fileName;
     Utility u;
 	while(1) {
@@ -125,7 +125,7 @@ void DialogUtility::updateOS() {
 	}
 }
 
-void DialogUtility::executeShell(const estring& verb, const estring& cmd, const estring& param, bool isHide) {
+void DialogUtility::executeShell(estring_cr verb, estring_cr cmd, estring_cr param, bool isHide) {
 #if _MSC_VER == 1200 //VC6 compiler
 	throw MyException(DU_NOT_SUPPORT_IN_VC6, "DU_NOT_SUPPORT_IN_VC6");
 #else
@@ -146,7 +146,7 @@ void DialogUtility::executeShell(const estring& verb, const estring& cmd, const 
 #endif
 }
 
-void DialogUtility::tabCtrl_addItem(CDialog& dlgPtr, int id, CTabCtrl& mainTabPtr, const estring& description) {
+void DialogUtility::tabCtrl_addItem(CDialog& dlgPtr, int id, CTabCtrl& mainTabPtr, estring_cr description) {
 	DialogUtility::TabStruct tmp;
 
 	tmp.dlgPtr = &dlgPtr;
@@ -176,7 +176,7 @@ void DialogUtility::tabCtrl_init(void) {
 	}
 }
 
-void DialogUtility::tabCtrl_moveLocation(CTabCtrl* mainTabPtr, CDialog* targetDialog) {
+void DialogUtility::tabCtrl_moveLocation(CTabCtrl_sp mainTabPtr, CDialog_p targetDialog) {
 	CRect rc;
 	mainTabPtr->GetClientRect(rc);
 	rc.top += 25;
@@ -186,11 +186,11 @@ void DialogUtility::tabCtrl_moveLocation(CTabCtrl* mainTabPtr, CDialog* targetDi
 	targetDialog->MoveWindow(&rc);
 }
 
-void DialogUtility::showMessageBox(const echar* msg) {
+void DialogUtility::showMessageBox(echar_sp msg) {
 	AfxMessageBox(msg);
 }
 
-void DialogUtility::showMessageBox(estring& msg) {
+void DialogUtility::showMessageBox(estring_cr msg) {
 	AfxMessageBox(msg.c_str());
 }
 
@@ -204,7 +204,7 @@ estring DialogUtility::genTimeString(const SYSTEMTIME& current_date_time) {
 	return genTimeString(current_date_time, _ET(":"), _ET("%02d"), 0);
 }
 
-estring DialogUtility::genTimeString(const SYSTEMTIME& current_date_time, const estring& separateSign, estring format, const int separateType) {
+estring DialogUtility::genTimeString(const SYSTEMTIME& current_date_time, estring_cr separateSign, estring format, const int separateType) {
 	estring yy, mo, dd, hh, mm, ss;
 	Utility u;
 	if(format == _ET("")) {

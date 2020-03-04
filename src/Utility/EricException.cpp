@@ -5,7 +5,7 @@
 
 using namespace EricCore;
 
-EricException::EricException(int errorCode, const estring& msg)
+EricException::EricException(int errorCode, estring_cr msg)
     :m_errorCode(errorCode)
     ,m_errMsg(msg) {
 }
@@ -16,20 +16,9 @@ EricException::EricException(int errorCode, ELPCTSTR fmt, ...)
     va_list	arg;
     va_start( arg, fmt );
     Utility su;
-    str = su.strFormat(0, fmt, arg);
+    str = su.strFormatValist(0, fmt, arg);
     va_end( arg );
 
-    m_errMsg = str;
-}
-
-EricException::EricException(ELPCTSTR fmt, ...)
-    :m_errorCode(0) {
-    estring str;
-    va_list	arg;
-    va_start( arg, fmt );
-    Utility su;
-    str = su.strFormat(0, fmt, arg);
-    va_end( arg );
     m_errMsg = str;
 }
 
