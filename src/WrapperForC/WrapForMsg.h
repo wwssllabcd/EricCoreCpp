@@ -1,15 +1,10 @@
 #pragma once
 
-#include "../DefineFiles/EricType.h"
-#include <stdarg.h>
 
-#define CLEAR_MSG() wrap_utility_clear_msg()
-#define SHOW_EXCEPT(x) wrap_exception(x)
+#define WRAP_THROW_EXCEPTION(MSG)                throw_exception_c(0, (MSG))
+#define WRAP_PRINT_MSG(fmt, ...)                 print_msg_c(fmt, ##__VA_ARGS__)
 
-void* wrap_utility_strFormat(echar_sp fmt, va_list valist);
-void wrap_utility_sendmsg(void* peString, eu32 isTrue);
-void wrap_utility_clear_msg(void);
-void wrap_exception(echar_sp c);
-void wrap_exception_with_number(int errCode, echar_sp c);
 
-void wrap_print_valist(echar_sp format, va_list args);
+void throw_exception_c(int errCode, char* c);
+void print_msg_c(const char* format, ...);
+void print_msg_valist_c(const char *fmt, va_list arg);

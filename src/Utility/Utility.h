@@ -15,7 +15,7 @@ namespace EricCore {
         estring strFormat(echar_sp fmt, ...);
         estring strFormatValist(int forDispatch, echar_sp fmt, va_list marker);
 
-        estring toString(const eu32& val, estring_cr param = _ET("%D"));
+        estring toString(const eu32& val);
 
 		estring toHexString(const eu8& arg);
 		estring toHexString(const eu16& arg);
@@ -26,6 +26,8 @@ namespace EricCore {
 
         estring makeHexTable(int length, eu8_sp ary, eu16 offset = 0, bool needHeader = true);
         estring makeAsciiTable(eu8_sp ary, int length);
+
+		void convertToWchar(wchar_t* wc, const char* c, int maxLen);
 
         ERIC_STATIC estring crLf();
         

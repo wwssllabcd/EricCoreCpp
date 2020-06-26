@@ -12,7 +12,6 @@
 	typedef const T* const T##_sp;    \
 	typedef T* const T##_p;           \
 	typedef T* T##_usp;               \
-	typedef const T&  T##_cr;         \
     typedef volatile T  v##T;         
 	
 

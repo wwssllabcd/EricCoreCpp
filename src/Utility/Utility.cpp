@@ -23,6 +23,10 @@ estring Utility::crLf() {
 	return _ET("\r\n");
 }
 
+void Utility::convertToWchar(wchar_t* wc, const char* c, int maxLen) {
+	swprintf(wc, maxLen, L"%hs", c);
+}
+
 estring Utility::strFormatValist(int forDispatch, echar_sp fmt, va_list marker) {
 	estring retStr(_ET(""));
 	if (NULL != fmt) {
@@ -72,8 +76,8 @@ estring Utility::_toStringBase(estring_cr param, const int& arg) {
 	return str;
 }
 
-estring Utility::toString(const eu32& val, estring_cr param) {
-	return _toStringBase(param, val);
+estring Utility::toString(const eu32& val) {
+	return _toStringBase(_ET("%d"), val);
 }
 
 estring Utility::toHexString(const eu8& arg) {

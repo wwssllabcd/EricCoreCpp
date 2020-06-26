@@ -53,3 +53,4 @@
 typedef const estring&    estring_cr;
 
 
+#define ERIC_EXTERN_C extern "C"

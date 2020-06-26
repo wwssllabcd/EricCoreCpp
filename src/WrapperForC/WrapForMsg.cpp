@@ -6,50 +6,47 @@
 #include "Utility\Observer.h"
 #include "Utility\EricException.h"
 
+#include <stdarg.h>
+
 using namespace EricCore;
 
-estring m_string;
+void throw_exception(int errCode, const char* c) {
 
-#define ERIC_EXTERN_C extern "C"
+#ifdef _UNICODE
+	wchar_t ws[100];
+	Utility u;
+	u.convertToWchar(ws, c, sizeof(ws));
+	estring msg(ws);
+#else
+	estring msg(c);
+#endif
 
-ERIC_EXTERN_C void* wrap_utility_strFormat(echar_sp fmt, va_list marker) {
-	Utility su;
-	m_string = su.strFormatValist(0, fmt, marker);
-	return &m_string;
+	THROW_MYEXCEPTION(errCode, msg);
 }
 
-ERIC_EXTERN_C void wrap_utility_sendmsg(void* peString, eu32 uIsTrue) {
-	estring* str = (estring*)peString;
-	bool isTrue;
-	if(uIsTrue) {
-		isTrue = true;
-	} else {
-		isTrue = false;
+ERIC_EXTERN_C void throw_exception_c(int errCode, char* c) {
+	throw_exception(errCode, c);
 	}
     
+ERIC_EXTERN_C void print_msg_valist_c(const char *fmt, va_list arg) {
 
-    //Observer::sendMsg(*str, isTrue, false, 1);
+	Utility u;
+	estring	str;
+
+#ifdef _UNICODE
+	wchar_t ws[100];
+	u.convertToWchar(ws, fmt, sizeof(ws));
+	str = u.strFormatValist(0, ws, arg);
+#else
+	str = u.strFormatValist(0, fmt, arg);
+#endif 
+	Observer::sendMsg(1, str, true, false);
+
 }
 
-ERIC_EXTERN_C void wrap_utility_clear_msg() {
-	//Utility u;
-	//u.sendMsgUartClean();
-}
-
-void throw_exception(int errCode, echar_sp c) {
-	estring msg(c);
-    THROW_MYEXCEPTION(errCode, msg);
-}
-
-ERIC_EXTERN_C void wrap_exception(echar_sp c) {
-    throw_exception(0, c);
-}
-
-ERIC_EXTERN_C void wrap_exception_with_number(int errCode, echar_sp c) {
-    throw_exception(errCode, c);
-}
-
-ERIC_EXTERN_C void wrap_print_valist(echar_sp format, va_list args) {
-    void* str = wrap_utility_strFormat(format, args);
-    wrap_utility_sendmsg(str, false);
+ERIC_EXTERN_C void print_msg_c(const char* fmt, ...) {
+	va_list	arg;
+	va_start(arg, fmt);
+	print_msg_valist_c(fmt, arg);
+	va_end(arg);
 }
