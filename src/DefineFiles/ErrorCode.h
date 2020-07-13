@@ -10,7 +10,7 @@
 // Utility
 #define UTI_OBS_REG_FAIL_NO                         0x0301
 #define UTI_SEND_MSG_FAIL                           0x0302
-#define UTI_TO_FILE_FAIL                            0x0305
+#define UTI_OPEN_FILE_FAIL                          0x0305
 #define UTI_GET_FILE_DATA_FAIL                      0x0308
 #define UTI_GET_FILE_SIZE_FAIL                      0x0309
 

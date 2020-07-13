@@ -36,12 +36,11 @@ namespace EricCore {
         void toFile(estring_cr filePath, estring_cr msg, bool isAppend);
         void toFile(estring_cr filePath, eu8_p data, int length, bool isAppend = false);
 
-        eu8_p getFileData(estring_cr filePath, eu8_p data);
+
         eu8_p getFileData(estring_cr filePath, eu32 fileSize, eu8_p data);
-        eu8_p getFileData(estring_cr filePath, int startAddr, int length, eu8_p data);
+
 
         eu32 getFileSize(estring_cr filePath);
-        FILE* getFilePtr(estring_cr filePath, estring_cr condition);
         bool isFileExist(estring_cr filePath);
         int deleteFile(estring_cr filePath);
 

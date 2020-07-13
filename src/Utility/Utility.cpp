@@ -176,63 +176,20 @@ estring Utility::makeHexTable(int length, eu8_sp ary, eu16 offset, bool needHead
 }
 
 eu32 Utility::getFileSize(estring_cr filePath) {
-	FILE* fpSource = getFilePtr(filePath, _ET("rb"));
-
-	if (fpSource == NULL) {
-		estring msg = _ET("GetFileSize: Can`t open file ") + filePath;
-		THROW_MYEXCEPTION(UTI_GET_FILE_SIZE_FAIL, msg.c_str());
+	struct _stat buffer;
+	_tstat(filePath.c_str(), &buffer);
+	return buffer.st_size;
 	}
 
-	fseek(fpSource, 0, SEEK_END);
-	eu32 fileLength = 0;
-	fileLength = ftell(fpSource);
-	fclose(fpSource);
-	return fileLength;
-}
-
-eu8_p Utility::_getFileDataNew(estring_cr filePath, int length, eu8_p data) {
-	fstream file;
-	file.open(filePath, ios::in | ios::binary);
-	file.read((char*)data, length);
-	file.close();
-	return data;
-}
-
-eu8_p Utility::getFileData(estring_cr filePath, int startAddr, int length, eu8_p data) {
-	if (startAddr == 0) {
-		return _getFileDataNew(filePath, length, data);
+eu8_p Utility::getFileData(estring_cr filePath, eu32 length, eu8_p data) {
+	ifstream ifs(filePath, ios::in | ios::binary);
+	if (ifs.fail()) {
+		estring msg = _ET("getFileData: Can`t open file ") + filePath;
+		THROW_MYEXCEPTION(UTI_OPEN_FILE_FAIL, msg.c_str());
 	}
 
-	int i;
-	FILE* fpSource = getFilePtr(filePath, _ET("rb"));
-
-	if (fpSource == NULL) {
-		estring msg = _ET("GetFileData: Can`t open file ") + filePath;
-		THROW_MYEXCEPTION(UTI_GET_FILE_DATA_FAIL, msg.c_str());
-	}
-
-	long fileSize = getFileSize(filePath);
-
-	if ((startAddr + length) > fileSize) {
-		THROW_MYEXCEPTION(UTI_GET_FILE_DATA_FAIL, _ET("GetFileData: get file size out of boundary"));
-	}
-
-	fseek(fpSource, startAddr, SEEK_SET);
-	for (i = 0; i < length; i++) {
-		data[i] = fgetc(fpSource);
-	}
-	fclose(fpSource);
-	return data;
-}
-
-eu8_p Utility::getFileData(estring_cr filePath, eu32 fileSize, eu8_p data) {
-	getFileData(filePath, 0, fileSize, data);
-	return data;
-}
-
-eu8_p Utility::getFileData(estring_cr filePath, eu8_p data) {
-	long fileSize = getFileSize(filePath);
-	getFileData(filePath, fileSize, data);
+	ifs.read((char*)data, length); // binary input
+	ifs.close();
 	return data;
 }
 
@@ -257,12 +214,12 @@ void Utility::toFile(estring_cr filePath, eu8_p data, int length, bool isAppend)
 		if (ofs.fail() == false) {
 			break;
 		}
-		Sleep(500);
+		Sleep(100);
 	}
 
 	if (ofs.fail() == true) {
 		estring msg = _ET("toFile: Can`t open file ") + filePath;
-		THROW_MYEXCEPTION(UTI_TO_FILE_FAIL, msg.c_str());
+		THROW_MYEXCEPTION(UTI_OPEN_FILE_FAIL, msg.c_str());
 	}
 
 	// output data by ANSI stream, because it's "byte array"
@@ -271,13 +228,6 @@ void Utility::toFile(estring_cr filePath, eu8_p data, int length, bool isAppend)
 	// even you didn't close, ofs will be close in destructor
 	// fstream destruct call close for you. When an exception is thrown, the file is closed automatically.(RAII)
 	ofs.close();
-}
-
-// output Array to Binary file
-FILE* Utility::getFilePtr(estring_cr filePath, estring_cr condition) {
-	FILE* fpSource = 0;
-	tfopen_s(&fpSource, filePath.c_str(), condition.c_str());
-	return fpSource;
 }
 
 bool Utility::isFileExist(estring_cr filePath) {
