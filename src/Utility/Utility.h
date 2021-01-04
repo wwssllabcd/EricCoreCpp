@@ -14,7 +14,7 @@ namespace EricCore {
         //---------- for string 
         estring strFormat(echar_sp fmt, ...);
         estring strFormatValist(int forDispatch, echar_sp fmt, va_list marker);
-
+		
         estring toString(const eu32& val);
 
 		estring toHexString(const eu8& arg);
@@ -32,13 +32,10 @@ namespace EricCore {
         ERIC_STATIC estring crLf();
         
         //---------- for file
-
         void toFile(estring_cr filePath, estring_cr msg, bool isAppend);
         void toFile(estring_cr filePath, eu8_p data, int length, bool isAppend = false);
 
-
         eu8_p getFileData(estring_cr filePath, eu32 fileSize, eu8_p data);
-
 
         eu32 getFileSize(estring_cr filePath);
         bool isFileExist(estring_cr filePath);
@@ -67,14 +64,13 @@ namespace EricCore {
         int getBit(const eu16& word, int num);
 
         int ceil(int dividend, int divisor);
-        void makeBuf(eu32 number, int length, eu8_p buf);
+        void makeBuf(eu32 number, eu32 length, eu8_p buf);
 
         eu32 getCheckSum(eu8_sp ary, eu32 length);
         eu32 getRandom(eu32 min, eu32 max);
 
     private:
         estring _toStringBase(estring_cr param, const int& arg);
-        eu8_p _getFileDataNew(estring_cr filePath, int length, eu8_p data);
     };
 }
 

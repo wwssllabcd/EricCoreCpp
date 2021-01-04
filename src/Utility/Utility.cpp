@@ -179,7 +179,7 @@ eu32 Utility::getFileSize(estring_cr filePath) {
 	struct _stat buffer;
 	_tstat(filePath.c_str(), &buffer);
 	return buffer.st_size;
-	}
+}
 
 eu8_p Utility::getFileData(estring_cr filePath, eu32 length, eu8_p data) {
 	ifstream ifs(filePath, ios::in | ios::binary);
@@ -195,22 +195,51 @@ eu8_p Utility::getFileData(estring_cr filePath, eu32 length, eu8_p data) {
 
 // output to Text file
 void Utility::toFile(estring_cr filePath, estring_cr msg, bool isAppend) {
-	toFile(filePath, (eu8*)msg.c_str(), (int)msg.length(), isAppend);
+	//if it have not the file , ofstream will make a new file
+	tofstream ofs;
+	for (int i = 0; i < 10; i++) {
+		if (isAppend == true) {
+			// ios::binary is mean "Do not replace CRLF"
+			ofs.open(filePath.c_str(), ios::out | ios::binary | ios::app);
+		}
+		else {
+			ofs.open(filePath.c_str(), ios::out | ios::binary | ios::trunc);
+		}
+
+		if (ofs.fail() == false) {
+			break;
+		}
+		Sleep(100);
+	}
+
+	if (ofs.fail() == true) {
+		estring msg = _ET("toFile: Can`t open file ") + filePath;
+		THROW_MYEXCEPTION(UTI_OPEN_FILE_FAIL, msg.c_str());
+	}
+
+
+	ofs.write(msg.c_str(), msg.length());
+
+	// even you didn't close, ofs will be close in destructor
+	// fstream destruct call close for you. When an exception is thrown, the file is closed automatically.(RAII)
+	ofs.close();
 }
+
 
 // output Array to Binary file
 void Utility::toFile(estring_cr filePath, eu8_p data, int length, bool isAppend) {
 	//if it have not the file , ofstream will make a new file
 	ofstream ofs;
-	int i;
-	for (i = 0; i < 10; i++) {
-		if (isAppend == true) {
-			// ios::binary is mean," Do not replace CRLF "
-			ofs.open(filePath.c_str(), ios::out | ios::binary | ios::app);
-		} else {
-			ofs.open(filePath.c_str(), ios::out | ios::binary | ios::trunc);
-		}
+	int mode;
+	if (isAppend == true) {
+		// ios::binary is mean "Do not replace CRLF"
+		mode = ios::out | ios::binary | ios::app;
+	} else {
+		mode = ios::out | ios::binary | ios::trunc;
+	}
 
+	for (int i = 0; i < 10; i++) {
+		ofs.open(filePath.c_str(), mode);
 		if (ofs.fail() == false) {
 			break;
 		}
@@ -326,11 +355,11 @@ int Utility::ceil(int dividend, int divisor) {
 	return result;
 }
 
-void Utility::makeBuf(eu32 number, int length, eu8_p buf) {
+void Utility::makeBuf(eu32 number, eu32 length, eu8_p buf) {
 	//align 512
 	if ((length % 512) == 0) {
 		eu8 wsl[512];
-		for (int a = 0; a < 512; a += 4) {
+		for (eu32 a = 0; a < 512; a += 4) {
 			toArray(number, wsl + a);
 		}
 		int cnt = length / 512;
@@ -341,13 +370,13 @@ void Utility::makeBuf(eu32 number, int length, eu8_p buf) {
 		return;
 	}
 
-	for (int c = 0; c < length; c += 4) {
+	for (eu32 c = 0; c < length; c += 4) {
 		toArray(number, buf + c);
 	}
 
 	// make signature
-	int cnt = length / 512;
-	for (int d = 0; d < cnt; d++) {
+    eu32 cnt = length / 512;
+	for (eu32 d = 0; d < cnt; d++) {
 		toArray(number + d, buf + d * 512);
 	}
 }
