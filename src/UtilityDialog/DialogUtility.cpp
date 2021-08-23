@@ -117,7 +117,7 @@ int DialogUtility::onDeviceEvent(eu32 wParam, DWORD_PTR lParam) {
 }
 
 
-void DialogUtility::updateOS() {
+void DialogUtility::update_message() {
 	MSG message;
 	while(::PeekMessage(&message, NULL, 0, 0, PM_REMOVE)) {
 		::TranslateMessage(&message);
@@ -129,8 +129,7 @@ void DialogUtility::executeShell(estring_cr verb, estring_cr cmd, estring_cr par
 #if _MSC_VER == 1200 //VC6 compiler
 	throw MyException(DU_NOT_SUPPORT_IN_VC6, "DU_NOT_SUPPORT_IN_VC6");
 #else
-	SHELLEXECUTEINFO info;
-	memset(&info, 0, sizeof(info));
+    SHELLEXECUTEINFO info = { 0 };
 	info.fMask = SEE_MASK_NOCLOSEPROCESS; //否則info.hProcess永遠是NULL
 	info.nShow = SW_SHOW;
 	if(isHide) {
@@ -227,3 +226,13 @@ estring DialogUtility::genTimeString(const SYSTEMTIME& current_date_time, estrin
 	return res;
 }
 
+void DialogUtility::show_txt_msg(CEdit_p pMsgArea, bool isClean, estring_cr msg) {
+    if (isClean) {
+        pMsgArea->SetWindowText(msg.c_str());
+    } else {
+        int end = pMsgArea->GetWindowTextLength();
+        pMsgArea->SetSel(end, end);
+        pMsgArea->ReplaceSel(msg.c_str());
+    }
+    update_message();
+}

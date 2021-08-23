@@ -71,6 +71,13 @@ estring Utility::strFormat(echar_sp fmt, ...) {
 	return retStr;
 }
 
+estring Utility::toString(eu8_p array, eu32 len) {
+    vector<char> v(array, array + len);
+    string str(v.begin(), v.end());
+    wstring wstr(v.begin(), v.end());
+    return wstr;
+}
+
 estring Utility::_toStringBase(estring_cr param, const int& arg) {
 	estring str = strFormat(param.c_str(), arg);
 	return str;
@@ -184,8 +191,7 @@ eu32 Utility::getFileSize(estring_cr filePath) {
 eu8_p Utility::getFileData(estring_cr filePath, eu32 length, eu8_p data) {
 	ifstream ifs(filePath, ios::in | ios::binary);
 	if (ifs.fail()) {
-		estring msg = _ET("getFileData: Can`t open file ") + filePath;
-		THROW_MYEXCEPTION(UTI_OPEN_FILE_FAIL, msg.c_str());
+		THROW_MYEXCEPTION(UTI_OPEN_FILE_FAIL, _ET("getFileData: Can`t open file ") + filePath);
 	}
 
 	ifs.read((char*)data, length); // binary input
@@ -193,38 +199,16 @@ eu8_p Utility::getFileData(estring_cr filePath, eu32 length, eu8_p data) {
 	return data;
 }
 
-// output to Text file
-void Utility::toFile(estring_cr filePath, estring_cr msg, bool isAppend) {
-	//if it have not the file , ofstream will make a new file
-	tofstream ofs;
-	for (int i = 0; i < 10; i++) {
-		if (isAppend == true) {
-			// ios::binary is mean "Do not replace CRLF"
-			ofs.open(filePath.c_str(), ios::out | ios::binary | ios::app);
-		}
-		else {
-			ofs.open(filePath.c_str(), ios::out | ios::binary | ios::trunc);
-		}
-
-		if (ofs.fail() == false) {
-			break;
-		}
-		Sleep(100);
-	}
-
-	if (ofs.fail() == true) {
-		estring msg = _ET("toFile: Can`t open file ") + filePath;
-		THROW_MYEXCEPTION(UTI_OPEN_FILE_FAIL, msg.c_str());
-	}
-
-
-	ofs.write(msg.c_str(), msg.length());
-
-	// even you didn't close, ofs will be close in destructor
-	// fstream destruct call close for you. When an exception is thrown, the file is closed automatically.(RAII)
-	ofs.close();
+eu32 Utility::getFileData(estring_cr filePath, eu8_p data) {
+    eu32 fileSize = getFileSize(filePath);
+    getFileData(filePath, fileSize, data);
+    return fileSize;
 }
 
+// output to Text file
+void Utility::toFile(estring_cr filePath, estring_cr msg, bool isAppend) {
+	toFile(filePath, (eu8*)msg.c_str(), (int)msg.length(), isAppend);
+}
 
 // output Array to Binary file
 void Utility::toFile(estring_cr filePath, eu8_p data, int length, bool isAppend) {
@@ -247,8 +231,7 @@ void Utility::toFile(estring_cr filePath, eu8_p data, int length, bool isAppend)
 	}
 
 	if (ofs.fail() == true) {
-		estring msg = _ET("toFile: Can`t open file ") + filePath;
-		THROW_MYEXCEPTION(UTI_OPEN_FILE_FAIL, msg.c_str());
+		THROW_MYEXCEPTION(UTI_OPEN_FILE_FAIL, _ET("toFile: Can`t open file ") + filePath);
 	}
 
 	// output data by ANSI stream, because it's "byte array"
@@ -271,8 +254,7 @@ int Utility::deleteFile(estring_cr filePath) {
 void Utility::createFolder(estring_cr folderName) {
 	if (CreateDirectory(folderName.c_str(), NULL) == 0) {
 		if (ERROR_ALREADY_EXISTS != GetLastError()) {
-			estring msg = _ET("createFolder: Can`t create folder file ") + folderName;
-			THROW_MYEXCEPTION(0, msg.c_str());
+			THROW_MYEXCEPTION(0, _ET("createFolder: Can`t create folder file ") + folderName);
 		}
 	}
 }

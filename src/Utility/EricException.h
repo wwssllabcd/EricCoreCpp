@@ -4,7 +4,9 @@
 #include "DefineFiles/DefineFile.h"
 
 
-#define THROW_MYEXCEPTION(errCode, msg)      throw EricCore::EricException(errCode, msg)
+//Note: you can used msg.c_str for estring mode
+#define THROW_MYEXCEPTION(errCode, fmt, ...)          throw EricCore::EricException(errCode, fmt, __VA_ARGS__)
+
 
 
 namespace EricCore {

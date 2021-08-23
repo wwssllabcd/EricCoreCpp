@@ -5,12 +5,13 @@
 
 using namespace std;
 
+//Note: you can used msg.c_str for estring mode
+#define SEND_MSG(fmt, ...)                               EricCore::Observer::sendMsg(0, true, false, fmt, __VA_ARGS__)
+#define SEND_MSG_STR(estr)                               SEND_MSG(estr.c_str())
 
-#define SEND_MSG(fmt, ...)                       Observer::sendMsg(0, true, false, fmt, __VA_ARGS__)
-#define SEND_MSG_NOCRLF(fmt, ...)                Observer::sendMsg(0, false, false, fmt, __VA_ARGS__)
-#define SEND_MSG_STR(estr)                       Observer::sendMsg(0, estr, true, false)
-#define SEND_MSG_STR_CLEAR(estr)                 Observer::sendMsg(0, estr, false, true)
-#define SEND_MSG_CLEAR()                         Observer::sendMsg(0, false, true, _ET(""))
+#define SEND_MSG_CTRL(isCrlf, isClear, fmt, ...)         EricCore::Observer::sendMsg(0, isCrlf, isClear, fmt, __VA_ARGS__)
+#define SEND_MSG_CLEAR()                                 EricCore::Observer::sendMsg(0, false, true, _ET(""))
+
 
 namespace EricCore {
     class Observer
@@ -24,7 +25,7 @@ namespace EricCore {
         ~Observer(void);
         
         ERIC_STATIC void observerRegister(int id, MsgFunPtr pF);
-        ERIC_STATIC void sendMsg(int id, estring& msg, bool isCrLf, bool isClean);
+        ERIC_STATIC void sendMsg(int id, estring& msg, bool isCrLf=true, bool isClean=false);
         ERIC_STATIC void sendMsg(int id, bool isCrLf, bool isClean, ELPCTSTR fmt, ...);
         ERIC_STATIC ObserObjColls m_obsColls;
     };

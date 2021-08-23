@@ -17,7 +17,8 @@
 
 #ifdef _UNICODE
 	typedef std::wstring                 estring;
-	#define tstring                      wstring
+
+    #define tstring                      wstring
 	#define tofstream                    wofstream
 	#define tatoi(x)                     _wtoi(x)
 	#define tfopen(x,y)                  _wfopen(x,y) //NT only
@@ -27,7 +28,7 @@
 	#define tvsnprintf_s(a, b, c, d, e)  _vsnwprintf_s(a, b, c, d, e) 	
     #define tvscprintf(x, y)             _vscwprintf(x, y) 	
     #define tctime_s(x, y, z)             _wctime_s(x, y, z) 	
-
+    #define to_tstring(x)                 to_wstring((x))
 #else
 	typedef std::string                    estring;
 	#define tofstream                      ofstream
@@ -37,6 +38,7 @@
     #define tvsnprintf(i, x, y, z)         _vsnprintf(i, x,y,z) 	
 	#define tvsnprintf_s(a, b, c, d, e)    _vsnprintf_s(a, b, c, d, e) 	
 	#define tvscprintf(x, y)               _vscprintf(x, y) 
+	#define to_tstring(x)                  to_string((x))
 
 
 #ifdef _ERIC_WIN_MFC_
@@ -51,6 +53,7 @@
 #endif
 
 typedef const estring&    estring_cr;
+typedef       estring&    estring_r;
 
 
 #define ERIC_EXTERN_C extern "C"

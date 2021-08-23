@@ -9,12 +9,12 @@
 #include <afxcmn.h>  //CTabCtrl
 using namespace std;
 
-ERIC_GEN_POINTER_TYPE(CDialog);
-ERIC_GEN_POINTER_TYPE(CComboBox);
-ERIC_GEN_POINTER_TYPE(CButton);
-ERIC_GEN_POINTER_TYPE(CEdit);
-ERIC_GEN_POINTER_TYPE(CTabCtrl);
-ERIC_GEN_POINTER_TYPE(CFont);
+ERIC_GEN_OTHER_TYPE(CDialog);
+ERIC_GEN_OTHER_TYPE(CComboBox);
+ERIC_GEN_OTHER_TYPE(CButton);
+ERIC_GEN_OTHER_TYPE(CEdit);
+ERIC_GEN_OTHER_TYPE(CTabCtrl);
+ERIC_GEN_OTHER_TYPE(CFont);
 
 namespace EricCore {
     class DialogUtility
@@ -38,7 +38,7 @@ namespace EricCore {
         estring getFilePathByDialog();
 
         // MFC platform
-        ERIC_STATIC void updateOS();
+        ERIC_STATIC void update_message();
         void executeShell(estring_cr verb, estring_cr cmd, estring_cr param, bool isHide);
 
         //ComboBox
@@ -56,6 +56,8 @@ namespace EricCore {
         SYSTEMTIME getTimeNow();
         estring genTimeString(const SYSTEMTIME& current_date_time);
         estring genTimeString(const SYSTEMTIME& current_date_time, estring_cr separateSign, estring format, const int separateType);
+
+        void show_txt_msg(CEdit_p pMsgArea, bool isClean, estring_cr msg);
 
         // ------------ template ------------
         template <typename T>
