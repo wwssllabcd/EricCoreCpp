@@ -72,7 +72,7 @@ namespace EricCore {
         int getBit(const eu16& word, int num);
 
         int ceil(int dividend, int divisor);
-        void makeBuf(eu32 number, int length, eu8_p buf);
+        void makeBuf(eu32 number, eu32 length, eu8_p buf);
 
         eu32 getCheckSum(eu8_sp ary, eu32 length);
         eu32 getRandom(eu32 min, eu32 max);
