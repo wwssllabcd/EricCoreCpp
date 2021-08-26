@@ -15,10 +15,10 @@ typedef struct {
 }DeviceInfo;
 typedef bool(*CheckFun)(DeviceInfo&);
 #else
-
+#include "Device/DeviceHandle.h"
 #endif
 
-#include "Device/DeviceHandle.h"
+
 
 class ScsiFun
 {
