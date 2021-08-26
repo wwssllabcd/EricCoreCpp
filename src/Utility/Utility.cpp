@@ -207,7 +207,7 @@ eu32 Utility::getFileData(estring_cr filePath, eu8_p data) {
 
 // output to Text file
 void Utility::toFile(estring_cr filePath, estring_cr msg, bool isAppend) {
-	toFile(filePath, (eu8*)msg.c_str(), (int)msg.length(), isAppend);
+	toFile(filePath, (eu8_p)msg.c_str(), (int)msg.length(), isAppend);
 }
 
 // output Array to Binary file

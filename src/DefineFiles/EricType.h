@@ -30,17 +30,12 @@ ERIC_GEN_OTHER_TYPE(eu64);
 
 
 #ifdef _UNICODE
-
-typedef eu8*                  eBufPtr;
 typedef unsigned int          euint;
 typedef wchar_t               echar;
 typedef const wchar_t*        ELPCTSTR;
 typedef int lpts_wsl;
 
 #else
-
-typedef eu8* const            eu8BufPtr; // 此 type 還是有需要, 因為只靠_p不能區分ptr or array
-typedef eu32* const           eu32BufPtr;
 
 typedef unsigned int          euint;
 typedef char                  echar;

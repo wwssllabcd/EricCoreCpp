@@ -157,16 +157,26 @@
     <ClInclude Include="src\DefineFiles\EricType.h" />
     <ClInclude Include="src\DefineFiles\MarcoFun.h" />
     <ClInclude Include="src\DefineFiles\OtherDefine.h" />
+    <ClInclude Include="src\Scsi\DefineScsi.h" />
+    <ClInclude Include="src\Scsi\FakeScsi\SimpleDisk.h" />
+    <ClInclude Include="src\Scsi\ScsiCmd.h" />
+    <ClInclude Include="src\Scsi\ScsiIf.h" />
+    <ClInclude Include="src\Scsi\ScsiIoIf.h" />
     <ClInclude Include="src\UtilityDialog\DialogUtility.h" />
     <ClInclude Include="src\UtilityDialog\IniUtility.h" />
     <ClInclude Include="src\Utility\EricException.h" />
     <ClInclude Include="src\Utility\Observer.h" />
+    <ClInclude Include="src\Utility\Singleton.h" />
     <ClInclude Include="src\Utility\Utility.h" />
     <ClInclude Include="src\WrapperForC\WrapForMsg.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Scsi\FakeScsi\SimpleDisk.cpp" />
+    <ClCompile Include="src\Scsi\ScsiCmd.cpp" />
+    <ClCompile Include="src\Scsi\ScsiIf.cpp" />
+    <ClCompile Include="src\Scsi\ScsiIoIf.cpp" />
     <ClCompile Include="src\UtilityDialog\DialogUtility.cpp" />
     <ClCompile Include="src\UtilityDialog\IniUtility.cpp" />
     <ClCompile Include="src\Utility\EricException.cpp" />

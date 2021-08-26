@@ -7,7 +7,8 @@
 
 using namespace std;
 
-mutex g_mutex;
+static ULONG m_instance = NULL; // initialize pointer
+
 
 template <typename T>
 class Singleton
@@ -16,15 +17,17 @@ public:
     ~Singleton() {};
 
     static Singleton<T>* get_instance() {
+        static mutex g_mutex;//maybe not thread safe
+
         lock_guard<mutex> lock(g_mutex);
-        if (m_instance<T> == NULL) {
-            m_instance<T> = new Singleton<T>();
+        if (m_instance == NULL) {
+            m_instance = (ULONG)(new Singleton<T>());
         }
-        return m_instance<T>;
+        return (Singleton<T>*)m_instance;
     }
 
     void release() {
-        return m_instance<T> = NULL;
+        m_instance = NULL;
     }
 
     void push_back(const T& item) {
@@ -45,10 +48,11 @@ public:
 private:
     Singleton() {};
     vector<T> m_itemColls;
+    
 };
 
-template <typename T>
-static Singleton<T>* m_instance = NULL; // initialize pointer
+
+
 
 
 
