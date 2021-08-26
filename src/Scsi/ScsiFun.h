@@ -2,18 +2,23 @@
 
 #include "DefineFiles/DefineFile.h"
 #include "Scsi/ScsiIf.h"
+#include "DefineScsi.h"
 
 #include <vector>
 
-
+#ifdef _ENABLE_FAKE_DEVICE
 typedef struct {
     estring devicePath;
     HANDLE handle;
     eu32 busType;
     estring description;
 }DeviceInfo;
-
 typedef bool(*CheckFun)(DeviceInfo&);
+#else
+
+#endif
+
+#include "Device/DeviceHandle.h"
 
 class ScsiFun
 {

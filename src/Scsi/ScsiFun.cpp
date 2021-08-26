@@ -26,6 +26,7 @@ vector<DeviceInfo> ScsiFun::scan_device(CheckFun filterFun) {
     return deviceInfo;
 }
 #else
+
 vector<DeviceInfo> ScsiFun::scan_device(CheckFun filterFun) {
 
     vector<DeviceInfo> deviceInfo;
