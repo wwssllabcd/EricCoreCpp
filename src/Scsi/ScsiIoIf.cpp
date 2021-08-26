@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "ScsiIoIf.h"
-
+#include "DefineScsi.h"
 
 #define SCSI_CMD_TIMEOUT                (30)
 
@@ -11,7 +11,7 @@ ScsiIoIf::ScsiIoIf()
 ScsiIoIf::~ScsiIoIf() {
 }
 
-#define _ENABLE_FAKE_DEVICE
+
 #ifdef _ENABLE_FAKE_DEVICE
 
 #include "FakeScsi/SimpleDisk.h"

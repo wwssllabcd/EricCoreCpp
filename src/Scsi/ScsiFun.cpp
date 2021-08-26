@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "ScsiFun.h"
+#include "DefineScsi.h"
 
 #include "Utility/Singleton.h"
 
@@ -11,6 +12,7 @@ ScsiFun::ScsiFun()
 ScsiFun::~ScsiFun() {
 }
 
+#ifdef _ENABLE_FAKE_DEVICE
 vector<DeviceInfo> ScsiFun::scan_device(CheckFun filterFun) {
     vector<DeviceInfo> deviceInfo;
     DeviceInfo di;
@@ -23,19 +25,20 @@ vector<DeviceInfo> ScsiFun::scan_device(CheckFun filterFun) {
     deviceInfo.push_back(di);
     return deviceInfo;
 }
+#else
+vector<DeviceInfo> ScsiFun::scan_device(CheckFun filterFun) {
 
-//vector<DeviceInfo> ScsiFun::scan_device(CheckFun filterFun) {
-//
-//    vector<DeviceInfo> deviceInfo;
-//    DeviceHandle deviceHandle;
-//
-//    deviceInfo = deviceHandle.get_device_handle_colls(deviceHandle.get_device_path());
-//
-//    if (filterFun) {
-//        deviceInfo = deviceHandle.filter(deviceInfo, filterFun);
-//    }
-//    return deviceInfo;
-//}
+    vector<DeviceInfo> deviceInfo;
+    DeviceHandle deviceHandle;
+
+    deviceInfo = deviceHandle.get_device_handle_colls(deviceHandle.get_device_path());
+
+    if (filterFun) {
+        deviceInfo = deviceHandle.filter(deviceInfo, filterFun);
+    }
+    return deviceInfo;
+}
+#endif
 
 void ScsiFun::put_into_singleton(vector<DeviceInfo> deviceInfos) {
     Singleton<ScsiIf>* s = Singleton<ScsiIf>::get_instance();
