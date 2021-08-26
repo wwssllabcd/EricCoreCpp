@@ -160,6 +160,7 @@
     <ClInclude Include="src\Scsi\DefineScsi.h" />
     <ClInclude Include="src\Scsi\FakeScsi\SimpleDisk.h" />
     <ClInclude Include="src\Scsi\ScsiCmd.h" />
+    <ClInclude Include="src\Scsi\ScsiFun.h" />
     <ClInclude Include="src\Scsi\ScsiIf.h" />
     <ClInclude Include="src\Scsi\ScsiIoIf.h" />
     <ClInclude Include="src\UtilityDialog\DialogUtility.h" />
@@ -175,6 +176,7 @@
   <ItemGroup>
     <ClCompile Include="src\Scsi\FakeScsi\SimpleDisk.cpp" />
     <ClCompile Include="src\Scsi\ScsiCmd.cpp" />
+    <ClCompile Include="src\Scsi\ScsiFun.cpp" />
     <ClCompile Include="src\Scsi\ScsiIf.cpp" />
     <ClCompile Include="src\Scsi\ScsiIoIf.cpp" />
     <ClCompile Include="src\UtilityDialog\DialogUtility.cpp" />

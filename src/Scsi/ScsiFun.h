@@ -1,10 +1,20 @@
 #pragma once
 
 #include "DefineFiles/DefineFile.h"
-#include "Device/DeviceHandle.h"
 #include "Scsi/ScsiIf.h"
 
 #include <vector>
+
+
+typedef struct {
+    estring devicePath;
+    HANDLE handle;
+    eu32 busType;
+    estring description;
+}DeviceInfo;
+
+typedef bool(*CheckFun)(DeviceInfo&);
+
 class ScsiFun
 {
 public:
