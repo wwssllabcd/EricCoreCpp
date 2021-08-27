@@ -27,11 +27,19 @@ public:
     }
 
     void release() {
+        clear();
+        if (m_instance != NULL) {
+            //it need to free memory
+        }
         m_instance = NULL;
     }
 
     void push_back(const T& item) {
         m_itemColls.push_back(item);
+    }
+
+    void clear() {
+        m_itemColls.clear();
     }
 
     T get_item(eu32 idx) {

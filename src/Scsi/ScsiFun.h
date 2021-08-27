@@ -6,7 +6,9 @@
 
 #include <vector>
 
-#ifdef _ENABLE_FAKE_DEVICE
+#ifdef _ENABLE_PHYSICAL_DEVICE
+#include "Device/DeviceHandle.h"
+#else
 typedef struct {
     estring devicePath;
     HANDLE handle;
@@ -14,10 +16,7 @@ typedef struct {
     estring description;
 }DeviceInfo;
 typedef bool(*CheckFun)(DeviceInfo&);
-#else
-#include "Device/DeviceHandle.h"
 #endif
-
 
 
 class ScsiFun
@@ -26,12 +25,16 @@ public:
 
     ScsiFun();
     ~ScsiFun();
-
+    vector<DeviceInfo> scan_all_device();
+    vector<DeviceInfo> filter_device(vector<DeviceInfo> deviceInfo, CheckFun filterFun);
     vector<DeviceInfo> scan_device(CheckFun filterFun);
-    void put_into_singleton(vector<DeviceInfo> deviceInfos);
+    void setup_singleton(vector<DeviceInfo> deviceInfos);
     ScsiIf get_form_singleton(eu32 num);
     vector<estring> get_device_name();
     void release();
+
+    bool is_usb_bus_type(DeviceInfo& deviceInfo);
+
 private:
     
 

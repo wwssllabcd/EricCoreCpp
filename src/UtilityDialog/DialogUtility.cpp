@@ -52,10 +52,8 @@ bool DialogUtility::getUserYesNo(estring_cr msg) {
 
 void DialogUtility::bind_combobox(CComboBox_p cbobox, vector<estring>& dataColl) {
 	cbobox->ResetContent();
-	size_t cnt = dataColl.size();
-	size_t i = 0;
-	for(i = 0; i < cnt; i++) {
-		cbobox->AddString(dataColl[i].c_str());
+	for (auto item : dataColl) {
+		cbobox->AddString(item.c_str());
 	}
 	cbobox->SetCurSel(0);
 }

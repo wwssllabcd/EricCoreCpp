@@ -1,6 +1,7 @@
 #pragma once
 
-#define _ENABLE_FAKE_DEVICE
+//#define _ENABLE_PHYSICAL_DEVICE
+#define FAKE_HANDLE                     (0xFFFF1234)
 
 //#define ENABLE_4k_SEC_LEN
 #ifdef ENABLE_4k_SEC_LEN

@@ -20,12 +20,14 @@ void Observer::observerRegister(int id, MsgFunPtr pF) {
     if (pF == 0) {
         THROW_MYEXCEPTION(UTI_OBS_REG_FAIL_NO, _ET("observerRegister error: function ptr is empty"));
     }
-    for (ObserObjColls::size_type i = 0; i < Observer::m_obsColls.size(); i++) {
-        MsgFunPtr testFP = Observer::m_obsColls[i].second;
+
+    for (auto i : m_obsColls) {
+        MsgFunPtr testFP = i.second;
         if (testFP == pF) {
             return;
         }
     }
+
     ObserObj o;
     o.first = id;
     o.second = pF;
@@ -38,9 +40,8 @@ void Observer::sendMsg(int id, estring& msg, bool isCrLf, bool isClean) {
         THROW_MYEXCEPTION(UTI_SEND_MSG_FAIL, _ET("sendMsg error: no any send msg function"));
     }
 
-    for (ObserObjColls::size_type i = 0; i < size; i++) {
-        ObserObj o = m_obsColls[i];
-        MsgFunPtr pF = m_obsColls[i].second;
+    for (auto o : m_obsColls) {
+        MsgFunPtr pF = o.second;
         if (pF == 0) {
             THROW_MYEXCEPTION(UTI_SEND_MSG_FAIL, _ET("sendMsg error: no any send msg function"));
         }
