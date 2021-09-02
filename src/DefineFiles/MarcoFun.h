@@ -1,5 +1,5 @@
 ﻿#pragma once
-//Copyright © EricWang(wwssllabcd@gmail.com). All rights reserved
+
 
 
 #define VALUE_OF_PTR(T, PTR)                       (*((volatile T*)((PTR))))

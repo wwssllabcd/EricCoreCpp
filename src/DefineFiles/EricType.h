@@ -1,5 +1,5 @@
 ﻿#pragma once
-//Copyright © EricWang(wwssllabcd@gmail.com). All rights reserved
+
 
 #ifndef _ERIC_TYPE_
 #define _ERIC_TYPE_
