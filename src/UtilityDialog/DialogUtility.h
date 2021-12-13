@@ -1,20 +1,11 @@
 #pragma once
 
-
 #include "DefineFiles/DefineFile.h"
 #include "Utility/Utility.h"
-
-
+#include "TypeDialog.h"
 #include <vector>
-#include <afxcmn.h>  //CTabCtrl
-using namespace std;
 
-ERIC_GEN_OTHER_TYPE(CDialog);
-ERIC_GEN_OTHER_TYPE(CComboBox);
-ERIC_GEN_OTHER_TYPE(CButton);
-ERIC_GEN_OTHER_TYPE(CEdit);
-ERIC_GEN_OTHER_TYPE(CTabCtrl);
-ERIC_GEN_OTHER_TYPE(CFont);
+using namespace std;
 
 namespace EricCore {
     class DialogUtility
@@ -57,7 +48,7 @@ namespace EricCore {
         estring genTimeString(const SYSTEMTIME& current_date_time);
         estring genTimeString(const SYSTEMTIME& current_date_time, estring_cr separateSign, estring format, const int separateType);
 
-        void show_txt_msg(CEdit_p pMsgArea, bool isClean, estring_cr msg);
+        void show_msg_to_txtbox(CEdit_p msgItem, bool isClean, estring_cr msg);
 
         // ------------ template ------------
         template <typename T>

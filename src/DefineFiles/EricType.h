@@ -7,6 +7,8 @@
 #include "EricConfig.h"
 
 #define _ET(x)                _T(x)
+#define CRLF                  _ET("\r\n")
+
 #define ERIC_STATIC static
 #define ERIC_GEN_OTHER_TYPE(T)        \
 	typedef const T* const T##_sp;    \

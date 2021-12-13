@@ -12,6 +12,8 @@ using namespace std;
 #define SEND_MSG_CTRL(isCrlf, isClear, fmt, ...)         EricCore::Observer::sendMsg(0, isCrlf, isClear, fmt, __VA_ARGS__)
 #define SEND_MSG_CLEAR()                                 EricCore::Observer::sendMsg(0, false, true, _ET(""))
 
+#define SEND_MSG_AREA_1(isCrlf, isClear, fmt, ...)       EricCore::Observer::sendMsg(1, isCrlf, isClear, fmt, __VA_ARGS__)
+#define SEND_CLEAR_AREA_1()                              EricCore::Observer::sendMsg(1, false, true, _ET(""))
 
 namespace EricCore {
     class Observer

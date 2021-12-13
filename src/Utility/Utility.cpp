@@ -72,12 +72,16 @@ estring Utility::strFormat(echar_sp fmt, ...) {
 
 estring Utility::toString(eu8_p array, eu32 len) {
     vector<char> v(array, array + len);
-    string str(v.begin(), v.end());
-    wstring wstr(v.begin(), v.end());
-    return wstr;
+    estring str(v.begin(), v.end());
+    return str;
 }
 
-estring Utility::_toStringBase(estring_cr param, const int& arg) {
+estring Utility::char_to_estring(const char* charStr) {
+	string msg(charStr);
+	return toString((eu8_p)charStr, (eu32)msg.length());
+}
+
+estring Utility::_toStringBase(estring_cr param, eu64 arg) {
 	estring str = strFormat(param.c_str(), arg);
 	return str;
 }
@@ -86,16 +90,20 @@ estring Utility::toString(const eu32& val) {
 	return _toStringBase(_ET("%d"), val);
 }
 
-estring Utility::toHexString(const eu8& arg) {
-    return _toStringBase(_ET("%02X"), arg);
+estring Utility::toHexString(const eu8& val) {
+    return _toStringBase(_ET("%02X"), val);
 }
 
-estring Utility::toHexString(const eu16& arg) {
-    return _toStringBase(_ET("%04X"), arg);
+estring Utility::toHexString(const eu16& val) {
+    return _toStringBase(_ET("%04X"), val);
 }
 
-estring Utility::toHexString(const eu32& arg, estring_cr param) {
-	return _toStringBase(param, arg);
+estring Utility::toHexString(const eu32& val, estring_cr param) {
+	return _toStringBase(param, val);
+}
+
+estring Utility::toHexString(const eu64& val, estring_cr param) {
+	return _toStringBase(param, val);
 }
 
 //array usually use "0x00" value for the end
@@ -147,35 +155,64 @@ estring Utility::makeAsciiTable(eu8_sp ary, int length) {
 	return msg;
 }
 
+estring Utility::table_adjust(eu32 curByteCnt) {
+	estring msg;
+
+	if (curByteCnt != 0) {
+		// one crlf per 16 byte
+		if ((curByteCnt % 0x10) == 0) {
+			msg += Utility::crLf();
+		}
+
+		//one zone per 512 byte
+		if ((curByteCnt % 512) == 0) {
+			msg += Utility::crLf();
+		}
+	}
+	
+	// add side list
+	if ((curByteCnt % 0x10) == 0) {
+		estring row = strFormat(_ET("%04X"), curByteCnt);
+		msg += row;
+		msg += _ET(" | ");
+	}
+	return msg;
+}
+
+estring Utility::gen_header_u32() {
+	estring head;
+	head += _ET("0000 |  3 2 1 0  7 6 5 4  B A 9 8  F E D C ") + Utility::crLf();
+	head += _ET("==== | ===================================") + Utility::crLf();
+	return head;
+}
+
+estring Utility::gen_header_u8() {
+	estring head;
+	head += _ET("0000 | 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F ") + Utility::crLf();
+	head += _ET("==== | ===============================================") + Utility::crLf();
+	return head;
+}
+
+estring Utility::makeHexTable_u32(eu32 byteCnt, eu32_sp ary) {
+	estring msg = gen_header_u32();
+	for (eu32 i = 0; i < byteCnt; i+=4) {
+		msg += table_adjust(i);
+		msg += toHexString(ary[i/4], _ET("%08X")) + _ET(" ");
+	}
+	return msg;
+}
+
 estring Utility::makeHexTable(int length, eu8_sp ary, eu16 offset, bool needHeader) {
 	estring msg;
 	estring head;
 	if (needHeader) {
-		head += _ET("0000 | 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F ") + Utility::crLf();
-		head += _ET("==== | ============================") + Utility::crLf();
-		msg += head;
+		msg += gen_header_u8();
 	}
 
 	int i = 0;
 	while (i < length) {
-		if ((i % 512) == 0) {
-			if (i != 0) {
-				msg += Utility::crLf();
-			}
-		}
-
-		if (needHeader) {
-			if ((i % 0x10) == 0) {
-				estring row = strFormat(_ET("%04X"), i + offset);
-				msg += row;
-				msg += _ET(" | ");
-			}
-		}
-
+		msg += table_adjust(i);
 		msg += toHexString(ary[i]) + _ET(" ");
-		if (((i + 1) % 0x10) == 0) {
-			msg += Utility::crLf();
-		}
 		i++;
 	}
 	return msg;
@@ -408,3 +445,4 @@ eu32 Utility::getRandom(eu32 min, eu32 max) {
 	eu32 y = (eu32)(x * ((float)((max)-(min))) / (float)(RAND_MAX)+(min));
 	return y;
 }
+

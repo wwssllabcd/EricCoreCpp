@@ -11,9 +11,9 @@ using namespace EricCore;
 
 int const DialogUtility::onDeviceEvent_Arrival = 1;
 int const DialogUtility::onDeviceEvent_Remove = 2;
+#define MAX_TEXTBOX_SIZE (_128K)
 
 DialogUtility::DialogUtility(void){}
-
 DialogUtility::~DialogUtility(void) {}
 
 int DialogUtility::get_cur_select(CComboBox_p cbobox) {
@@ -114,7 +114,6 @@ int DialogUtility::onDeviceEvent(eu32 wParam, DWORD_PTR lParam) {
 	return 0;
 }
 
-
 void DialogUtility::update_message() {
 	MSG message;
 	while(::PeekMessage(&message, NULL, 0, 0, PM_REMOVE)) {
@@ -154,7 +153,6 @@ void DialogUtility::tabCtrl_addItem(CDialog& dlgPtr, int id, CTabCtrl& mainTabPt
 
 	m_tabColls.push_back(tmp);
 }
-
 
 void DialogUtility::tabCtrl_init(void) {
 	int  tabCnt = (int)m_tabColls.size();
@@ -224,13 +222,24 @@ estring DialogUtility::genTimeString(const SYSTEMTIME& current_date_time, estrin
 	return res;
 }
 
-void DialogUtility::show_txt_msg(CEdit_p pMsgArea, bool isClean, estring_cr msg) {
-    if (isClean) {
-        pMsgArea->SetWindowText(msg.c_str());
-    } else {
-        int end = pMsgArea->GetWindowTextLength();
-        pMsgArea->SetSel(end, end);
-        pMsgArea->ReplaceSel(msg.c_str());
-    }
-    update_message();
+void DialogUtility::show_msg_to_txtbox(CEdit_p msgItem, bool isClean, estring_cr msg) {
+	if (!msgItem) {
+		THROW_MYEXCEPTION(GENERAL_FAIL, _ET("show_msg_to_txtbox: text item NULL"));
+	}
+
+	int end = 0;
+	if (isClean) {
+		msgItem->SetWindowText(msg.c_str());
+	} else {
+		if (end < MAX_TEXTBOX_SIZE) {
+			end = msgItem->GetWindowTextLength();
+			msgItem->SetSel(end, end);
+			msgItem->ReplaceSel(msg.c_str());
+		} else {
+			//force clean text
+			msgItem->SetWindowText(msg.c_str());
+		}
+	}
+	msgItem->SetSel(end, end);
+	update_message();
 }

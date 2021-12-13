@@ -16,12 +16,11 @@ IniUtility::~IniUtility()
 {
 }
 
-
 estring IniUtility::getString(estring_cr appName, estring_cr keyName, estring_cr defaultString) {
 	echar cKey[200];
-	GetPrivateProfileString(appName.c_str(), keyName.c_str(), _ET(""), cKey, 200, iniFilePath_.c_str());
+	eu32 cnt = GetPrivateProfileString(appName.c_str(), keyName.c_str(), _ET(""), cKey, 200, iniFilePath_.c_str());
 	Utility u;
-	estring res = u.strFormat(_ET("%s"), cKey);
+	estring res(cKey);
 	if(res.length() == 0) {
 		res = defaultString;
 	}

@@ -19,16 +19,20 @@ namespace EricCore {
 
         //convert char array to estring
         estring toString(eu8_p array, eu32 len);
+        estring char_to_estring(const char* charStr);
 
-
-		estring toHexString(const eu8& arg);
-		estring toHexString(const eu16& arg);
-        estring toHexString(const eu32& arg, estring_cr param = _ET("%X"));
+		estring toHexString(const eu8& val);
+		estring toHexString(const eu16& val);
+        estring toHexString(const eu32& val, estring_cr param = _ET("%X"));
+        estring toHexString(const eu64& val, estring_cr param = _ET("%X"));
 
         estring arrayToString(eu8_sp charArray, int length, bool isEndWhenZero = false);
         estring arrayToHexString(eu8_sp charArray, int length, estring_cr filler = _ET(" "));
 
         estring makeHexTable(int length, eu8_sp ary, eu16 offset = 0, bool needHeader = true);
+        
+        estring makeHexTable_u32(eu32 length, eu32_sp ary);
+        
         estring makeAsciiTable(eu8_sp ary, int length);
 
 		void convertToWchar(wchar_t* wc, const char* c, int maxLen);
@@ -78,7 +82,10 @@ namespace EricCore {
         eu32 getRandom(eu32 min, eu32 max);
 
     private:
-        estring _toStringBase(estring_cr param, const int& arg);
+        estring gen_header_u8();
+        estring gen_header_u32();
+        estring table_adjust(eu32 curByteCnt);
+        estring _toStringBase(estring_cr param, eu64 arg);
   
     };
 }

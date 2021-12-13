@@ -50,7 +50,7 @@ public:
     }
 
     eu32 size() {
-        return m_itemColls.size();
+        return (eu32)m_itemColls.size();
     }
     
 private:
