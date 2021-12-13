@@ -161,8 +161,12 @@
     <ClInclude Include="src\DefineFiles\MarcoFun.h" />
     <ClInclude Include="src\DefineFiles\OtherDefine.h" />
     <ClInclude Include="src\Scsi\DefineScsi.h" />
+    <ClInclude Include="src\UtilityDialog\CmderUi.h" />
     <ClInclude Include="src\UtilityDialog\DialogUtility.h" />
+    <ClInclude Include="src\UtilityDialog\DialogViewUtility.h" />
     <ClInclude Include="src\UtilityDialog\IniUtility.h" />
+    <ClInclude Include="src\UtilityDialog\TypeDialog.h" />
+    <ClInclude Include="src\UtilityDialog\WinUtility.h" />
     <ClInclude Include="src\Utility\EricException.h" />
     <ClInclude Include="src\Utility\Observer.h" />
     <ClInclude Include="src\Utility\Singleton.h" />
@@ -172,8 +176,11 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\UtilityDialog\CmderUi.cpp" />
     <ClCompile Include="src\UtilityDialog\DialogUtility.cpp" />
+    <ClCompile Include="src\UtilityDialog\DialogViewUtility.cpp" />
     <ClCompile Include="src\UtilityDialog\IniUtility.cpp" />
+    <ClCompile Include="src\UtilityDialog\WinUtility.cpp" />
     <ClCompile Include="src\Utility\EricException.cpp" />
     <ClCompile Include="src\Utility\Observer.cpp" />
     <ClCompile Include="src\Utility\Utility.cpp" />
