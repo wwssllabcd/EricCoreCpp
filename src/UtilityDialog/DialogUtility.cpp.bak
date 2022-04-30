@@ -61,6 +61,7 @@ void DialogUtility::bind_combobox(CComboBox_p cbobox, vector<estring>& dataColl)
 estring DialogUtility::getFilePathByDialog(estring_cr defaultFileName, estring_cr fileFilter, bool checkExist) {
 	estring fileName;
     Utility u;
+
 	while(1) {
 		CFileDialog fdlg(false, NULL, defaultFileName.c_str(), NULL, fileFilter.c_str());
 		if(fdlg.DoModal() == IDOK) {

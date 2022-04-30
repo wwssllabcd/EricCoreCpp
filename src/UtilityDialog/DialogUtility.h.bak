@@ -25,7 +25,8 @@ namespace EricCore {
 
         void setFont(CEdit_p item, int size, estring_cr fontName, bool reDraw, CFont_p font);
         bool getUserYesNo(estring_cr msg);
-        estring getFilePathByDialog(estring_cr defaultFileName, estring_cr fileFilter= _ET("Text Files (*.txt)|*.txt|Bin File (*.bin)|*.bin|All Files (*.*)|*.*||"), bool checkExist = true);
+        estring getFilePathByDialog(estring_cr defaultFileName, estring_cr fileFilter, bool checkExist);
+        estring getFilePathByDialog();
 
         // MFC platform
         ERIC_STATIC void update_message();

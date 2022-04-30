@@ -4,11 +4,7 @@
 #include <fstream>     // fstream
 #include "EricException.h"
 
-#include <thread>
-
 using namespace std;
-using std::this_thread::sleep_for;
-
 
 namespace EricCore {
     class Utility

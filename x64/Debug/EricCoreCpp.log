@@ -1,0 +1,9 @@
+﻿  stdafx.cpp
+  DialogUtility.cpp
+  IniUtility.cpp
+  EricException.cpp
+  Observer.cpp
+  Utility.cpp
+  WrapForMsg.cpp
+  正在產生程式碼...
+  EricCoreCpp.vcxproj -> D:\GitHub\cpp\UsbCommander_github\x64\Debug\EricCoreCpp.lib

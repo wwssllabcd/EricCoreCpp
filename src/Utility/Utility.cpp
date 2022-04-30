@@ -1,12 +1,12 @@
 ﻿
 #include "stdafx.h"
 #include "Utility.h"
-#include "EricException.h"
+
 #include <vector>
 
 #include <stdarg.h>    // va_start, va_end
-#include <windows.h>   // CreateDirectory
-#include <fstream>     // fstream
+#include <windows.h>   // Sleep
+
 #include <bitset>      // bitset
 
 using namespace EricCore;
@@ -155,7 +155,7 @@ estring Utility::makeAsciiTable(eu8_sp ary, int length) {
 	return msg;
 }
 
-estring Utility::table_adjust(eu32 curByteCnt) {
+estring Utility::table_adjust(eu32 curByteCnt, bool needSideBar) {
 	estring msg;
 
 	if (curByteCnt != 0) {
@@ -171,11 +171,14 @@ estring Utility::table_adjust(eu32 curByteCnt) {
 	}
 	
 	// add side list
-	if ((curByteCnt % 0x10) == 0) {
-		estring row = strFormat(_ET("%04X"), curByteCnt);
-		msg += row;
-		msg += _ET(" | ");
+	if (needSideBar) {
+		if ((curByteCnt % 0x10) == 0) {
+			estring row = strFormat(_ET("%04X"), curByteCnt);
+			msg += row;
+			msg += _ET(" | ");
+		}
 	}
+
 	return msg;
 }
 
@@ -193,10 +196,15 @@ estring Utility::gen_header_u8() {
 	return head;
 }
 
-estring Utility::makeHexTable_u32(eu32 byteCnt, eu32_sp ary) {
-	estring msg = gen_header_u32();
+estring Utility::makeHexTable_u32(eu32 byteCnt, eu32_sp ary, bool needHeader) {
+	
+	estring msg;
+	if (needHeader) {
+		msg = gen_header_u32();
+	}
+
 	for (eu32 i = 0; i < byteCnt; i+=4) {
-		msg += table_adjust(i);
+		msg += table_adjust(i, needHeader);
 		msg += toHexString(ary[i/4], _ET("%08X")) + _ET(" ");
 	}
 	return msg;
@@ -211,7 +219,7 @@ estring Utility::makeHexTable(int length, eu8_sp ary, eu16 offset, bool needHead
 
 	int i = 0;
 	while (i < length) {
-		msg += table_adjust(i);
+		msg += table_adjust(i, needHeader);
 		msg += toHexString(ary[i]) + _ET(" ");
 		i++;
 	}
@@ -243,39 +251,12 @@ eu32 Utility::getFileData(estring_cr filePath, eu8_p data) {
 
 // output to Text file
 void Utility::toFile(estring_cr filePath, estring_cr msg, bool isAppend) {
-	toFile(filePath, (eu8_p)msg.c_str(), (int)msg.length(), isAppend);
+	_toFile<tofstream>(filePath, msg.c_str(), msg.length(), false);
 }
 
 // output Array to Binary file
-void Utility::toFile(estring_cr filePath, eu8_p data, int length, bool isAppend) {
-	//if it have not the file , ofstream will make a new file
-	ofstream ofs;
-	int mode;
-	if (isAppend == true) {
-		// ios::binary is mean "Do not replace CRLF"
-		mode = ios::out | ios::binary | ios::app;
-	} else {
-		mode = ios::out | ios::binary | ios::trunc;
-	}
-
-	for (int i = 0; i < 10; i++) {
-		ofs.open(filePath.c_str(), mode);
-		if (ofs.fail() == false) {
-			break;
-		}
-		Sleep(100);
-	}
-
-	if (ofs.fail() == true) {
-		THROW_MYEXCEPTION(UTI_OPEN_FILE_FAIL, _ET("toFile: Can`t open file ") + filePath);
-	}
-
-	// output data by ANSI stream, because it's "byte array"
-	ofs.write((char*)data, length);
-
-	// even you didn't close, ofs will be close in destructor
-	// fstream destruct call close for you. When an exception is thrown, the file is closed automatically.(RAII)
-	ofs.close();
+void Utility::toFile(estring_cr filePath, eu8_p data, eu32 length, bool isAppend) {
+	_toFile<ofstream, const char*>(filePath, (const char* )data, length, false);
 }
 
 bool Utility::isFileExist(estring_cr filePath) {
@@ -340,7 +321,7 @@ void Utility::toArray(const eu16& source, eu8_p array, bool isMSB) {
 }
 
 void Utility::toArray(const eu32& source, eu8_p array, bool isMSB) {
-	if (isMSB == true) {
+	if (isMSB) {
 		array[0] = static_cast<eu8>((source >> 24) & 0xFF);
 		array[1] = static_cast<eu8>((source >> 16) & 0xFF);
 		array[2] = static_cast<eu8>((source >> 8) & 0xFF);
@@ -378,7 +359,7 @@ void Utility::makeBuf(eu32 number, eu32 length, eu8_p buf) {
 	if ((length % 512) == 0) {
 		eu8 wsl[512];
 		for (eu32 a = 0; a < 512; a += 4) {
-			toArray(number, wsl + a);
+			toArray(number, wsl + a, false);
 		}
 		int cnt = length / 512;
 
@@ -389,13 +370,13 @@ void Utility::makeBuf(eu32 number, eu32 length, eu8_p buf) {
 	}
 
 	for (eu32 c = 0; c < length; c += 4) {
-		toArray(number, buf + c);
+		toArray(number, buf + c, false);
 	}
 
 	// make signature
     eu32 cnt = length / 512;
 	for (eu32 d = 0; d < cnt; d++) {
-		toArray(number + d, buf + d * 512);
+		toArray(number + d, buf + d * 512, false);
 	}
 }
 
