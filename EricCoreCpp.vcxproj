@@ -151,7 +151,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Cmder\CmderUi.h" />
     <ClInclude Include="src\DefineFiles\DefBitConst.h" />
     <ClInclude Include="src\DefineFiles\DefConst.h" />
     <ClInclude Include="src\DefineFiles\DefineFile.h" />
@@ -177,7 +176,6 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Cmder\CmderUi.cpp" />
     <ClCompile Include="src\UtilityDialog\CmderUi.cpp" />
     <ClCompile Include="src\UtilityDialog\DialogUtility.cpp" />
     <ClCompile Include="src\UtilityDialog\DialogViewUtility.cpp" />

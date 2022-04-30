@@ -1,6 +1,0 @@
-﻿d:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1098,5): warning MSB8027: 兩個或多個名稱為 'CmderUi.cpp' 的檔案會產生輸出到相同位置。這可能導致錯誤的組建結果。涉及的檔案是 src\Cmder\CmderUi.cpp, src\UtilityDialog\CmderUi.cpp。
-  CmderUi.cpp
-  DialogUtility.cpp
-  正在產生程式碼...
-Debug\CmderUi.obj : warning LNK4042: 指定物件超過一次，已忽略多餘的部分
-  EricCoreCpp.vcxproj -> D:\GitHub\cpp\UsbCommander_github\Debug\EricCoreCpp.lib
