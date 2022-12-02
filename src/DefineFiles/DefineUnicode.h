@@ -8,7 +8,7 @@
 
 #ifdef _UNICODE
 	typedef std::wstring                 estring;
-
+	typedef std::wstringstream           estringstream;
     #define tstring                      wstring
 	#define tofstream                    wofstream
 	#define tifstream                    wifstream

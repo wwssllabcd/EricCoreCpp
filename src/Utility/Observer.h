@@ -19,6 +19,7 @@ using namespace std;
 
 //to avoid "incorrent format specifier, 0" issue
 #define SEND_MSG_ESTR_AREA_1(estr)                       EricCore::Observer::sendMsg(1, estr, false, true)
+#define SEND_MSG_ESTR_CTRL_AREA_1(estr, isCrlf, isClear) EricCore::Observer::sendMsg(1, estr, isCrlf, isClear)
 #define SEND_CLEAR_AREA_1()                              EricCore::Observer::sendMsg(1, false, true, _ET(""))
 
 namespace EricCore {

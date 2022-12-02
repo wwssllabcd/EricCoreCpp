@@ -2,7 +2,7 @@
 
 #include "stdafx.h"
 #include "DialogUtility.h"
-#include "Dbt.h"
+#include "Dbt.h"               // PDEV_BROADCAST_HDR
 #include <afxdlgs.h> //CFileDialog
 #include "Utility/Utility.h"
 #include "Utility/EricException.h"

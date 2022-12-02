@@ -6,7 +6,7 @@
 
 #include <stdarg.h>    // va_start, va_end
 #include <windows.h>   // Sleep
-
+#include <sstream>     // getline
 #include <bitset>      // bitset
 
 using namespace EricCore;
@@ -249,6 +249,15 @@ eu32 Utility::getFileData(estring_cr filePath, eu8_p data) {
     return fileSize;
 }
 
+//for get txt file
+estring Utility::getFileData(estring_cr filePath) {
+	eu32 fileSize = getFileSize(filePath);
+	unique_ptr<eu8[]> buffer(new eu8[fileSize]);
+	getFileData(filePath, fileSize, buffer.get());
+	estring res(buffer.get(), buffer.get() + fileSize);
+	return res;
+}
+
 // output to Text file
 void Utility::toFile(estring_cr filePath, estring_cr msg, bool isAppend) {
 	_toFile<tofstream>(filePath, msg.c_str(), msg.length(), false);
@@ -289,6 +298,11 @@ int Utility::toInt(const bool& boolean) {
 int Utility::toInt(eu8 value) {
 	return (int)value;
 }
+
+int Utility::toInt(estring value) {
+	return std::stoul(value, nullptr, 0);
+}
+
 int Utility::getBit(const eu16& word, int bitNo) {
 	//using Bitset of STD(C++ Primer 3rd Edition ch4.11 , ch4.12)
 	std::bitset<32> result(word);
@@ -427,3 +441,13 @@ eu32 Utility::getRandom(eu32 min, eu32 max) {
 	return y;
 }
 
+vector<estring> Utility::stringSplit(const estring& s, echar delim) {
+	estringstream ss(s);
+	estring item;
+	vector<estring> elems;
+	while (getline(ss, item, delim)) {
+		//elems.push_back(item);
+		elems.push_back(move(item));
+	}
+	return elems;
+}

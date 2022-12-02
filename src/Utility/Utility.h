@@ -3,12 +3,12 @@
 #include "DefineFiles/DefineFile.h"
 #include <fstream>     // fstream
 #include "EricException.h"
-
 #include <thread>
+#include <vector>
 
 using namespace std;
 using std::this_thread::sleep_for;
-
+using std::vector;
 
 namespace EricCore {
     class Utility
@@ -42,6 +42,8 @@ namespace EricCore {
 
 		void convertToWchar(wchar_t* wc, const char* c, int maxLen);
 
+        vector<estring> stringSplit(const estring& s, echar delim);
+
         ERIC_STATIC estring crLf();
         
         //---------- for file
@@ -51,6 +53,7 @@ namespace EricCore {
 
         eu8_p getFileData(estring_cr filePath, eu32 fileSize, eu8_p data);
         eu32 getFileData(estring_cr filePath, eu8_p data);
+        estring getFileData(estring_cr filePath);
 
 
         eu32 getFileSize(estring_cr filePath);
@@ -63,6 +66,7 @@ namespace EricCore {
         //---------- for convert
         int toInt(const bool& boolean);
         int toInt(eu8 value);
+        int toInt(estring value);
 
         bool toBool(eu32 intValue);
 
